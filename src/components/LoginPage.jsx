@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import "../assets/styles/login.css"
 
 import Logo from "../assets/images/LOGO_header.png"
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+
+  const email = "mit@7702"
+  const password = "7702"
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,6 +20,12 @@ const LoginPage = () => {
     e.preventDefault();
     console.log("Login Submitted:", formData);
     // Add authentication logic here
+    if(email !== formData.email || password !== formData.password){
+      alert("Invalid Credentials")
+      return
+    }
+    const navigate = useNavigate();
+    navigate(`/userDashboard`);
   };
 
   return (
