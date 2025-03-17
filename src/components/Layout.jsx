@@ -27,11 +27,31 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
+import { useEffect, useState } from "react";
+
 
 import { useLocation, Outlet } from "react-router-dom";
 
 const Layout = () => {
+
+  // const [message, setMessage] = useState("");
+
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/")
+  //     .then((res) => res.text())
+  //     .then((data) => setMessage(data));
+  // }, []);
+
+
+
+
+
+
   const location = useLocation();
+
+
+
+
 
   // Define different layout paths
   const miniLayoutPaths = ["/login", "/signup", "/Terms&Service", "/addMedia", "/contactUs", "/ForgotPassword", "/PrivacyPolicy"];
@@ -52,6 +72,7 @@ const Layout = () => {
           {isMiniLayout ? <MiniHeader /> : <Header />}
           <div className="main-container hide-scrollbar main-content">
             {mainContent}
+            {/* {message} */}
           </div>
         </div>
         {!isMiniLayout && <Sidebar />}
