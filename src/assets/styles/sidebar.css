@@ -1,0 +1,63 @@
+
+
+.sidebar {
+    background-color: #0f0f0f;
+    color: #d7ede3;
+    width: 250px;
+    min-height: 100%;
+    padding: 20px;
+    display: flex !important;
+    flex-direction: column;
+  }
+  
+  .sidebar h5 {
+    color: #d7ede3;
+  }
+  
+  .list-group-item {
+    background-color: #1f1f1f;
+    color: #d7ede3;
+    border: none;
+  }
+  
+  .list-group-item:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  
+  .top-section button {
+    font-size: 16px;
+  }
+  
+  .top-section button.mt-3 {
+    margin-top: 1rem;
+  }
+  
+  .bottom-section {
+    margin-top: auto;
+  }
+  
+  .reminders-section,
+  .todo-section {
+    flex-grow: 1;
+  }
+  
+  .todo-name,
+  .reminder-name {
+    font-size: 16px;
+  }
+  
+  .app-name,
+  .reminder-date {
+    font-size: 12px;
+    color: #b5b5b5;
+  }
+
+  @media (max-width: 768px) {
+    .navbar {
+        display: none;
+    }
+  
+    .sidebar {
+        display: none !important;
+    }
+  }

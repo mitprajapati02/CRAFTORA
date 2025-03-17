@@ -1,0 +1,74 @@
+body {
+  background-color: #d5ebe1;
+  color: #272828;
+}
+
+.all-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/*mainconatiner style start here*/
+
+
+/* Style only for elements with the .custom-scroll class */
+/* Hide scrollbar for Chrome, Edge, Safari */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.hide-scrollbar {
+  scrollbar-width: none;
+  /* Disables scrollbar width */
+  -ms-overflow-style: none;
+  /* Disables scrollbar for Internet Explorer 10+ */
+}
+
+.main-content {
+
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  /* Space between cards */
+  max-height: fit-content;
+  /* Restrict height 
+overflow-y: auto;
+Enable scrolling if content overflows
+scrollbar-width: thin;
+scrollbar-color: #94dc98 #d7ede3;*/
+}
+
+
+
+
+
+
+
+/* Style only for elements with the .custom-scroll class */
+/* Hide scrollbar for Chrome, Edge, Safari */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.hide-scrollbar {
+  scrollbar-width: none;
+  /* Disables scrollbar width */
+  -ms-overflow-style: none;
+  /* Disables scrollbar for Internet Explorer 10+ */
+}
+
+.icon-hover:hover {
+  color: #7f91f2;
+}
+
+

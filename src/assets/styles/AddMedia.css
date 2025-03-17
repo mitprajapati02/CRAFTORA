@@ -1,0 +1,25 @@
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for Firefox */
+  .hide-scrollbar {
+    scrollbar-width: none;
+    /* Disables scrollbar width */
+    -ms-overflow-style: none;
+    /* Disables scrollbar for Internet Explorer 10+ */
+  }
+
+  /* contactUs */
+  /* privacy */
+  /* terms */
