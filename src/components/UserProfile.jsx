@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
 
-import "../assets/styles/UserProfile.css"
+import "../assets/styles/userProfile.css"
 
 const UserProfile = () => {
   const [formData, setFormData] = useState({
