@@ -1,21 +1,35 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 import "../assets/styles/sidebar.css"
 import "../assets/styles/offcanvas.css"
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const handleProfile = () => {
+    if(user){
+      navigate("/userProfile");
+    }else{
+      navigate("/login");
+    }
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
   return (
     <aside className="sidebar d-none d-md-block">
       {/* Top Section: Profile */}
       <div className="top-section">
-      <Link to="/userProfile">
-        <button className="btn btn-primary w-100 mb-3 mt-3">Profile
+        <button className="btn btn-primary w-100 mb-3 mt-3" onClick={handleProfile}>Profile
         </button>
-        </Link>
       </div>
 
       {/* Second Section: Reminders */}
@@ -50,7 +64,7 @@ const Sidebar = () => {
 
       {/* Sign Out Button */}
       <div className="bottom-section mt-auto">
-        <button className="btn btn-danger w-100">Sign Out</button>
+        <button className="btn btn-danger w-100" onClick={handleSignOut}>Sign Out</button>
       </div>
     </aside>
   );

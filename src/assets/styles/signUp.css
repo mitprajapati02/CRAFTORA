@@ -26,13 +26,10 @@
     margin-bottom: 20px;
     color: #94dc98;
   }
-  .form-control{
-    background: black !important;
-    color: white;
-  }
+
   .signup-form .form-control {
     background-color: #272828;
-    color: #d7ede3;
+    color: #0f0f0f;
     border: none;
     border-radius: 5px;
   }

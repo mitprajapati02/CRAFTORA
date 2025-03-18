@@ -26,7 +26,7 @@ const ContactUs = () => {
           <div className="card mb-4">
             <div className="card-body">
               <h5 className="card-title">Phone</h5>
-              <p className="card-text">+1 (123) 456-7890</p>
+              <p className="card-text">+91 9099227702</p>
             </div>
           </div>
 

@@ -1,10 +1,28 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { useNavigate } from "react-router-dom";
 import "../assets/styles/sidebar.css"
 import "../assets/styles/offcanvas.css"
 
 const OffcanvasSidebar = () => {
+    const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user"));
+    const handleProfile = () => {
+        if(user){
+            navigate("/userProfile");
+        }else{
+            navigate("/login");
+        }
+    };
+
+    const handleSignOut = () => {
+        if(user){
+            localStorage.removeItem("user");
+            navigate("/login");
+        }else{
+            navigate("/login");
+        }
+    };
     return (
         <div className="offcanvas offcanvas-end" id="sidebarOffcanvas">
             <div className="offcanvas-header">
@@ -14,7 +32,7 @@ const OffcanvasSidebar = () => {
             <div className="offcanvas-body d-flex flex-column">
                 {/* Top Section: Profile */}
                 <div className="top-section">
-                    <button className="btn btn-primary w-100 mb-3 mt-3">Profile</button>
+                    <button className="btn btn-primary w-100 mb-3 mt-3" onClick={handleProfile}>Profile</button>
                 </div>
 
                 {/* Second Section: Reminders */}
@@ -49,7 +67,7 @@ const OffcanvasSidebar = () => {
 
                 {/* Sign Out Button */}
                 <div className="bottom-section mt-auto">
-                    <button className="btn btn-danger w-100">Sign Out</button>
+                    <button className="btn btn-danger w-100" onClick={handleSignOut}>Sign Out</button>
                 </div>
             </div>
         </div>

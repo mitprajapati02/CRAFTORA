@@ -37,11 +37,11 @@ function App() {
           {/* Mini Layout Pages */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/Terms&Service" element={<TermsOfService />} />
+          <Route path="/terms&service" element={<TermsOfService />} />
           <Route path="/addMedia" element={<AddMedia />} />
           <Route path="/contactUs" element={<ContactUs />} />
-          <Route path="/ForgotPassword" element={<ForgotPass />} />
-          <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+          <Route path="/forgot-password" element={<ForgotPass />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
           {/* Full Layout Pages (Added missing routes) */}
           <Route path="/userProfile" element={<UserProfile />} />

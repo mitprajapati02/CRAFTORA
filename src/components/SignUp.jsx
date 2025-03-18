@@ -1,12 +1,11 @@
 import { useState } from "react";
-
+import { Link } from "react-router-dom";
 import "../assets/styles/signUp.css"
 import Logo from "../assets/images/LOGO_header.png"
 
 const SignUp = () => {
 
   const [formData, setFormData] = useState({
-    fullName: "",
     username: "",
     mobile: "",
     email: "",
@@ -22,7 +21,17 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!validateForm()) {
+    const {username, mobile, email, profession, password } = formData;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const mobileRegex = /^[0-9]{10}$/;
+
+    if (
+      username.trim() === "" ||
+      !mobileRegex.test(mobile) ||
+      !emailRegex.test(email) ||
+      profession.trim() === "" ||
+      password.length < 6
+    ) {
       alert("Please fill out all fields correctly.");
       return;
     }
@@ -30,25 +39,11 @@ const SignUp = () => {
     localStorage.setItem("user", JSON.stringify({
       username: formData.username,
       email: formData.email,
+      password: formData.password,
     }));
+
     alert("Signup successful!");
   };
-
-  const validateForm = () => {
-    const { fullName, username, mobile, email, profession, password } = formData;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const mobileRegex = /^[0-9]{10}$/;
-
-    return (
-      fullName.trim() !== "" &&
-      username.trim() !== "" &&
-      mobileRegex.test(mobile) &&
-      emailRegex.test(email) &&
-      profession.trim() !== "" &&
-      password.length >= 6
-    );
-  };
-  
 
   return (
     <main className="main-content d-flex justify-content-center align-items-center vh-100">
@@ -59,34 +54,27 @@ const SignUp = () => {
       <div className="mb-3">
         <input
           type="text"
-          name="fullName"
-          className="form-control"
-          placeholder="Full Name"
-          value={formData.fullName}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div className="mb-3">
-        <input
-          type="text"
           name="username"
           className="form-control"
           placeholder="Username"
           value={formData.username}
           onChange={handleChange}
+          style={{backgroundColor: "white"}}
           required
         />
       </div>
       <div className="mb-3">
         <input
-          type="text"
+          type="tel"
           name="mobile"
           className="form-control"
           placeholder="Mobile Number"
           value={formData.mobile}
           onChange={handleChange}
+          style={{backgroundColor: "white"}}
           required
+          pattern="[0-9]{10}"
+          title="Please enter a valid 10-digit mobile number"
         />
       </div>
       <div className="mb-3">
@@ -97,7 +85,10 @@ const SignUp = () => {
           placeholder="Email Address"
           value={formData.email}
           onChange={handleChange}
+          style={{backgroundColor: "white"}}
           required
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          title="Please enter a valid email address"
         />
       </div>
       <div className="mb-3">
@@ -107,7 +98,8 @@ const SignUp = () => {
           className="form-control"
           placeholder="Profession"
           value={formData.profession}
-          onChange={handleChange}
+          onChange={handleChange} 
+          style={{backgroundColor: "white"}}
           required
         />
       </div>
@@ -119,6 +111,7 @@ const SignUp = () => {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
+          style={{backgroundColor: "white"}}
           required
         />
       </div>
@@ -127,7 +120,7 @@ const SignUp = () => {
       </button>
     </form>
         <p className="mt-3">
-          Already have an account? <a href="/login">Login</a>
+          Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
     </main>

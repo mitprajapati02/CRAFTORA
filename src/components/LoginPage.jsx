@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import "../assets/styles/login.css"
 
@@ -10,19 +10,29 @@ const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const navigation = useNavigate();
+  useEffect(() => {
+    // Remove any leftover Bootstrap backdrop
+    const backdrop = document.querySelector(".offcanvas-backdrop");
+    if (backdrop) backdrop.remove();
+  }, []);
 
-  // const email = "mit@7702"
-  // const password = "7702"
+
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Login Submitted:", formData);
-    navigation('/userDashboard');
-    localStorage.setItem("authToken", "user_authenticated");
+    
+    const { email, password } = JSON.parse(localStorage.getItem("user"));
+
+    if(email === formData.email && password === formData.password){
+      navigation('/userDashboard');
+    }else{
+      alert("Invalid email or password");
+    }
 
   };
 
@@ -59,8 +69,8 @@ const LoginPage = () => {
           </button>
         </form>
         <div className="d-flex justify-content-between">
-          <a href="#">Sign Up</a>
-          <a href="#">Forgot Password?</a>
+          <Link to="/signup">Sign Up</Link>
+          <Link to="/forgotPassword">Forgot Password?</Link>
         </div>
       </div>
     </main>

@@ -43,7 +43,7 @@ const AddMedia = () => {
               App Name
             </label>
             <select id="appName" className="form-select" required onChange={handleChange}>
-              <option value="" selected disabled>
+              <option value=""  disabled>
                 Select App Name
               </option>
               <option value="Facebook">Facebook</option>
@@ -58,7 +58,7 @@ const AddMedia = () => {
               App Image
             </label>
             <select id="appImage" className="form-select" onChange={handleChange}>
-              <option value="" selected disabled>
+              <option value=""  disabled>
                 Select App Image
               </option>
               <option value="image1.png">image1.png</option>

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import "../assets/styles/UserDashboard.css"
 
 const socialMediaData = [
@@ -87,11 +87,13 @@ const UserDashboard = () => {
       ))}
 
       {/* Add Card */}
+      
       <div className="add-card">
         <center>
-          <i className="bi bi-plus"></i>
+         <Link to="/addMedia" className="text-decoration-none "> <i className="bi bi-plus"></i></Link>
         </center>
       </div>
+      
     </div>
   );
 };

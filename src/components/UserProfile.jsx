@@ -71,15 +71,15 @@ const UserProfile = () => {
                 <tr>
                   <td>Want to change password?</td>
                   <td>
-                    <Link to="/ForgotPassword">
-                    <a  className="btn btn-secondary">Change Password</a>
+                    <Link to="/forgot-password" className="btn btn-primary">
+                    Change Password
                     </Link>
                   </td>
                 </tr>
                 <tr>
                   <td>Forgot password?</td>
                   <td>
-                    <a href="/forgot-password" className="btn btn-secondary">Reset Password</a>
+                    <Link to="/forgot-password" className="btn btn-primary">Forgot Password</Link>
                   </td>
                 </tr>
               </tbody>

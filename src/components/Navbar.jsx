@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -8,12 +9,27 @@ import "../assets/styles/offcanvas.css"
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
+  let userName;
+  if(user){
+    userName = user.username;
+  }
+
+  const handleAddNewApp = () => {
+    if(user){
+      navigate("/addMedia");
+    }else{
+      navigate("/login");
+    }
+  };
+
   return (
     <nav className="navbar d-none d-md-flex">
       {/* Top row with user profile */}
       <div className="user-profile">
         <img src="user-profile-pic.jpg" alt="User Profile" className="profile-pic" />
-        <p className="user-name">John Doe</p>
+        <p className="user-name">{userName || "User"}</p>
       </div>
 
       {/* Social Apps List */}
@@ -36,9 +52,9 @@ const Navbar = () => {
         </ul>
       </div>
 
-      {/* Add new social app button */}
+      
       <div className="add-new-app">
-        <button className="btn btn-primary" id="addAppBtn">
+        <button className="btn btn-primary" id="addAppBtn" onClick={handleAddNewApp}>
           <i className="bi bi-plus-circle"></i> Add New Social
         </button>
       </div>

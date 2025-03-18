@@ -49,12 +49,14 @@ const Layout = () => {
 
   const location = useLocation();
 
-
+  useEffect(() => {
+    document.title = location.pathname === "/" ? "Home" : location.pathname.replace("/", " ").toUpperCase();
+  }, [location.pathname]);
 
 
 
   // Define different layout paths
-  const miniLayoutPaths = ["/login", "/signup", "/Terms&Service", "/addMedia", "/contactUs", "/ForgotPassword", "/PrivacyPolicy"];
+  const miniLayoutPaths = ["/login", "/signup", "/terms&service", "/addMedia", "/contactUs", "/forgot-password", "/privacy-policy"];
   const fullLayoutPaths = {
     "/userProfile": <UserProfile />,
     "/appDashboard": <AppDashboard />,

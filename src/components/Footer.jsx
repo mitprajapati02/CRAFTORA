@@ -63,7 +63,7 @@ const storedTheme = localStorage.getItem("theme") || "light";
         <div className="col-md-5 div-2">
           <div className="mb-3">
             <h5>Links</h5>
-            <Link to="/userDashboard">Home</Link> | <Link to="/PrivacyPolicy">Privacy Policy</Link> | <Link to="/Terms&Service">Terms of Service</Link> | <Link to="/contactUs">Contact Us</Link>
+            <Link to="/userDashboard">Home</Link> | <Link to="/privacy-policy">Privacy Policy</Link> | <Link to="/terms&service">Terms of Service</Link> | <Link to="/contactUs">Contact Us</Link>
           </div>
           <div>
             <h5>Contact</h5>

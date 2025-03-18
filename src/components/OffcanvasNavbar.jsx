@@ -1,10 +1,26 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "../assets/styles/navbar.css"
 import "../assets/styles/offcanvas.css"
 
 const OffcanvasNavbar = () => {
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  let userName;
+   if(user){
+    userName = user.username;
+  }
+    const navigate = useNavigate();
+  const handleAddNewApp = () => {
+    if(user){
+      navigate("/addMedia");
+    }else{
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="offcanvas offcanvas-start" id="navbarOffcanvas">
       <div className="offcanvas-header">
@@ -15,7 +31,7 @@ const OffcanvasNavbar = () => {
         {/* Top row with user profile */}
         <div className="user-profile">
           <img src="user-profile-pic.jpg" alt="User Profile" className="profile-pic" />
-          <p className="user-name">John Doe</p>
+          <p className="user-name">{userName}</p>
         </div>
 
         {/* Social Apps List */}
@@ -38,7 +54,7 @@ const OffcanvasNavbar = () => {
 
         {/* Add new social app button */}
         <div className="add-new-app">
-          <button className="btn btn-primary" id="addAppBtn">
+          <button className="btn btn-primary" id="addAppBtn" onClick={handleAddNewApp}>
             <i className="bi bi-plus-circle"></i> Add New Social
           </button>
         </div>
