@@ -36,7 +36,7 @@ const SignUp = () => {
       profession.trim() === "" ||
       password.length < 6
     ) {
-      return;
+       return alert("Invalid input! Please check your inputs");
     }
 
     try {
@@ -114,7 +114,7 @@ const SignUp = () => {
           type="password"
           name="password"
           className="form-control"
-          placeholder="Password"
+          placeholder="Password (min. 6 characters)"
           value={formData.password}
           onChange={handleChange}
           style={{backgroundColor: "white"}}

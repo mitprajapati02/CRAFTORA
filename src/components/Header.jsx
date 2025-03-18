@@ -19,6 +19,8 @@ const Header = () => {
     setPageName(path.split("/").pop());
   }, [location]);
 
+  const user = localStorage.getItem("user");
+
   return (
     <header className="header">
       <div className="header-left d-flex align-items-center">
@@ -48,9 +50,15 @@ const Header = () => {
           className={`bi ${darkMode ? "bi-moon-fill" : "bi-brightness-high"} icon-hover theme-toggle`}
           onClick={toggleTheme}
         ></i>
-        <Link to="/addMedia" className="text-decoration-none">
-          <i className="bi bi-plus icon-hover " style={{color: "#7f91f2"}}></i>
-        </Link>
+        {user ? (
+          <Link to="/addMedia" className="text-decoration-none">
+            <i className="bi bi-plus icon-hover " style={{color: "#7f91f2"}}></i>
+          </Link>
+        ) : (
+          <Link to="/login" className="text-decoration-none">
+            <i className="bi bi-plus icon-hover " style={{color: "#7f91f2"}}></i>
+          </Link>
+        )}
         <i
           className="bi bi-layout-sidebar-inset-reverse icon-hover d-md-none"
           data-bs-toggle="offcanvas"

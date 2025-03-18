@@ -59,7 +59,9 @@ const socialMediaData = [
   },
 ];
 
+
 const UserDashboard = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <div className="main-container hide-scrollbar main-content">
       {socialMediaData.map((data, index) => (
@@ -90,7 +92,9 @@ const UserDashboard = () => {
       
       <div className="add-card">
         <center>
-         <Link to="/addMedia" className="text-decoration-none "> <i className="bi bi-plus"></i></Link>
+          {user ? (<Link to="/addMedia" className="text-decoration-none "> <i className="bi bi-plus"></i></Link>):(
+            <Link to="/login" className="text-decoration-none "> <i className="bi bi-plus"></i></Link>
+          )}
         </center>
       </div>
       
