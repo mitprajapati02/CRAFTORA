@@ -6,8 +6,9 @@ import "../assets/styles/login.css"
 
 import Logo from "../assets/images/LOGO_header.png"
 
+import axios from "axios";
+
 const LoginPage = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
 
   const navigation = useNavigate();
   useEffect(() => {
@@ -16,24 +17,28 @@ const LoginPage = () => {
     if (backdrop) backdrop.remove();
   }, []);
 
-
+  const [formData, setFormData] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const { email, password } = JSON.parse(localStorage.getItem("user"));
 
-    if(email === formData.email && password === formData.password){
-      navigation('/userDashboard');
-    }else{
-      alert("Invalid email or password");
+    try {
+      const response = await axios.post("http://localhost:5001/api/auth/login", formData);
+
+      // ✅ Save user details in localStorage
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      alert("Login successful!");
+      // ✅ Redirect to dashboard
+      navigation("/userDashboard");
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed, check your credentials.");
     }
-
   };
 
   return (

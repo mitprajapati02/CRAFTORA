@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../assets/styles/signUp.css"
 import Logo from "../assets/images/LOGO_header.png"
 
+import axios from "axios";
+
 const SignUp = () => {
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -18,10 +22,10 @@ const SignUp = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const {username, mobile, email, profession, password } = formData;
+    const { username, mobile, email, profession, password } = formData;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const mobileRegex = /^[0-9]{10}$/;
 
@@ -32,18 +36,22 @@ const SignUp = () => {
       profession.trim() === "" ||
       password.length < 6
     ) {
-      alert("Please fill out all fields correctly.");
       return;
     }
 
-    localStorage.setItem("user", JSON.stringify({
-      username: formData.username,
-      email: formData.email,
-      password: formData.password,
-    }));
+    try {
+      await axios.post("http://localhost:5001/api/auth/signup", formData);
 
-    alert("Signup successful!");
+      // ✅ Save username & email to localStorage
+      localStorage.setItem("user", JSON.stringify({ username, email }));
+      navigate("/userDashboard");
+      
+    } catch (err) {
+      console.error("Signup failed", err);
+    }
   };
+
+
 
   return (
     <main className="main-content d-flex justify-content-center align-items-center vh-100">
@@ -73,7 +81,6 @@ const SignUp = () => {
           onChange={handleChange}
           style={{backgroundColor: "white"}}
           required
-          pattern="[0-9]{10}"
           title="Please enter a valid 10-digit mobile number"
         />
       </div>
@@ -87,7 +94,6 @@ const SignUp = () => {
           onChange={handleChange}
           style={{backgroundColor: "white"}}
           required
-          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
           title="Please enter a valid email address"
         />
       </div>
