@@ -9,8 +9,10 @@ import Logo from "../assets/images/LOGO_header.png"
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
 
-  const email = "mit@7702"
-  const password = "7702"
+  const navigation = useNavigate();
+
+  // const email = "mit@7702"
+  // const password = "7702"
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,13 +21,9 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Login Submitted:", formData);
-    // Add authentication logic here
-    if(email !== formData.email || password !== formData.password){
-      alert("Invalid Credentials")
-      return
-    }
-    const navigate = useNavigate();
-    navigate(`/userDashboard`);
+    navigation('/userDashboard');
+    localStorage.setItem("authToken", "user_authenticated");
+
   };
 
   return (
