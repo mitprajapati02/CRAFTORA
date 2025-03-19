@@ -52,7 +52,7 @@ const SignUp = () => {
     try {
       await axios.post("http://localhost:5001/api/auth/signup", dataWithToken);
 
-      // ✅ Save username & email to localStorage
+
       localStorage.setItem("user", JSON.stringify({ username, email, token }));
       navigate("/userDashboard");
 

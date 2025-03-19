@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 
 import "../assets/styles/login.css"
-
 import Logo from "../assets/images/LOGO_header.png"
 
-import axios from "axios";
+
 
 const generateToken = () => {
   return Math.random().toString(36).substr(2, 10); // Random 10-character alphanumeric token
@@ -30,21 +29,13 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-
-
     const token = generateToken();
-
     const dataWithToken = { ...formData, token };
 
     try {
       const response = await axios.post("http://localhost:5001/api/auth/login", dataWithToken);
-
-      // ✅ Save user details in localStorage
       localStorage.setItem("user", JSON.stringify(response.data.user));
-
       alert("Login successful!");
-      // ✅ Redirect to dashboard
       navigation("/userDashboard");
     } catch (err) {
       alert(err.response?.data?.message || "Login failed, check your credentials.");

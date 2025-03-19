@@ -16,9 +16,9 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
-
 app.use('/api/user', userRoutes);
 
+// eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     connectDB();

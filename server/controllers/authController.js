@@ -1,12 +1,12 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 
-// 📌 User Signup Controller
+
 const signupUser = async (req, res) => {
   const { username, mobile, email, profession, password, token } = req.body;
 
   try {
-    // Check if email already
+
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: "Email already exists" });
 
@@ -44,17 +44,17 @@ const loginUser = async (req, res) => {
   }
 
   try {
-    // ✅ Check if user exists
+
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "User not found" });
 
-    // ✅ Verify password
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
       return res.status(400).json({ message: "Invalid credentials" });
     user.$set({ token });
     await user.save();
-    // ✅ Send user details (excluding password)
+
     res.json({
       message: "Login successful",
       user: { username: user.username, email: user.email, token: user.token },
