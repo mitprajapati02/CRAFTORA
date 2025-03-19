@@ -1,5 +1,6 @@
 const User = require("../models/User");
 
+
 const getUserProfile = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
@@ -14,6 +15,7 @@ const getUserProfile = async (req, res) => {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
+
 
 const updateUserProfile = async (req, res) => {
   try {
