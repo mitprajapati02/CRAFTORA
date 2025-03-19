@@ -1,6 +1,8 @@
 import React from "react";
 
+
 import "../assets/styles/AddMedia.css"
+
 
 const ContactUs = () => {
   return (
@@ -12,7 +14,7 @@ const ContactUs = () => {
 
       <div className="row justify-content-center">
         <div className="col-md-6">
-          {/* Email Card */}
+
           <div className="card mb-4">
             <div className="card-body">
               <h5 className="card-title">Email</h5>
@@ -22,7 +24,6 @@ const ContactUs = () => {
             </div>
           </div>
 
-          {/* Phone Card */}
           <div className="card mb-4">
             <div className="card-body">
               <h5 className="card-title">Phone</h5>
@@ -30,7 +31,6 @@ const ContactUs = () => {
             </div>
           </div>
 
-          {/* Address Card */}
           <div className="card">
             <div className="card-body">
               <h5 className="card-title">Address</h5>

@@ -21,29 +21,30 @@ const AddMedia = () => {
     tag3: "",
   });
 
-  // Handle form input change
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  // Handle form submission
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitted Data:", formData);
   };
+
 
   return (
     <main className="main-content hide-scrollbar">
       <div>
         <h2 className="text-center">Add App Details</h2>
         <form style={{ marginTop: "50px" }} onSubmit={handleSubmit}>
-          {/* App Name */}
+
           <div className="mb-3">
             <label htmlFor="appName" className="form-label">
               App Name
             </label>
             <select id="appName" className="form-select" required onChange={handleChange}>
-              <option value=""  disabled>
+              <option value="" disabled>
                 Select App Name
               </option>
               <option value="Facebook">Facebook</option>
@@ -52,13 +53,13 @@ const AddMedia = () => {
             </select>
           </div>
 
-          {/* App Image */}
+
           <div className="mb-3">
             <label htmlFor="appImage" className="form-label">
               App Image
             </label>
             <select id="appImage" className="form-select" onChange={handleChange}>
-              <option value=""  disabled>
+              <option value="" disabled>
                 Select App Image
               </option>
               <option value="image1.png">image1.png</option>
@@ -67,7 +68,7 @@ const AddMedia = () => {
             </select>
           </div>
 
-          {/* In-App Username */}
+
           <div className="mb-3">
             <label htmlFor="inAppUsername" className="form-label">
               In-App Username
@@ -75,7 +76,7 @@ const AddMedia = () => {
             <input type="text" className="form-control" id="inAppUsername" placeholder="Enter in-app username" onChange={handleChange} />
           </div>
 
-          {/* In-App Profile */}
+
           <div className="mb-3">
             <label htmlFor="inAppProfile" className="form-label">
               In-App Profile Image
@@ -83,7 +84,7 @@ const AddMedia = () => {
             <input type="text" className="form-control" id="inAppProfile" placeholder="Enter profile image URL" onChange={handleChange} />
           </div>
 
-          {/* Stats and Values */}
+
           {[1, 2, 3].map((num) => (
             <div className="row" key={num}>
               <div className="col-md-6 mb-3">
@@ -101,7 +102,7 @@ const AddMedia = () => {
             </div>
           ))}
 
-          {/* App URL */}
+
           <div className="mb-3">
             <label htmlFor="url" className="form-label">
               App URL
@@ -109,7 +110,7 @@ const AddMedia = () => {
             <input type="url" className="form-control" id="url" placeholder="Enter app URL" onChange={handleChange} />
           </div>
 
-          {/* Bio */}
+
           <div className="mb-3">
             <label htmlFor="bio" className="form-label">
               Bio
@@ -117,7 +118,7 @@ const AddMedia = () => {
             <textarea id="bio" className="form-control" rows="3" placeholder="Enter bio or description" onChange={handleChange}></textarea>
           </div>
 
-          {/* Tags */}
+
           <div className="row">
             {[1, 2, 3].map((num) => (
               <div className="col-md-4 mb-3" key={num}>
@@ -129,7 +130,7 @@ const AddMedia = () => {
             ))}
           </div>
 
-          {/* Submit Button */}
+
           <div className="text-center">
             <button type="submit" className="btn btn-primary">
               Submit

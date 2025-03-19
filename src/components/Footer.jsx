@@ -1,25 +1,25 @@
 import React from "react";
-import logo from "../assets/images/LOGO.png"
-
 import { createContext, useContext, useState, useEffect } from "react";
-
 import { Link } from "react-router-dom";
 
 
+import logo from "../assets/images/LOGO.png"
 import "../assets/styles/Footer.css"
 
+
 const Footer = () => {
-const storedTheme = localStorage.getItem("theme") || "light";
+
+
+  const storedTheme = localStorage.getItem("theme") || "light";
+
   const [darkMode, setDarkMode] = useState(storedTheme === "dark");
 
-  // Function to toggle theme
   const toggleTheme = () => {
     const newTheme = !darkMode;
     setDarkMode(newTheme);
     localStorage.setItem("theme", newTheme ? "dark" : "light");
   };
 
-  // Apply theme styles when darkMode changes
   useEffect(() => {
     document.body.style.backgroundColor = darkMode ? "#0f0f0f" : "#d5ebe1";
     document.body.style.color = darkMode ? "#d5ebe1" : "#272828";
@@ -28,7 +28,7 @@ const storedTheme = localStorage.getItem("theme") || "light";
     document.querySelector(".main-container").style.backgroundColor = darkMode ? "#0f0f0f" : "#d5ebe1";
     document.querySelector(".main-content").style.backgroundColor = darkMode ? "#0f0f0f" : "#d5ebe1";
     document.querySelector(".all-container").style.backgroundColor = darkMode ? "#0f0f0f" : "#d5ebe1";
-    
+
 
     document.querySelectorAll(".card-front").forEach((card) => {
       card.style.backgroundColor = darkMode ? "#d7ede3" : "#0f0f0f";
@@ -45,12 +45,12 @@ const storedTheme = localStorage.getItem("theme") || "light";
   return (
     <footer className="footer-container container-xxl py-4">
       <div className="row justify-content-center">
-        {/* Div-1 */}
+
         <div className="col-md-5 div-1 me-md-3 text-center">
-        <Link to="/userDashboard">
-          <img src={logo} alt="Craftora Logo" className="footer-logo mb-2" />
-        </Link>
-          
+          <Link to="/userDashboard">
+            <img src={logo} alt="Craftora Logo" className="footer-logo mb-2" />
+          </Link>
+
           <p className="mb-2 text-success">Your Sanctuary for Organized Creativity.</p>
           <p className="text-light">
             Crafted with passion by <strong>Mit Prajapati</strong>, a dedicated student of Integrated Master of Science
@@ -59,7 +59,6 @@ const storedTheme = localStorage.getItem("theme") || "light";
           </p>
         </div>
 
-        {/* Div-2 */}
         <div className="col-md-5 div-2">
           <div className="mb-3">
             <h5>Links</h5>
@@ -91,7 +90,6 @@ const storedTheme = localStorage.getItem("theme") || "light";
         </div>
       </div>
 
-      {/* Div-3 */}
       <div className="div-3 mt-3 col-md-10 mx-auto text-center">
         <p>© 2024 Craftora. All rights reserved. Built with creativity and purpose.</p>
       </div>

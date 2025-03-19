@@ -1,12 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const todoListSchema = new mongoose.Schema({
-    app: { type: mongoose.Schema.Types.ObjectId, ref: 'SocialMediaApp' },
-    title: String,
-    tasks: [{
-        task: String,
-        completed: { type: Boolean, default: false }
-    }]
+  app: { type: mongoose.Schema.Types.ObjectId, ref: "SocialMediaApp" },
+  tasks: [
+    {
+      task: String,
+      completed: { type: Boolean, default: false },
+    },
+  ],
 });
 
-module.exports = mongoose.model('TodoList', todoListSchema);
+module.exports = mongoose.model("TodoList", todoListSchema);
