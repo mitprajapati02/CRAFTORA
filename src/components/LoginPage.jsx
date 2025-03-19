@@ -8,6 +8,10 @@ import Logo from "../assets/images/LOGO_header.png"
 
 import axios from "axios";
 
+const generateToken = () => {
+  return Math.random().toString(36).substr(2, 10); // Random 10-character alphanumeric token
+};
+
 const LoginPage = () => {
 
   const navigation = useNavigate();
@@ -17,7 +21,7 @@ const LoginPage = () => {
     if (backdrop) backdrop.remove();
   }, []);
 
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ email: "", password: "", token: "" });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,8 +31,14 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
+
+    const token = generateToken();
+
+    const dataWithToken = { ...formData, token };
+
     try {
-      const response = await axios.post("http://localhost:5001/api/auth/login", formData);
+      const response = await axios.post("http://localhost:5001/api/auth/login", dataWithToken);
 
       // ✅ Save user details in localStorage
       localStorage.setItem("user", JSON.stringify(response.data.user));
