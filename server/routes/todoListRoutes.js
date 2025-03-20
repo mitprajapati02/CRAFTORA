@@ -1,15 +1,19 @@
-const express = require('express');
-const { createTodoList, markTaskCompleted, deleteTask, getTodoListsByApp } = require('../controllers/todoListController');
-
+const express = require("express");
+const {
+  createTodoList,
+  markTaskCompleted,
+  deleteTask,
+  getTodoListsByApp,
+} = require("../controllers/todoListController");
 
 const router = express.Router();
 
-router.get('/todoList/:appId', getTodoListsByApp);
+router.get("/todoList/:appId", getTodoListsByApp);
 
-router.post('/todoList', createTodoList);
+router.put("/todoList", createTodoList);
 
-router.put('/todoList/task/complete', markTaskCompleted);
+router.put("/todoList/task/complete", markTaskCompleted);
 
-router.delete('/todoList/task', deleteTask);
+router.delete("/todoList/task", deleteTask);
 
 module.exports = router;

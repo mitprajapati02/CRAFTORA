@@ -3,29 +3,26 @@ const SocialMediaApp = require("../models/SocialMediaApp");
 const User = require("../models/User");
 
 // Utility function to decode token and get userId
-const getUserIdFromToken =  async (token) => {
+const getUserIdFromToken = async (token) => {
   try {
     const user = await User.findOne({ token })
-          .select("-password -token")
-          .exec();
-        if (user) {
-          return user._id;
-        }
+      .select("-password -token")
+      .exec();
+    if (user) {
+      return user._id;
+    }
   } catch (err) {
     throw new Error("Invalid or expired token");
   }
 };
 
-
 async function createSocialMediaApp(req, res) {
   try {
-    // Step 1: Get token from the Authorization header
+
     const token = req.headers.authorization.split(" ")[1];
 
-    // Step 2: Extract userId from the token
     const userId = await getUserIdFromToken(token);
 
-    // Step 3: Extract details from the request body
     const {
       mediaName,
       inMediaUsername,
@@ -35,17 +32,16 @@ async function createSocialMediaApp(req, res) {
       values = {},
       tags = [],
       url = "",
-      
     } = req.body;
-    
-    // Check required fields
+
+
     if (!mediaName || !inMediaUsername) {
-      return res.status(400).json({ error: "mediaName and inMediaUsername are required." });
+      return res
+        .status(400)
+        .json({ error: "mediaName and inMediaUsername are required." });
     }
-    
 
 
-    // Step 4: Create a new SocialMediaApp document
     const socialApp = new SocialMediaApp({
       user: userId,
       mediaName,
@@ -58,10 +54,10 @@ async function createSocialMediaApp(req, res) {
       url,
     });
 
-    // Step 5: Save the SocialMediaApp to the database
+
     await socialApp.save();
 
-    // Step 6: Add the new social app's ID to the user's socialMediaApps array
+
     await User.findByIdAndUpdate(userId, {
       $push: { socialMediaApps: socialApp._id },
     });
@@ -73,8 +69,6 @@ async function createSocialMediaApp(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
-
-
 
 async function getAppsByUser(req, res) {
   try {
@@ -94,7 +88,7 @@ async function getAppsByUser(req, res) {
       id: app._id, // Unique ID
       platform: app.mediaName, // Social media platform name
       icon: getPlatformIcon(app.mediaName), // Get icon based on platform name
-      tasks: app.todoLists.map(todo => todo.taskName), // Extract task names
+      tasks: app.todoLists.map((todo) => todo.taskName), // Extract task names
     }));
 
     // Step 5: Send formatted response
@@ -116,7 +110,6 @@ function getPlatformIcon(platform) {
   };
   return icons[platform] || "bi bi-globe"; // Default icon if not found
 }
-
 
 async function getAppById(req, res) {
   try {
@@ -158,7 +151,6 @@ async function getAppById(req, res) {
   }
 }
 
-
 async function removeApp(req, res) {
   try {
     // Step 1: Find and delete the SocialMediaApp
@@ -188,4 +180,33 @@ async function removeApp(req, res) {
   }
 }
 
-module.exports = { createSocialMediaApp, getAppsByUser, removeApp, getAppById };
+async function updateBio(req, res) {
+  try {
+    const appId = req.headers.authorization.split(" ")[1];
+
+    const { bio } = req.body;
+
+    if (!bio) {
+      return res.status(400).json({ error: "bio is required." });
+    }
+
+    const updatedAppBio = await SocialMediaApp.findByIdAndUpdate(
+      appId,
+      { bio },
+      { new: true }
+    );
+
+    res.status(200).json(updatedAppBio);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+module.exports = {
+  createSocialMediaApp,
+  getAppsByUser,
+  removeApp,
+  getAppById,
+  updateBio,
+};
