@@ -45,7 +45,7 @@ function App() {
 
           {/* Full Layout Pages (Added missing routes) */}
           <Route path="/userProfile" element={<UserProfile />} />
-          <Route path="/appDashboard" element={<AppDashboard />} />
+          <Route path="/appDashboard/:appId" element={<AppDashboard />} />
           <Route path="/userDashboard" element={<UserDashboard />} />
         </Route>
       </Routes>

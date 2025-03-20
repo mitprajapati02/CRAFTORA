@@ -60,7 +60,7 @@ const Layout = () => {
   const fullLayoutPaths = {
     "/userProfile": <UserProfile />,
     "/appDashboard": <AppDashboard />,
-    "/userDashboard": <UserDashboard />
+    "/": <UserDashboard />
   };
 
   const isMiniLayout = miniLayoutPaths.includes(location.pathname);
