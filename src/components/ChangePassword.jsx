@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 
-import "../assets/styles/ForgotPass.css"
+import '../assets/styles/ForgotPass.css'
 
 
 const ChangePassword = () => {

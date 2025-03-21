@@ -1,5 +1,5 @@
-const bcrypt = require("bcryptjs");
-const User = require("../models/User");
+const bcrypt = require('bcryptjs');
+const User = require('../models/User');
 
 
 const signupUser = async (req, res) => {
@@ -8,12 +8,12 @@ const signupUser = async (req, res) => {
   try {
 
     let user = await User.findOne({ email });
-    if (user) return res.status(400).json({ message: "Email already exists" });
+    if (user) return res.status(400).json({ message: 'Email already exists' });
 
     // Check if mobile already exists
     user = await User.findOne({ mobile });
     if (user)
-      return res.status(400).json({ message: "Mobile number already exists" });
+      return res.status(400).json({ message: 'Mobile number already exists' });
 
     // Hash Password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -29,9 +29,9 @@ const signupUser = async (req, res) => {
     });
     await user.save();
 
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
+    res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
 
@@ -40,27 +40,28 @@ const loginUser = async (req, res) => {
   if (!email || !password) {
     return res
       .status(400)
-      .json({ message: "Please provide email and password" });
+      .json({ message: 'Please provide email and password' });
   }
 
   try {
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "User not found" });
+    if (!user) return res.status(400).json({ message: 'User not found' });
 
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: 'Invalid credentials' });
+
     user.$set({ token });
     await user.save();
 
     res.json({
-      message: "Login successful",
+      message: 'Login successful',
       user: { username: user.username, email: user.email, token: user.token },
     });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 

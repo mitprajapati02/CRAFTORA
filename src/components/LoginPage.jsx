@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 
-import "../assets/styles/login.css"
-import Logo from "../assets/images/LOGO_header.png"
+import '../assets/styles/login.css'
+import Logo from '../assets/images/LOGO_header.png'
 
 
 
@@ -16,11 +16,11 @@ const LoginPage = () => {
   const navigation = useNavigate();
   useEffect(() => {
     // Remove any leftover Bootstrap backdrop
-    const backdrop = document.querySelector(".offcanvas-backdrop");
+    const backdrop = document.querySelector('.offcanvas-backdrop');
     if (backdrop) backdrop.remove();
   }, []);
 
-  const [formData, setFormData] = useState({ email: "", password: "", token: "" });
+  const [formData, setFormData] = useState({ email: '', password: '', token: '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,12 +33,12 @@ const LoginPage = () => {
     const dataWithToken = { ...formData, token };
 
     try {
-      const response = await axios.post("http://localhost:5001/api/auth/login", dataWithToken);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      alert("Login successful!");
-      navigation("/userDashboard");
+      const response = await axios.post('http://localhost:5001/api/auth/login', dataWithToken);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      alert('Login successful!');
+      navigation('/userDashboard');
     } catch (err) {
-      alert(err.response?.data?.message || "Login failed, check your credentials.");
+      alert(err.response?.data?.message || 'Login failed, check your credentials.');
     }
   };
 

@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 
-import "../assets/styles/AddMedia.css"
+import '../assets/styles/AddMedia.css'
 
 
 const ContactUs = () => {

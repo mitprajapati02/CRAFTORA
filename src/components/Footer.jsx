@@ -1,43 +1,43 @@
-import React from "react";
-import { createContext, useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 
-import logo from "../assets/images/LOGO.png"
-import "../assets/styles/Footer.css"
+import logo from '../assets/images/LOGO.png'
+import '../assets/styles/Footer.css'
 
 
 const Footer = () => {
 
 
-  const storedTheme = localStorage.getItem("theme") || "light";
+  const storedTheme = localStorage.getItem('theme') || 'light';
 
-  const [darkMode, setDarkMode] = useState(storedTheme === "dark");
+  const [darkMode, setDarkMode] = useState(storedTheme === 'dark');
 
   const toggleTheme = () => {
     const newTheme = !darkMode;
     setDarkMode(newTheme);
-    localStorage.setItem("theme", newTheme ? "dark" : "light");
+    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
   };
 
   useEffect(() => {
-    document.body.style.backgroundColor = darkMode ? "#0f0f0f" : "#d5ebe1";
-    document.body.style.color = darkMode ? "#d5ebe1" : "#272828";
+    document.body.style.backgroundColor = darkMode ? '#0f0f0f' : '#d5ebe1';
+    document.body.style.color = darkMode ? '#d5ebe1' : '#272828';
 
-    document.querySelector(".footer-container").style.backgroundColor = darkMode ? "#0f0f0f" : "#d5ebe1";
-    document.querySelector(".main-container").style.backgroundColor = darkMode ? "#0f0f0f" : "#d5ebe1";
-    document.querySelector(".main-content").style.backgroundColor = darkMode ? "#0f0f0f" : "#d5ebe1";
-    document.querySelector(".all-container").style.backgroundColor = darkMode ? "#0f0f0f" : "#d5ebe1";
+    document.querySelector('.footer-container').style.backgroundColor = darkMode ? '#0f0f0f' : '#d5ebe1';
+    document.querySelector('.main-container').style.backgroundColor = darkMode ? '#0f0f0f' : '#d5ebe1';
+    document.querySelector('.main-content').style.backgroundColor = darkMode ? '#0f0f0f' : '#d5ebe1';
+    document.querySelector('.all-container').style.backgroundColor = darkMode ? '#0f0f0f' : '#d5ebe1';
 
 
-    document.querySelectorAll(".card-front").forEach((card) => {
-      card.style.backgroundColor = darkMode ? "#d7ede3" : "#0f0f0f";
-      card.style.color = darkMode ? "#0f0f0f" : "#d7ede3";
+    document.querySelectorAll('.card-front').forEach((card) => {
+      card.style.backgroundColor = darkMode ? '#d7ede3' : '#0f0f0f';
+      card.style.color = darkMode ? '#0f0f0f' : '#d7ede3';
     });
 
-    document.querySelectorAll(".main-container > div").forEach((div) => {
-      div.style.backgroundColor = darkMode ? "#0f0f0f" : "#d7ede3";
-      div.style.color = darkMode ? "#d7ede3" : "#0f0f0f";
+    document.querySelectorAll('.main-container > div').forEach((div) => {
+      div.style.backgroundColor = darkMode ? '#0f0f0f' : '#d7ede3';
+      div.style.color = darkMode ? '#d7ede3' : '#0f0f0f';
     });
   }, [darkMode]);
 

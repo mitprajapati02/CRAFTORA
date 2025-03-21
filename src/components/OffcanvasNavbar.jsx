@@ -1,23 +1,24 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import "../assets/styles/navbar.css"
-import "../assets/styles/offcanvas.css"
+import '../assets/styles/navbar.css'
+import '../assets/styles/offcanvas.css'
 
 const OffcanvasNavbar = () => {
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem('user'));
   let userName;
    if(user){
     userName = user.username;
   }
+
     const navigate = useNavigate();
   const handleAddNewApp = () => {
     if(user){
-      navigate("/addMedia");
+      navigate('/addMedia');
     }else{
-      navigate("/login");
+      navigate('/login');
     }
   };
 

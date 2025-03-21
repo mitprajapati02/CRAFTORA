@@ -1,7 +1,7 @@
-import React from "react";
-import "../assets/styles/ForgotPass.css"
+import React from 'react';
+import '../assets/styles/ForgotPass.css'
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const ForgotPass = () => {
   return (

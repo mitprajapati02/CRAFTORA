@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema(
   {
@@ -11,10 +11,10 @@ const UserSchema = new mongoose.Schema(
     password: { type: String, required: true },
     token: { type: String, unique: true },
     socialMediaApps: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "SocialMediaApp" },
+      { type: mongoose.Schema.Types.ObjectId, ref: 'SocialMediaApp' },
     ],
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', UserSchema);

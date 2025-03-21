@@ -1,16 +1,16 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
-import "../assets/styles/navbar.css"
-import "../assets/styles/offcanvas.css"
+import '../assets/styles/navbar.css'
+import '../assets/styles/offcanvas.css'
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem('user'));
   let userName;
   if(user){
     userName = user.username;
@@ -18,9 +18,9 @@ const Navbar = () => {
 
   const handleAddNewApp = () => {
     if(user){
-      navigate("/addMedia");
+      navigate('/addMedia');
     }else{
-      navigate("/login");
+      navigate('/login');
     }
   };
 
@@ -29,7 +29,7 @@ const Navbar = () => {
       {/* Top row with user profile */}
       <div className="user-profile">
         <img src="user-profile-pic.jpg" alt="User Profile" className="profile-pic" />
-        <p className="user-name">{userName || "User"}</p>
+        <p className="user-name">{userName || 'User'}</p>
       </div>
 
       {/* Social Apps List */}

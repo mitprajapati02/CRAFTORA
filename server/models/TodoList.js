@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const todoListSchema = new mongoose.Schema({
-  app: { type: mongoose.Schema.Types.ObjectId, ref: "SocialMediaApp" },
+  app: { type: mongoose.Schema.Types.ObjectId, ref: 'SocialMediaApp' },
   tasks: [
     {
       task: String,
@@ -10,4 +10,4 @@ const todoListSchema = new mongoose.Schema({
   ],
 });
 
-module.exports = mongoose.model("TodoList", todoListSchema);
+module.exports = mongoose.model('TodoList', todoListSchema);

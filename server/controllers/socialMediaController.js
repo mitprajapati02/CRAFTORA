@@ -1,44 +1,44 @@
-const { default: mongoose } = require("mongoose");
-const SocialMediaApp = require("../models/SocialMediaApp");
-const User = require("../models/User");
+const { default: mongoose } = require('mongoose');
+const SocialMediaApp = require('../models/SocialMediaApp');
+const User = require('../models/User');
 
 // Utility function to decode token and get userId
 const getUserIdFromToken = async (token) => {
   try {
     const user = await User.findOne({ token })
-      .select("-password -token")
+      .select('-password -token')
       .exec();
     if (user) {
       return user._id;
     }
   } catch (err) {
-    throw new Error("Invalid or expired token");
+    throw new Error('Invalid or expired token');
   }
 };
 
 async function createSocialMediaApp(req, res) {
   try {
 
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization.split(' ')[1];
 
     const userId = await getUserIdFromToken(token);
 
     const {
       mediaName,
       inMediaUsername,
-      inMediaProfileImg = "",
-      bio = "",
+      inMediaProfileImg = '',
+      bio = '',
       states = {},
       values = {},
       tags = [],
-      url = "",
+      url = '',
     } = req.body;
 
 
     if (!mediaName || !inMediaUsername) {
       return res
         .status(400)
-        .json({ error: "mediaName and inMediaUsername are required." });
+        .json({ error: 'mediaName and inMediaUsername are required.' });
     }
 
 
@@ -73,15 +73,15 @@ async function createSocialMediaApp(req, res) {
 async function getAppsByUser(req, res) {
   try {
     // Step 1: Get token from the Authorization header
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization.split(' ')[1];
 
     // Step 2: Extract userId from the token
     const userId = await getUserIdFromToken(token);
 
     // Step 3: Fetch SocialMediaApp documents for the user
     const apps = await SocialMediaApp.find({ user: userId })
-      .populate("reminders") // Populate reminders
-      .populate("todoLists"); // Populate todoLists
+      .populate('reminders') // Populate reminders
+      .populate('todoLists'); // Populate todoLists
 
     // Step 4: Format the response
     const formattedResponse = apps.map((app) => ({
@@ -102,13 +102,13 @@ async function getAppsByUser(req, res) {
 // Utility function to get icons based on platform name
 function getPlatformIcon(platform) {
   const icons = {
-    Facebook: "bi bi-facebook",
-    Instagram: "bi bi-instagram",
-    Twitter: "bi bi-twitter",
-    LinkedIn: "bi bi-linkedin",
-    YouTube: "bi bi-youtube",
+    Facebook: 'bi bi-facebook',
+    Instagram: 'bi bi-instagram',
+    Twitter: 'bi bi-twitter',
+    LinkedIn: 'bi bi-linkedin',
+    YouTube: 'bi bi-youtube',
   };
-  return icons[platform] || "bi bi-globe"; // Default icon if not found
+  return icons[platform] || 'bi bi-globe'; // Default icon if not found
 }
 
 async function getAppById(req, res) {
@@ -117,17 +117,17 @@ async function getAppById(req, res) {
 
     // Step 1: Validate ObjectId
     if (!mongoose.Types.ObjectId.isValid(appId)) {
-      return res.status(400).json({ error: "Invalid app ID format" });
+      return res.status(400).json({ error: 'Invalid app ID format' });
     }
 
     // Step 2: Find the SocialMediaApp by ID
     const app = await SocialMediaApp.findById(appId)
-      .populate("reminders") // Populate reminders
-      .populate("todoLists"); // Populate todoLists
+      .populate('reminders') // Populate reminders
+      .populate('todoLists'); // Populate todoLists
 
     // Step 3: Check if the app exists
     if (!app) {
-      return res.status(404).json({ error: "SocialMediaApp not found" });
+      return res.status(404).json({ error: 'SocialMediaApp not found' });
     }
 
     // Step 4: Send the formatted response
@@ -135,19 +135,19 @@ async function getAppById(req, res) {
       id: app._id,
       mediaName: app.mediaName,
       inMediaUsername: app.inMediaUsername,
-      inMediaProfileImg: app.inMediaProfileImg || "",
-      bio: app.bio || "",
+      inMediaProfileImg: app.inMediaProfileImg || '',
+      bio: app.bio || '',
       states: app.states || {},
       values: app.values || {},
       tags: app.tags || [],
       reminders: app.reminders || [],
       todoLists: app.todoLists || [],
-      url: app.url || "",
+      url: app.url || '',
       createdAt: app.createdAt,
     });
   } catch (error) {
-    console.error("Error in getAppById:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error('Error in getAppById:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 }
 
@@ -157,7 +157,7 @@ async function removeApp(req, res) {
     const app = await SocialMediaApp.findById(req.params.appId);
 
     if (!app) {
-      return res.status(404).json({ error: "SocialMediaApp not found" });
+      return res.status(404).json({ error: 'SocialMediaApp not found' });
     }
 
     // Step 2: Remove the app from the user's socialMediaApps array and delete the app
@@ -173,7 +173,7 @@ async function removeApp(req, res) {
     await Promise.all([userUpdate, appDelete]);
 
     // Step 4: Respond with a success message
-    res.json({ message: "App deleted successfully" });
+    res.json({ message: 'App deleted successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
@@ -182,12 +182,12 @@ async function removeApp(req, res) {
 
 async function updateBio(req, res) {
   try {
-    const appId = req.headers.authorization.split(" ")[1];
+    const appId = req.headers.authorization.split(' ')[1];
 
     const { bio } = req.body;
 
     if (!bio) {
-      return res.status(400).json({ error: "bio is required." });
+      return res.status(400).json({ error: 'bio is required.' });
     }
 
     const updatedAppBio = await SocialMediaApp.findByIdAndUpdate(

@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "../assets/styles/signUp.css"
-import Logo from "../assets/images/LOGO_header.png"
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import '../assets/styles/signUp.css'
+import Logo from '../assets/images/LOGO_header.png'
 
-import axios from "axios";
+import axios from 'axios';
 
 const generateToken = () => {
   return Math.random().toString(36).substr(2, 10); // Random 10-character alphanumeric token
@@ -15,12 +15,12 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    username: "",
-    mobile: "",
-    email: "",
-    profession: "",
-    password: "",
-    token: "",
+    username: '',
+    mobile: '',
+    email: '',
+    profession: '',
+    password: '',
+    token: '',
   });
 
   const handleChange = (e) => {
@@ -36,13 +36,13 @@ const SignUp = () => {
     const mobileRegex = /^[0-9]{10}$/;
 
     if (
-      username.trim() === "" ||
+      username.trim() === '' ||
       !mobileRegex.test(mobile) ||
       !emailRegex.test(email) ||
-      profession.trim() === "" ||
+      profession.trim() === '' ||
       password.length < 6
     ) {
-      return alert("Invalid input! Please check your inputs");
+      return alert('Invalid input! Please check your inputs');
     }
 
     const token = generateToken();
@@ -50,14 +50,14 @@ const SignUp = () => {
     const dataWithToken = { ...formData, token };
 
     try {
-      await axios.post("http://localhost:5001/api/auth/signup", dataWithToken);
+      await axios.post('http://localhost:5001/api/auth/signup', dataWithToken);
 
 
-      localStorage.setItem("user", JSON.stringify({ username, email, token }));
-      navigate("/userDashboard");
+      localStorage.setItem('user', JSON.stringify({ username, email, token }));
+      navigate('/userDashboard');
 
     } catch (err) {
-      console.error("Signup failed", err);
+      console.error('Signup failed', err);
     }
   };
 
@@ -77,7 +77,7 @@ const SignUp = () => {
               placeholder="Username"
               value={formData.username}
               onChange={handleChange}
-              style={{ backgroundColor: "white" }}
+              style={{ backgroundColor: 'white' }}
               required
             />
           </div>
@@ -89,7 +89,7 @@ const SignUp = () => {
               placeholder="Mobile Number"
               value={formData.mobile}
               onChange={handleChange}
-              style={{ backgroundColor: "white" }}
+              style={{ backgroundColor: 'white' }}
               required
               title="Please enter a valid 10-digit mobile number"
             />
@@ -102,7 +102,7 @@ const SignUp = () => {
               placeholder="Email Address"
               value={formData.email}
               onChange={handleChange}
-              style={{ backgroundColor: "white" }}
+              style={{ backgroundColor: 'white' }}
               required
               title="Please enter a valid email address"
             />
@@ -115,7 +115,7 @@ const SignUp = () => {
               placeholder="Profession"
               value={formData.profession}
               onChange={handleChange}
-              style={{ backgroundColor: "white" }}
+              style={{ backgroundColor: 'white' }}
               required
             />
           </div>
@@ -127,7 +127,7 @@ const SignUp = () => {
               placeholder="Password (min. 6 characters)"
               value={formData.password}
               onChange={handleChange}
-              style={{ backgroundColor: "white" }}
+              style={{ backgroundColor: 'white' }}
               required
             />
           </div>

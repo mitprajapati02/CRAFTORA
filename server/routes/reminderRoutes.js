@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/reminder/:appId', getRemindersByApp);
 
-router.post('/reminder', createReminder);
+router.post('/add', createReminder);
 
 
 module.exports = router;

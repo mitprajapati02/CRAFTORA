@@ -16,7 +16,7 @@ const todoListRoutes = require('./routes/todoListRoutes');
 const app = express();
 
 
-app.use(cors({ origin: "*" })); // Allow frontend
+app.use(cors({ origin: '*' })); // Allow frontend
 app.use(express.json());
 
 

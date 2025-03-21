@@ -1,27 +1,27 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { apiRequest } from "../utils/apiService";
-import "../assets/styles/AddMedia.css"
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { apiRequest } from '../utils/apiService';
+import '../assets/styles/AddMedia.css'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const AddMedia = () => {
   const [formData, setFormData] = useState({
-    mediaName: "",
-    inMediaUsername: "",
-    inMediaProfileImg: "",
-    bio: "",
-    url: "",
-    tag1: "",
-    tag2: "",
-    tag3: "",
-    stat1: "",
-    value1: "",
-    stat2: "",
-    value2: "",
-    stat3: "",
-    value3: "",
+    mediaName: '',
+    inMediaUsername: '',
+    inMediaProfileImg: '',
+    bio: '',
+    url: '',
+    tag1: '',
+    tag2: '',
+    tag3: '',
+    stat1: '',
+    value1: '',
+    stat2: '',
+    value2: '',
+    stat3: '',
+    value3: '',
   });
 
   const navigate = useNavigate();
@@ -41,12 +41,12 @@ const AddMedia = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted Data:", formData);
+    console.log('Submitted Data:', formData);
     const formattedData = {
       mediaName: formData.mediaName,
       inMediaUsername: formData.inMediaUsername,
-      inMediaProfileImg: formData.inMediaProfileImg || "",
-      bio: formData.bio || "",
+      inMediaProfileImg: formData.inMediaProfileImg || '',
+      bio: formData.bio || '',
       states: {
         stat1: formData.stat1,
         stat2: formData.stat2,
@@ -61,30 +61,30 @@ const AddMedia = () => {
       url: formData.url,
     };
     try {
-      const response = await apiRequest("social/socialApp", "POST", formattedData);
+      const response = await apiRequest('social/socialApp', 'POST', formattedData);
 
 
-      alert("App details added successfully!");
+      alert('App details added successfully!');
       setFormData({
-        mediaName: "",
-        inMediaUsername: "",
-        inMediaProfileImg: "",
-        bio: "",
-        url: "",
-        tag1: "",
-        tag2: "",
-        tag3: "",
-        stat1: "",
-        value1: "",
-        stat2: "",
-        value2: "",
-        stat3: "",
-        value3: "",
+        mediaName: '',
+        inMediaUsername: '',
+        inMediaProfileImg: '',
+        bio: '',
+        url: '',
+        tag1: '',
+        tag2: '',
+        tag3: '',
+        stat1: '',
+        value1: '',
+        stat2: '',
+        value2: '',
+        stat3: '',
+        value3: '',
       });
-      navigate("/userDashboard");
+      navigate('/userDashboard');
     } catch (error) { 
-      console.error("Error:", error);
-      alert("Failed to add app details. Please try again.");
+      console.error('Error:', error);
+      alert('Failed to add app details. Please try again.');
     }
   };
 
@@ -92,7 +92,7 @@ const AddMedia = () => {
     <main className="main-content hide-scrollbar">
       <div>
         <h2 className="text-center">Add App Details</h2>
-        <form style={{ marginTop: "50px" }} onSubmit={handleSubmit}>
+        <form style={{ marginTop: '50px' }} onSubmit={handleSubmit}>
 
           <div className="mb-3">
             <label htmlFor="mediaName" className="form-label">

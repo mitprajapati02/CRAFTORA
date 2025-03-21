@@ -1,37 +1,38 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useEffect } from "react";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-import "../assets/styles/userProfile.css"
+import '../assets/styles/userProfile.css'
 
 const UserProfile = () => {
   const [formData, setFormData] = useState({
-    username: "Username",
-    mobile: "+1234567890",
-    email: "user@example.com",
-    profession: "Software Developer",
-    age: "",
-    profilePicture: "",
+    username: 'Username',
+    mobile: '+1234567890',
+    email: 'user@example.com',
+    profession: 'Software Developer',
+    age: '',
+    profilePicture: '',
   });
 
   const [currentUser, setCurrentUser] = useState({
-    username: "Username",
-    mobile: "+1234567890",
-    email: "user@example.com",
-    profession: "Software Developer",
+    username: 'Username',
+    mobile: '+1234567890',
+    email: 'user@example.com',
+    profession: 'Software Developer',
     age: 25,
-    profilePicture: "",
+    profilePicture: '',
   });
 
   const getUserProfile = async () => {
     try {
-      const userData = JSON.parse(localStorage.getItem("user"));
+      const userData = JSON.parse(localStorage.getItem('user'));
       if (!userData) return;
+
       console.log(userData);
       const token = userData?.token;
-      const response = await axios.get("http://localhost:5001/api/user/profile", {
+      const response = await axios.get('http://localhost:5001/api/user/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,12 +40,14 @@ const UserProfile = () => {
       console.log(response.data);
       if (!response.data) {
         return
-      };
+      }
+
+;
       setCurrentUser(response.data.user);
       setFormData(response.data.user);
       console.log(response);
     } catch (error) {
-      console.error("Error fetching user profile", error);
+      console.error('Error fetching user profile', error);
     }
   };
 
@@ -59,19 +62,20 @@ const UserProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const userData = JSON.parse(localStorage.getItem("user"));
+      const userData = JSON.parse(localStorage.getItem('user'));
       if (!userData) return;
+
       const token = userData?.token;
-      const response = await axios.put("http://localhost:5001/api/user/profile", formData, {
+      const response = await axios.put('http://localhost:5001/api/user/profile', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       console.log(response);
-      alert("Profile updated successfully");
+      alert('Profile updated successfully');
       getUserProfile();
     } catch (error) {
-      console.error("Error updating user profile", error);
+      console.error('Error updating user profile', error);
     }
   }
 
@@ -82,20 +86,20 @@ const UserProfile = () => {
         <div className="col-lg-4 col-12 mb-4">
           <div className="card p-3">
             <img
-              src={"https://via.placeholder.com/300x200"}
+              src={'https://via.placeholder.com/300x200'}
               alt="Profile"
               className="profile-img img-fluid"
             />
-            <h4 className="text-center mt-3">{currentUser.username || "User"}</h4>
+            <h4 className="text-center mt-3">{currentUser.username || 'User'}</h4>
             <table className="table profile-info-table">
               <tbody>
                 <tr>
                   <td><strong>Mobile:</strong></td>
-                  <td>{formData.mobile || "9099227702"}</td>
+                  <td>{formData.mobile || '9099227702'}</td>
                 </tr>
                 <tr>
                   <td><strong>Email:</strong></td>
-                  <td>{formData.email || "exapmle@gmail.com"}</td>
+                  <td>{formData.email || 'exapmle@gmail.com'}</td>
                 </tr>
                 <tr>
                   <td><strong>Profession:</strong></td>

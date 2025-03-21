@@ -1,26 +1,26 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate } from "react-router-dom";
-import "../assets/styles/sidebar.css"
-import "../assets/styles/offcanvas.css"
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
+import '../assets/styles/sidebar.css'
+import '../assets/styles/offcanvas.css'
 
 const OffcanvasSidebar = () => {
     const navigate = useNavigate();
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem('user'));
     const handleProfile = () => {
         if(user){
-            navigate("/userProfile");
+            navigate('/userProfile');
         }else{
-            navigate("/login");
+            navigate('/login');
         }
     };
 
     const handleSignOut = () => {
         if(user){
-            localStorage.removeItem("user");
-            navigate("/login");
+            localStorage.removeItem('user');
+            navigate('/login');
         }else{
-            navigate("/login");
+            navigate('/login');
         }
     };
     return (

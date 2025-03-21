@@ -1,15 +1,15 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "../assets/styles/UserDashboard.css"
-import { apiRequest } from "../utils/apiService"; // Import reusable API function
-import { useEffect, useState } from "react";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import '../assets/styles/UserDashboard.css'
+import { apiRequest } from '../utils/apiService'; // Import reusable API function
+import { useEffect, useState } from 'react';
 
 
 
 
 
 const UserDashboard = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem('user'));
   const [socialMediaData, setSocialMediaData] = useState([]);
 
   if (user) {
@@ -17,10 +17,10 @@ const UserDashboard = () => {
     useEffect(() => {
       const fetchApps = async () => {
         try {
-          const response = await apiRequest("social/socialApps", "GET");
+          const response = await apiRequest('social/socialApps', 'GET');
           setSocialMediaData(response); // Store API response in state
         } catch (error) {
-          console.error("Error fetching social media apps:", error);
+          console.error('Error fetching social media apps:', error);
         }
       };
 
@@ -37,7 +37,7 @@ const UserDashboard = () => {
           socialMediaData.map((data, index) => (
             <div
               key={data.id}
-              className={`card-container ${index % 2 === 0 ? "odd-card" : "even-card"}`}
+              className={`card-container ${index % 2 === 0 ? 'odd-card' : 'even-card'}`}
             >
               <div className="card-flip">
                 <div className="card-front">

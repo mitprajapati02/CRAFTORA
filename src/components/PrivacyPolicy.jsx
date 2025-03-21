@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import "../assets/styles/AddMedia.css"
+import '../assets/styles/AddMedia.css'
 
 const PrivacyPolicy = () => {
   return (
     <div className="container mt-5">
-      <h1 className="text-center mb-4" style={{ marginTop: "50px" }}>Privacy Policy</h1>
+      <h1 className="text-center mb-4" style={{ marginTop: '50px' }}>Privacy Policy</h1>
       <p className="text-muted">Effective Date: [Insert Date]</p>
 
       <section className="mb-4">
