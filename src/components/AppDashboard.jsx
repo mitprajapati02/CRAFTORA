@@ -1,3 +1,7 @@
+// https://chatgpt.com/share/67dd111a-d924-8008-8722-31b2c0626b7f
+
+
+
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -10,6 +14,9 @@ import '../assets/styles/AppDashboard.css'
 const AppDashboard = () => {
     const { appId } = useParams(); // Get appId from URL
     const [appData, setAppData] = useState(null);
+    const [editProfile, setEditProfile] = useState(null);
+
+
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -34,9 +41,11 @@ const AppDashboard = () => {
                     },
                 });
 
-                console.log(response.data);
 
                 setAppData(response.data);
+
+                setEditProfile({ ...response.data });
+
                 setBio(response.data.bio || '');
                 setTags(response.data.tags || []);
 
@@ -103,6 +112,63 @@ const AppDashboard = () => {
         }
     };
 
+
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setEditProfile((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    // For states and values separately
+    const handleStateChange = (key, value) => {
+        setEditProfile((prev) => ({
+            ...prev,
+            states: {
+                ...prev.states,
+                [key]: value,
+            },
+        }));
+    };
+
+    const handleValueChange = (key, value) => {
+        setEditProfile((prev) => ({
+            ...prev,
+            values: {
+                ...prev.values,
+                [key]: value,
+            },
+        }));
+    };
+
+    const handleProfileUpdate = async (e) => {
+        e.preventDefault();
+        try {
+            const userData = JSON.parse(localStorage.getItem("user"));
+            if (!userData || !userData.token) {
+                throw new Error("User not authenticated");
+            }
+
+            const response = await axios.put(`http://localhost:5001/api/social/socialApp/${appId}`, editProfile, {
+                headers: {
+                    Authorization: `Bearer ${userData.token}`,
+                    "Content-Type": "application/json",
+                },
+            });
+
+            console.log("Updated response:", response.data);
+
+            // Update appData state with new data
+            setAppData(response.data);
+            setEditProfile(response.data);
+            alert("Profile updated successfully!");
+        } catch (error) {
+            console.error("Error updating profile:", error);
+            alert("Failed to update profile.");
+        }
+    };
 
 
 
@@ -267,46 +333,62 @@ const AppDashboard = () => {
 
                     {/* Accordion Form for Editing */}
                     <div className="collapse mt-4" id="editProfileForm">
-                        <form>
-                            {/* Username Input */}
+                        <form onSubmit={handleProfileUpdate}>
+                            {/* Username */}
                             <div className="mb-3">
-                                <label htmlFor="username" className="form-label">
-                                    Username
-                                </label>
-                                <input type="text" className="form-control" id="username" defaultValue={appData.inMediaUsername} />
+                                <label className="form-label">Username</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="inMediaUsername"
+                                    value={editProfile.inMediaUsername || ""}
+                                    onChange={handleInputChange}
+                                />
                             </div>
 
-                            {/* Profile Photo Input */}
+                            {/* Profile Image */}
                             <div className="mb-3">
-                                <label htmlFor="profilePhoto" className="form-label">
-                                    Profile Photo
-                                </label>
-                                <input type="file" className="form-control" id="profilePhoto" />
+                                <label className="form-label">Profile Photo</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="inMediaProfileImg"
+                                    value={editProfile.inMediaProfileImg || ""}
+                                    onChange={handleInputChange}
+                                />
                             </div>
 
-                            {/* Stats Editing Section */}
-                            {Object.entries(appData.states || {}).map(([key, stateValue], index) => (
-                                <div className="row" key={key}>
-                                    <div className="col-6">
-                                        <label className="form-label">{stateValue}</label>
-                                        <input type="text" className="form-control" defaultValue={stateValue} disabled />
+                            {/* States & Values Section */}
+                            {editProfile.states &&
+                                Object.entries(editProfile.states).map(([key, stateLabel]) => (
+                                    <div className="row mb-2" key={key}>
+                                        <div className="col-6">
+                                            <label className="form-label">State Label</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                value={stateLabel || ""}
+                                                onChange={(e) => handleStateChange(key, e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="col-6">
+                                            <label className="form-label">Value</label>
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                value={editProfile.values?.[key] || ""}
+                                                onChange={(e) => handleValueChange(key, e.target.value)}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="col-6">
-                                        <label className="form-label">Value</label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            defaultValue={appData.values ? Object.values(appData.values)[index] : ''}
-                                        />
-                                    </div>
-                                </div>
-                            ))}
+                                ))}
 
-                            {/* Save Button */}
+                            {/* Submit Button */}
                             <button type="submit" className="btn btn-primary mt-3">
                                 Save
                             </button>
                         </form>
+
                     </div>
                 </div>
 
