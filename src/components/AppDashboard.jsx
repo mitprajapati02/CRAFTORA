@@ -60,6 +60,7 @@ const AppDashboard = () => {
                 console.error('Error fetching app details:', error);
                 setError(error.message);
                 setLoading(false);
+                console.log(response.data.states);
             }
         };
 
@@ -103,7 +104,6 @@ const AppDashboard = () => {
                     ...prevData,
                     reminders: response.data.reminders, // Use all reminders
                 }));
-
                 e.target.reset(); // Clear input fields
             }
         } catch (error) {
@@ -138,36 +138,55 @@ const AppDashboard = () => {
             ...prev,
             values: {
                 ...prev.values,
-                [key]: value,
+                [key]: value,  // Updating values inside editProfile
             },
         }));
     };
 
+
+
     const handleProfileUpdate = async (e) => {
         e.preventDefault();
+        const updatedValues = {
+            value1: editProfile.values.stat1, // Assign stat1 → value1
+            value2: editProfile.values.stat2, // Assign stat2 → value2
+            value3: editProfile.values.stat3, // Assign stat3 → value3
+        };
+
+        const finalProfile = {
+            ...editProfile,   // Keep the rest of the data
+            values: updatedValues, // Replace values with transformed values
+        };
+
+        const updatedFields = {
+            mediaName: finalProfile.mediaName,
+            inMediaUsername: finalProfile.inMediaUsername,
+            inMediaProfileImg: finalProfile.inMediaProfileImg,
+            states: finalProfile.states,
+            values: finalProfile.values,
+            url: finalProfile.url
+        };
+
         try {
-            const userData = JSON.parse(localStorage.getItem("user"));
-            if (!userData || !userData.token) {
-                throw new Error("User not authenticated");
+
+            const response = await axios.patch("http://localhost:5001/api/social/socialApp/updateProfile", updatedFields,
+                {
+                    headers: {
+                        Authorization: `Bearer ${appId}`,
+                    },
+                }
+            );
+
+            if (response.status === 201) {
+                setAppData(response.data); // Update appData state
+                alert('Profile updated successfully!');
+                e.target.reset(); // Clear input
+                document.getElementById('editProfileForm').classList.remove('show');
             }
-
-            const response = await axios.put(`http://localhost:5001/api/social/socialApp/${appId}`, editProfile, {
-                headers: {
-                    Authorization: `Bearer ${userData.token}`,
-                    "Content-Type": "application/json",
-                },
-            });
-
-            console.log("Updated response:", response.data);
-
-            // Update appData state with new data
-            setAppData(response.data);
-            setEditProfile(response.data);
-            alert("Profile updated successfully!");
         } catch (error) {
             console.error("Error updating profile:", error);
-            alert("Failed to update profile.");
         }
+
     };
 
 
@@ -313,7 +332,7 @@ const AppDashboard = () => {
                         {/* Stats Section */}
                         <div className="d-flex justify-content-around mt-3">
                             {Object.entries(appData.states || {}).map(([key, stateValue], index) => (
-                                <div key={key}>
+                                <div key={`${key}-${index}`}>
                                     <h6>{stateValue}</h6>
                                     <p>{appData.values ? Object.values(appData.values)[index] : 'N/A'}</p>
                                 </div>
@@ -357,6 +376,16 @@ const AppDashboard = () => {
                                     onChange={handleInputChange}
                                 />
                             </div>
+                            <div className="mb-3">
+                                <label className="form-label"> App URL</label>
+                                <input
+                                    type="url"
+                                    className="form-control"
+                                    name="url"
+                                    value={editProfile.url || ""}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
 
                             {/* States & Values Section */}
                             {editProfile.states &&
@@ -382,6 +411,7 @@ const AppDashboard = () => {
                                         </div>
                                     </div>
                                 ))}
+
 
                             {/* Submit Button */}
                             <button type="submit" className="btn btn-primary mt-3">
