@@ -18,7 +18,7 @@ const UserDashboard = () => {
       const fetchApps = async () => {
         try {
           const response = await apiRequest('social/socialApps', 'GET');
-          setSocialMediaData(response); // Store API response in state
+          setSocialMediaData(response);
         } catch (error) {
           console.error('Error fetching social media apps:', error);
         }

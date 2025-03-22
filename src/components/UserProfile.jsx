@@ -16,6 +16,8 @@ const UserProfile = () => {
     profilePicture: '',
   });
 
+  const [apps, setApps] = useState([]); // Store social media apps
+
   const [currentUser, setCurrentUser] = useState({
     username: 'Username',
     mobile: '+1234567890',
@@ -30,7 +32,6 @@ const UserProfile = () => {
       const userData = JSON.parse(localStorage.getItem('user'));
       if (!userData) return;
 
-      console.log(userData);
       const token = userData?.token;
       const response = await axios.get('http://localhost:5001/api/user/profile', {
         headers: {
@@ -42,9 +43,11 @@ const UserProfile = () => {
         return
       }
 
-;
+      ;
       setCurrentUser(response.data.user);
       setFormData(response.data.user);
+      setApps(response.data.apps); // Store apps in state
+
       console.log(response);
     } catch (error) {
       console.error('Error fetching user profile', error);
@@ -183,13 +186,19 @@ const UserProfile = () => {
           <div className="card p-3">
             <h4>Socials</h4>
             <div className="social-icons mt-3">
-              <a href="#" className="social-icon"><i className="bi bi-facebook"></i></a>
-              <a href="#" className="social-icon"><i className="bi bi-twitter"></i></a>
-              <a href="#" className="social-icon"><i className="bi bi-instagram"></i></a>
-              <a href="#" className="social-icon"><i className="bi bi-linkedin"></i></a>
-              <a href="#" className="social-icon"><i className="bi bi-youtube"></i></a>
+              {apps.length > 0 ? (
+                apps.map((app) => (
+                  <a key={app.id} href={`/appDashboard/${app.id}`} className="social-icon">
+                    <i className={app.icon}></i>
+                  </a>
+                ))
+              ) : (
+                <p>No social media accounts linked</p>
+              )}
             </div>
           </div>
+
+
         </div>
       </div>
     </div>
