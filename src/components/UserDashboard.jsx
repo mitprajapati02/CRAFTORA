@@ -34,30 +34,30 @@ const UserDashboard = () => {
   return (
     <div className="main-container hide-scrollbar main-content">
       {user ? (
-          socialMediaData.map((data, index) => (
-            <div
-              key={data.id}
-              className={`card-container ${index % 2 === 0 ? 'odd-card' : 'even-card'}`}
-            >
-              <div className="card-flip">
-                <div className="card-front">
-                  <i className={data.icon}></i> {/* Dynamic icon */}
-                </div>
-                <div className="card-back">
-                  <h5>{data.platform}</h5> {/* Social Media Platform Name */}
-                  <ul>
-                    {data.tasks.map((task, i) => (
-                      <li key={i}>
-                        {task} <button><i className="bi bi-check2"></i></button>
-                      </li>
-                    ))}
-                  </ul>
-                  <button type="button" onClick={() => navigate(`/appDashboard/${data.id}`)} className="btn btn-primary">View</button>
-                </div>
+        socialMediaData.map((data, index) => (
+          <div
+            key={data.id}
+            className={`card-container ${index % 2 === 0 ? 'odd-card' : 'even-card'}`}
+          >
+            <div className="card-flip">
+              <div className="card-front">
+                <i className={data.icon}></i> {/* Dynamic icon */}
+              </div>
+              <div className="card-back">
+                <h5>{data.platform}</h5> {/* Social Media Platform Name */}
+                <ul>
+                  {data.tasks.slice(0, 2).map((taskObj) => (
+                    <li className="task-item">
+                      <p>{taskObj.task}</p>
+                    </li>
+                  ))}
+                </ul>
+                <button type="button" onClick={() => navigate(`/appDashboard/${data.id}`)} className="btn btn-primary">View</button>
               </div>
             </div>
-          ))
-      ) : null }
+          </div>
+        ))
+      ) : null}
 
 
 

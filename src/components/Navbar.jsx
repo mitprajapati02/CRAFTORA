@@ -5,6 +5,7 @@ import { apiRequest } from '../utils/apiService';
 import { useParams } from 'react-router-dom';
 
 
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -29,7 +30,6 @@ const Navbar = () => {
       try {
         const response = await apiRequest('social/socialApps', 'GET');
         setMediaList(response);
-        console.log(response);
       } catch (error) {
         console.error('Error fetching social media apps:', error);
       }

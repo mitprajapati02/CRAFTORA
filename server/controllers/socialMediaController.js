@@ -83,10 +83,49 @@ async function getAppsByUser(req, res) {
       id: app._id, // Unique ID
       platform: app.mediaName, // Social media platform name
       icon: getPlatformIcon(app.mediaName), // Get icon based on platform name
-      tasks: app.todoLists.map((todo) => todo.taskName), // Extract task names
+      tasks: app.todoLists.at(0)?.tasks || [], // Extract task names
     }));
 
     // Step 5: Send formatted response
+    res.json(formattedResponse);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+async function getTasksByUser(req, res) {
+  try {
+    // Step 1: Get token from the Authorization header
+    const token = req.headers.authorization.split(" ")[1];
+
+    // Step 2: Extract userId from the token
+    const userId = await getUserIdFromToken(token);
+
+    // Step 3: Fetch SocialMediaApp documents for the user
+    const apps = await SocialMediaApp.find({ user: userId })
+      .populate("reminders") // Populate reminders
+      .populate("todoLists"); // Populate todoLists
+
+    // Step 4: Filter apps that have both reminders and tasks
+    let filteredApps = apps.filter(
+      (app) => app.reminders.length > 0 || app.todoLists.length > 0
+    );
+
+    // Step 5: Select up to 3 random apps from the filtered list
+    if (filteredApps.length > 3) {
+      filteredApps = filteredApps.sort(() => 0.5 - Math.random()).slice(0, 3);
+    }
+
+    // Step 6: Format the response
+    const formattedResponse = filteredApps.map((app) => ({
+      id: app._id,
+      platform: app.mediaName,
+      tasks: app.todoLists.at(0)?.tasks.slice(0, 2) || [], // Get first 2 tasks
+      reminders: app.reminders.slice(0, 2) || [], // Get first 2 reminders
+    }));
+
+    // Step 7: Send formatted response
     res.json(formattedResponse);
   } catch (error) {
     console.error(error);
@@ -230,6 +269,7 @@ module.exports = {
   getAppsByUser,
   removeApp,
   getAppById,
+  getTasksByUser,
   updateBio,
   updateProfile,
 };

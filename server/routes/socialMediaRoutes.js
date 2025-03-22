@@ -4,6 +4,7 @@ const {
   getAppsByUser,
   removeApp,
   getAppById,
+  getTasksByUser,
   updateBio,
   updateProfile,
 } = require("../controllers/socialMediaController");
@@ -14,6 +15,7 @@ router.post("/socialApp", createSocialMediaApp);
 router.get("/socialApps/", getAppsByUser);
 router.delete("/socialApp/:appId", removeApp);
 router.get("/socialApp/:appId", getAppById);
+router.get("/tasks", getTasksByUser);
 router.put("/socialApp/updateBio", updateBio);
 router.patch("/socialApp/updateProfile", updateProfile);
 
