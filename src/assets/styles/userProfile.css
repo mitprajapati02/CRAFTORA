@@ -1,11 +1,9 @@
-
 td,
 th {
   background-color: #d7ede3 !important;
 }
 
 .main-container {
-
   width: 100%;
 }
 
@@ -76,7 +74,6 @@ th {
   justify-content: center;
 }
 
-
 span img {
-  width: 200px
+  width: 200px;
 }

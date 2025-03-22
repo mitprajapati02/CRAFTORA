@@ -47,7 +47,7 @@ const Footer = () => {
       <div className="row justify-content-center">
 
         <div className="col-md-5 div-1 me-md-3 text-center">
-          <Link to="/userDashboard">
+          <Link to="/user-dashboard">
             <img src={logo} alt="Craftora Logo" className="footer-logo mb-2" />
           </Link>
 
@@ -62,7 +62,7 @@ const Footer = () => {
         <div className="col-md-5 div-2">
           <div className="mb-3">
             <h5>Links</h5>
-            <Link to="/userDashboard">Home</Link> | <Link to="/privacy-policy">Privacy Policy</Link> | <Link to="/terms&service">Terms of Service</Link> | <Link to="/contactUs">Contact Us</Link>
+            <Link to="/user-dashboard">Home</Link> | <Link to="/privacy-policy">Privacy Policy</Link> | <Link to="/terms&service">Terms of Service</Link> | <Link to="/contact-us">Contact Us</Link>
           </div>
           <div>
             <h5>Contact</h5>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../assets/styles/UserDashboard.css'
-import { apiRequest } from '../utils/apiService'; // Import reusable API function
+import { apiRequest } from '../utils/apiService';
 import { useEffect, useState } from 'react';
 
 
@@ -24,7 +24,7 @@ const UserDashboard = () => {
         }
       };
 
-      fetchApps(); // Call API on component mount
+      fetchApps();
     }, []);
   }
 
@@ -41,10 +41,10 @@ const UserDashboard = () => {
           >
             <div className="card-flip">
               <div className="card-front">
-                <i className={data.icon}></i> {/* Dynamic icon */}
+                <i className={data.icon}></i>
               </div>
               <div className="card-back">
-                <h5>{data.platform}</h5> {/* Social Media Platform Name */}
+                <h5>{data.platform}</h5>
                 <ul>
                   {data.tasks.slice(0, 2).map((taskObj) => (
                     <li className="task-item">
@@ -52,7 +52,7 @@ const UserDashboard = () => {
                     </li>
                   ))}
                 </ul>
-                <button type="button" onClick={() => navigate(`/appDashboard/${data.id}`)} className="btn btn-primary">View</button>
+                <button type="button" onClick={() => navigate(`/app-dashboard/${data.id}`)} className="btn btn-primary">View</button>
               </div>
             </div>
           </div>
@@ -64,7 +64,7 @@ const UserDashboard = () => {
 
       <div className="add-card">
         <center>
-          {user ? (<Link to="/addMedia" className="text-decoration-none "> <i className="bi bi-plus"></i></Link>) : (
+          {user ? (<Link to="/add-media" className="text-decoration-none "> <i className="bi bi-plus"></i></Link>) : (
             <Link to="/login" className="text-decoration-none "> <i className="bi bi-plus"></i></Link>
           )}
         </center>

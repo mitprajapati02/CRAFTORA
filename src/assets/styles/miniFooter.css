@@ -1,19 +1,18 @@
 body {
-    background-color: #d5ebe1;
-    color: #272828;
-  }
-  
-  .footer-container {
-    background-color: #d5ebe1;
-    color: #272828;
-    padding: 30px;
-  }
-  
-  .footer-container .div-3 {
-    background-color: #272828;
-    color: #d7ede3;
-    border-radius: 10px;
-    text-align: center;
-    padding: 15px;
-  }
-  
+  background-color: #d5ebe1;
+  color: #272828;
+}
+
+.footer-container {
+  background-color: #d5ebe1;
+  color: #272828;
+  padding: 30px;
+}
+
+.footer-container .div-3 {
+  background-color: #272828;
+  color: #d7ede3;
+  border-radius: 10px;
+  text-align: center;
+  padding: 15px;
+}

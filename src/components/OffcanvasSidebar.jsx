@@ -1,28 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-import '../assets/styles/sidebar.css'
-import '../assets/styles/offcanvas.css'
+import { apiRequest } from '../utils/apiService';
+
+import '../assets/styles/sidebar.css';
+import '../assets/styles/offcanvas.css';
 
 const OffcanvasSidebar = () => {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('user'));
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchUserTasks = async () => {
+            try {
+                const response = await apiRequest('social/tasks', 'GET');
+                setData(response || []); // Ensure data is always an array
+            } catch (error) {
+                console.error('Error fetching social media tasks:', error);
+            }
+        };
+        if (user) fetchUserTasks();
+    }, []);
+
     const handleProfile = () => {
-        if(user){
-            navigate('/userProfile');
-        }else{
+        if (user) {
+            navigate('/user-profile');
+        } else {
             navigate('/login');
         }
     };
 
     const handleSignOut = () => {
-        if(user){
-            localStorage.removeItem('user');
-            navigate('/login');
-        }else{
-            navigate('/login');
-        }
+        localStorage.removeItem('user');
+        navigate('/login');
     };
+
     return (
         <div className="offcanvas offcanvas-end" id="sidebarOffcanvas">
             <div className="offcanvas-header">
@@ -35,33 +48,46 @@ const OffcanvasSidebar = () => {
                     <button className="btn btn-primary w-100 mb-3 mt-3" onClick={handleProfile}>Profile</button>
                 </div>
 
-                {/* Second Section: Reminders */}
+                {/* Reminders Section */}
                 <div className="reminders-section mt-4">
                     <h5>Reminders</h5>
                     <ul className="list-group mt-2">
-                        <li className="list-group-item">
-                            <span className="reminder-name">Pay Bills</span><br />
-                            <small className="reminder-date">2024-11-20</small>
-                        </li>
-                        <li className="list-group-item">
-                            <span className="reminder-name">Project Deadline</span><br />
-                            <small className="reminder-date">2024-11-25</small>
-                        </li>
+                        {data.length > 0 ? (
+                            data.slice(0, 3).map((app, appIndex) =>
+                                (app.reminders || [])
+                                    .filter(reminder => new Date(reminder.date) >= new Date().setHours(0, 0, 0, 0))
+                                    .slice(0, 3)
+                                    .map((reminder, index) => (
+                                        <li key={`${appIndex}-${index}`} className="list-group-item">
+                                            <span className="reminder-name">{reminder.reminder}</span>
+                                            <br />
+                                            <small className="reminder-date">{new Date(reminder.date).toLocaleDateString()}</small>
+                                        </li>
+                                    ))
+                            )
+                        ) : (
+                            <li className="list-group-item">No reminders available</li>
+                        )}
                     </ul>
                 </div>
 
-                {/* Third Section: To-Do List */}
+                {/* To-Do List Section */}
                 <div className="todo-section mt-4">
                     <h5>To-Do List</h5>
                     <ul className="list-group mt-2">
-                        <li className="list-group-item">
-                            <span className="todo-name">Update Profile</span><br />
-                            <small className="app-name">Facebook</small>
-                        </li>
-                        <li className="list-group-item">
-                            <span className="todo-name">Post New Photo</span><br />
-                            <small className="app-name">Instagram</small>
-                        </li>
+                        {data.length > 0 ? (
+                            data.slice(0, 3).map((app, appIndex) =>
+                                (app.tasks || []).slice(0, 3).map((task, index) => (
+                                    <li key={`${appIndex}-${index}`} className="list-group-item">
+                                        <span className="todo-name">{task.task}</span>
+                                        <br />
+                                        <small className="app-name">{app.platform}</small>
+                                    </li>
+                                ))
+                            )
+                        ) : (
+                            <li className="list-group-item">No tasks available</li>
+                        )}
                     </ul>
                 </div>
 

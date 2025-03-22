@@ -188,7 +188,7 @@ const UserProfile = () => {
             <div className="social-icons mt-3">
               {apps.length > 0 ? (
                 apps.map((app) => (
-                  <a key={app.id} href={`/appDashboard/${app.id}`} className="social-icon">
+                  <a key={app.id} href={`/app-dashboard/${app.id}`} className="social-icon">
                     <i className={app.icon}></i>
                   </a>
                 ))

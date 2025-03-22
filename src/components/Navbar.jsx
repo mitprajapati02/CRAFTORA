@@ -41,12 +41,12 @@ const Navbar = () => {
 
   const handleMediaSelect = (media) => {
     setSelectedMedia(media);
-    navigate(`/appDashboard/${media.id}`); // Navigate to media's dashboard
+    navigate(`/app-dashboard/${media.id}`);
   };
 
   const handleAddNewApp = () => {
     if (user) {
-      navigate('/addMedia');
+      navigate('/add-media');
     } else {
       navigate('/login');
     }

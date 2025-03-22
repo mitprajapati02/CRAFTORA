@@ -1,23 +1,42 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { apiRequest } from '../utils/apiService';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
-import '../assets/styles/navbar.css'
-import '../assets/styles/offcanvas.css'
+import '../assets/styles/navbar.css';
+import '../assets/styles/offcanvas.css';
 
 const OffcanvasNavbar = () => {
-
+  const navigate = useNavigate();
+  const { appId } = useParams();
   const user = JSON.parse(localStorage.getItem('user'));
-  let userName;
-   if(user){
-    userName = user.username;
-  }
+  const [mediaList, setMediaList] = useState([]);
+  const [selectedMedia, setSelectedMedia] = useState(null);
 
-    const navigate = useNavigate();
+  let userName = user?.username || 'User';
+
+  useEffect(() => {
+    const fetchUserMedia = async () => {
+      try {
+        const response = await apiRequest('social/socialApps', 'GET');
+        setMediaList(response);
+      } catch (error) {
+        console.error('Error fetching social media apps:', error);
+      }
+    };
+    if (user) fetchUserMedia();
+  }, []);
+
+  const handleMediaSelect = (media) => {
+    setSelectedMedia(media);
+    navigate(`/app-dashboard/${media.id}`);
+  };
+
   const handleAddNewApp = () => {
-    if(user){
-      navigate('/addMedia');
-    }else{
+    if (user) {
+      navigate('/add-media');
+    } else {
       navigate('/login');
     }
   };
@@ -29,7 +48,7 @@ const OffcanvasNavbar = () => {
         <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
       </div>
       <div className="offcanvas-body">
-        {/* Top row with user profile */}
+        {/* User Profile */}
         <div className="user-profile">
           <img src="user-profile-pic.jpg" alt="User Profile" className="profile-pic" />
           <p className="user-name">{userName}</p>
@@ -38,22 +57,25 @@ const OffcanvasNavbar = () => {
         {/* Social Apps List */}
         <div className="social-apps">
           <ul>
-            <li className="app-item active" id="app1">
-              <i className="bi bi-facebook app-icon"></i>
-              <span className="app-name">Facebook</span>
-            </li>
-            <li className="app-item" id="app2">
-              <i className="bi bi-twitter app-icon"></i>
-              <span className="app-name">Twitter</span>
-            </li>
-            <li className="app-item" id="app3">
-              <i className="bi bi-instagram app-icon"></i>
-              <span className="app-name">Instagram</span>
-            </li>
+            {mediaList.length > 0 ? (
+              mediaList.map((media) => (
+                <li
+                  key={media.id}
+                  className={`app-item ${media?.id === appId ? 'active' : ''}`}
+                  onClick={() => handleMediaSelect(media)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <i className={`bi bi-${media.icon} app-icon`}></i>
+                  <span className="app-name">{media.platform}</span>
+                </li>
+              ))
+            ) : (
+              <p>No media added yet.</p>
+            )}
           </ul>
         </div>
 
-        {/* Add new social app button */}
+        {/* Add New Social Media Button */}
         <div className="add-new-app">
           <button className="btn btn-primary" id="addAppBtn" onClick={handleAddNewApp}>
             <i className="bi bi-plus-circle"></i> Add New Social

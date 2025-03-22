@@ -8,14 +8,14 @@ import Logo from '../assets/images/LOGO_header.png'
 
 
 const generateToken = () => {
-  return Math.random().toString(36).substr(2, 10); // Random 10-character alphanumeric token
+  return Math.random().toString(36).substr(2, 10);
 };
 
 const LoginPage = () => {
 
   const navigation = useNavigate();
   useEffect(() => {
-    // Remove any leftover Bootstrap backdrop
+
     const backdrop = document.querySelector('.offcanvas-backdrop');
     if (backdrop) backdrop.remove();
   }, []);
@@ -36,7 +36,7 @@ const LoginPage = () => {
       const response = await axios.post('http://localhost:5001/api/auth/login', dataWithToken);
       localStorage.setItem('user', JSON.stringify(response.data.user));
       alert('Login successful!');
-      navigation('/userDashboard');
+      navigation('/user-dashboard');
     } catch (err) {
       alert(err.response?.data?.message || 'Login failed, check your credentials.');
     }

@@ -31,25 +31,25 @@ import AppDashboard from './components/AppDashboard';
 function App() {
   return (
     <ThemeProvider>
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          {/* Mini Layout Pages */}
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/terms&service" element={<TermsOfService />} />
-          <Route path="/addMedia" element={<AddMedia />} />
-          <Route path="/contactUs" element={<ContactUs />} />
-          <Route path="/forgot-password" element={<ForgotPass />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            {/* Mini Layout Pages */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/terms&service" element={<TermsOfService />} />
+            <Route path="/add-media" element={<AddMedia />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/forgot-password" element={<ForgotPass />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
-          {/* Full Layout Pages (Added missing routes) */}
-          <Route path="/userProfile" element={<UserProfile />} />
-          <Route path="/appDashboard/:appId" element={<AppDashboard />} />
-          <Route path="/userDashboard" element={<UserDashboard />} />
-        </Route>
-      </Routes>
-    </Router>
+            {/* Full Layout Pages (Added missing routes) */}
+            <Route path="/user-profile" element={<UserProfile />} />
+            <Route path="/app-dashboard/:appId" element={<AppDashboard />} />
+            <Route path="/user-dashboard" element={<UserDashboard />} />
+          </Route>
+        </Routes>
+      </Router>
     </ThemeProvider>
   );
 }

@@ -1,9 +1,6 @@
-// https://chatgpt.com/share/67dd111a-d924-8008-8722-31b2c0626b7f
-
-
-
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
 
 import axios from 'axios';
 
@@ -12,25 +9,30 @@ import '../assets/styles/AppDashboard.css'
 
 
 const AppDashboard = () => {
-    const { appId } = useParams(); // Get appId from URL
+    const { appId } = useParams();
+
     const [appData, setAppData] = useState(null);
+
     const [editProfile, setEditProfile] = useState(null);
 
-
-
     const [loading, setLoading] = useState(true);
+
     const [error, setError] = useState(null);
 
     const [bio, setBio] = useState('');
+
     const [tags, setTags] = useState([]);
+
     const [todoLists, setTodoLists] = useState([]);
-    const [reminders, setReminders] = useState([]); // New state for reminders
+
+    const [reminders, setReminders] = useState([]);
 
 
     useEffect(() => {
         const fetchAppData = async () => {
             try {
                 const userData = JSON.parse(localStorage.getItem('user'));
+
                 if (!userData || !userData.token) {
                     throw new Error('User not authenticated');
                 }
@@ -41,21 +43,23 @@ const AppDashboard = () => {
                     },
                 });
 
-
                 setAppData(response.data);
 
                 setEditProfile({ ...response.data });
 
                 setBio(response.data.bio || '');
+
                 setTags(response.data.tags || []);
 
-                // Ensure we extract the first todoList correctly if it exists
+
                 const firstTodoList = response.data.todoLists?.[0] || { tasks: [] };
+
                 setTodoLists(firstTodoList.tasks);
 
                 setReminders(response.data.reminders || []);
 
                 setLoading(false);
+
             } catch (error) {
                 console.error('Error fetching app details:', error);
                 setError(error.message);
@@ -63,7 +67,6 @@ const AppDashboard = () => {
                 console.log(response.data.states);
             }
         };
-
         fetchAppData();
     }, [appId]);
 
@@ -75,20 +78,21 @@ const AppDashboard = () => {
     if (!appData) return <p>No data found.</p>;
 
 
-
-
     const handleAddReminder = async (e) => {
+
         e.preventDefault();
         const reminderText = e.target.reminder.value.trim();
         const reminderDate = e.target.date.value;
 
         if (!reminderText || !reminderDate) return alert('Both fields are required.');
 
-        // Prevent selecting past dates
-        const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+
+        const today = new Date().toISOString().split('T')[0];
+
         if (reminderDate < today) return alert('Reminder date cannot be before today.');
 
         try {
+
             const response = await axios.post(
                 'http://localhost:5001/api/reminder/add',
                 { reminder: reminderText, date: reminderDate },
@@ -102,16 +106,15 @@ const AppDashboard = () => {
             if (response.status === 201) {
                 setAppData((prevData) => ({
                     ...prevData,
-                    reminders: response.data.reminders, // Use all reminders
+                    reminders: response.data.reminders,
                 }));
-                e.target.reset(); // Clear input fields
+                e.target.reset();
             }
         } catch (error) {
             console.error('Error adding reminder:', error);
             alert('Failed to add reminder.');
         }
     };
-
 
 
     const handleInputChange = (e) => {
@@ -122,7 +125,7 @@ const AppDashboard = () => {
         }));
     };
 
-    // For states and values separately
+
     const handleStateChange = (key, value) => {
         setEditProfile((prev) => ({
             ...prev,
@@ -133,12 +136,13 @@ const AppDashboard = () => {
         }));
     };
 
+
     const handleValueChange = (key, value) => {
         setEditProfile((prev) => ({
             ...prev,
             values: {
                 ...prev.values,
-                [key]: value,  // Updating values inside editProfile
+                [key]: value,
             },
         }));
     };
@@ -146,16 +150,18 @@ const AppDashboard = () => {
 
 
     const handleProfileUpdate = async (e) => {
+
         e.preventDefault();
+
         const updatedValues = {
-            value1: editProfile.values.stat1, // Assign stat1 → value1
-            value2: editProfile.values.stat2, // Assign stat2 → value2
-            value3: editProfile.values.stat3, // Assign stat3 → value3
+            value1: editProfile.values.stat1,
+            value2: editProfile.values.stat2,
+            value3: editProfile.values.stat3,
         };
 
         const finalProfile = {
-            ...editProfile,   // Keep the rest of the data
-            values: updatedValues, // Replace values with transformed values
+            ...editProfile,
+            values: updatedValues,
         };
 
         const updatedFields = {
@@ -178,9 +184,10 @@ const AppDashboard = () => {
             );
 
             if (response.status === 201) {
-                setAppData(response.data); // Update appData state
+
+                setAppData(response.data);
                 alert('Profile updated successfully!');
-                e.target.reset(); // Clear input
+                e.target.reset();
                 document.getElementById('editProfileForm').classList.remove('show');
             }
         } catch (error) {
@@ -190,14 +197,10 @@ const AppDashboard = () => {
     };
 
 
-
-
-
-
-
-
     const handleAddTodo = async (e) => {
+
         e.preventDefault();
+
         const newTask = e.target.taskName.value.trim();
         if (!newTask) return;
 
@@ -213,9 +216,9 @@ const AppDashboard = () => {
             );
 
             if (response.status === 200) {
-                const addedTask = response.data.task; // Extract newly added task
-                setTodoLists((prevTasks) => [...prevTasks, addedTask]); // Append new task
-                e.target.reset(); // Clear input
+                const addedTask = response.data.task;
+                setTodoLists((prevTasks) => [...prevTasks, addedTask]);
+                e.target.reset();
             }
         } catch (error) {
             console.error('Error adding task:', error);
@@ -224,15 +227,10 @@ const AppDashboard = () => {
     };
 
 
-
-
-
-
-
     const toggleTodo = async (taskId) => {
         try {
             const response = await axios.put(
-                `http://localhost:5001/api/todo/toggle/${taskId}`, // API to toggle task completion
+                `http://localhost:5001/api/todo/toggle/${taskId}`,
                 {},
                 {
                     headers: {
@@ -253,7 +251,6 @@ const AppDashboard = () => {
             alert('Failed to update task status.');
         }
     };
-
 
 
     const removeTodo = async (taskId) => {
@@ -277,11 +274,6 @@ const AppDashboard = () => {
     };
 
 
-
-
-
-
-    // Function to handle bio update
     const handleUpdateBio = async (e) => {
         e.preventDefault();
         const updatedBio = e.target.bio.value;
@@ -292,7 +284,7 @@ const AppDashboard = () => {
                 },
             });
             if (response.status === 200) {
-                setBio(updatedBio); // Update UI state
+                setBio(updatedBio);
                 alert('Bio updated successfully!');
                 document.getElementById('editBioForm').classList.remove('show');
             }
@@ -354,6 +346,7 @@ const AppDashboard = () => {
                     <div className="collapse mt-4" id="editProfileForm">
                         <form onSubmit={handleProfileUpdate}>
                             {/* Username */}
+
                             <div className="mb-3">
                                 <label className="form-label">Username</label>
                                 <input
@@ -387,6 +380,7 @@ const AppDashboard = () => {
                                 />
                             </div>
 
+
                             {/* States & Values Section */}
                             {editProfile.states &&
                                 Object.entries(editProfile.states).map(([key, stateLabel]) => (
@@ -418,7 +412,6 @@ const AppDashboard = () => {
                                 Save
                             </button>
                         </form>
-
                     </div>
                 </div>
 
@@ -433,12 +426,14 @@ const AppDashboard = () => {
                     </div>
                     <ul className="list-group mt-3">
                         {appData.reminders?.length > 0 ? (
-                            appData.reminders.map((reminder, index) => (
-                                <li key={reminder._id} className="list-group-item d-flex justify-content-between">
-                                    {reminder.reminder}
-                                    <span className="badge bg-secondary">{new Date(reminder.date).toLocaleDateString()}</span>
-                                </li>
-                            ))
+                            appData.reminders
+                                .filter(reminder => new Date(reminder.date) >= new Date().setHours(0, 0, 0, 0)) // Only future & today
+                                .map((reminder) => (
+                                    <li key={reminder._id} className="list-group-item d-flex justify-content-between">
+                                        {reminder.reminder}
+                                        <span className="badge bg-secondary">{new Date(reminder.date).toLocaleDateString()}</span>
+                                    </li>
+                                ))
                         ) : (
                             <li className="list-group-item">No reminders yet.</li>
                         )}
@@ -451,9 +446,8 @@ const AppDashboard = () => {
                         </form>
                     </div>
                 </div>
-
-
             </div>
+
 
             {/* To-Do Section */}
             <div className="row mt-4" style={{ border: '1px solid black' }}>
@@ -481,7 +475,7 @@ const AppDashboard = () => {
                                         className="form-check-input me-2"
                                         onChange={() => toggleTodo(task._id)}
                                     />
-                                    {task.task} {/* Updated to use task.task */}
+                                    {task.task}
                                     <button
                                         className="btn btn-danger btn-sm"
                                         onClick={() => removeTodo(task._id)}
@@ -507,6 +501,7 @@ const AppDashboard = () => {
                     </div>
                 </div>
 
+
                 {/* Completed Tasks Section */}
                 <div className="col-lg-6 color_card2 p-3">
                     <h4>Completed</h4>
@@ -524,7 +519,7 @@ const AppDashboard = () => {
                                         checked
                                         onChange={() => toggleTodo(task._id)}
                                     />
-                                    {task.task} {/* Updated to use task.task */}
+                                    {task.task}
                                     <button
                                         className="btn btn-danger btn-sm"
                                         onClick={() => removeTodo(task._id)}
@@ -536,7 +531,6 @@ const AppDashboard = () => {
                     </ul>
                 </div>
             </div>
-
 
 
             {/* Bio Section */}

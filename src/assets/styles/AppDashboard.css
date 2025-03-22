@@ -1,87 +1,84 @@
-  .main-container {
-    width: 100%;
-  }
+.main-container {
+  width: 100%;
+}
 
-  .first-div,
-  .second-div,
-  .third-div,
-  .fourth-div {
-    background-color: #0f0f0f ;
-    border: 1px solid #ddd;
-    color: #fff;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  .profile-photo {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-  }
-  
-  .btn-edit {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-  
-  .to-do-section {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .to-do-list {
-    max-height: 200px;
-    overflow-y: auto;
-  }
-  
-  .bio-tags {
-    text-align: center;
-    margin-top: 10px;
-  }
-  
-  .add-btn {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  span img {
-    width: 200px
-  }
+.first-div,
+.second-div,
+.third-div,
+.fourth-div {
+  background-color: #0f0f0f;
+  border: 1px solid #ddd;
+  color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.profile-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
 
-  
-    .profile-photo {
-      width: 80px;
-      height: 80px;
-    }
-  
-    .btn-edit {
-      top: 5px;
-      right: 5px;
-    }
-  
-    .to-do-section {
-      flex-direction: column;
-    }
-  
-    .to-do-list {
-      max-height: 150px;
-    }
-  
-    .bio-tags {
-      margin-top: 5px;
-    }
-  
-    .add-btn {
-      width: 30px;
-      height: 30px;
-    }
-    
-  }
+.btn-edit {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.to-do-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.to-do-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.bio-tags {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.add-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+span img {
+  width: 200px;
+}
+
+.profile-photo {
+  width: 80px;
+  height: 80px;
+}
+
+.btn-edit {
+  top: 5px;
+  right: 5px;
+}
+
+.to-do-section {
+  flex-direction: column;
+}
+
+.to-do-list {
+  max-height: 150px;
+}
+
+.bio-tags {
+  margin-top: 5px;
+}
+
+.add-btn {
+  width: 30px;
+  height: 30px;
+}

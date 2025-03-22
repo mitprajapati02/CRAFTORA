@@ -54,7 +54,7 @@ const SignUp = () => {
 
 
       localStorage.setItem('user', JSON.stringify({ username, email, token }));
-      navigate('/userDashboard');
+      navigate('/user-dashboard');
 
     } catch (err) {
       console.error('Signup failed', err);

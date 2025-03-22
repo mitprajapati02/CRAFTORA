@@ -24,7 +24,7 @@ const ChangePassword = () => {
                 </form>
 
                 <p className="mt-3">
-                    <Link to="/userProfile">Back to Profile</Link>
+                    <Link to="/user-profile">Back to Profile</Link>
                 </p>
             </div>
         </main>

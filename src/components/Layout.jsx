@@ -34,19 +34,6 @@ import { useLocation, Outlet } from 'react-router-dom';
 
 const Layout = () => {
 
-  // const [message, setMessage] = useState("");
-
-  // useEffect(() => {
-  //   fetch("http://localhost:5000/")
-  //     .then((res) => res.text())
-  //     .then((data) => setMessage(data));
-  // }, []);
-
-
-
-
-
-
   const location = useLocation();
 
   useEffect(() => {
@@ -54,14 +41,13 @@ const Layout = () => {
   }, [location.pathname]);
 
 
-
-  // Define different layout paths
-  const miniLayoutPaths = ['/login', '/signup', '/terms&service', '/addMedia', '/contactUs', '/forgot-password', '/privacy-policy'];
+  const miniLayoutPaths = ['/login', '/signup', '/terms&service', '/add-media', '/contact-us', '/forgot-password', '/privacy-policy'];
   const fullLayoutPaths = {
-    '/userProfile': <UserProfile />,
-    '/appDashboard': <AppDashboard />,
+    '/user-profile': <UserProfile />,
+    '/app-dashboard': <AppDashboard />,
     '/': <UserDashboard />
   };
+
 
   const isMiniLayout = miniLayoutPaths.includes(location.pathname);
   const mainContent = fullLayoutPaths[location.pathname] || <Outlet />;

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-
 import { apiRequest } from '../utils/apiService';
-import '../assets/styles/AddMedia.css'
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
+
+import '../assets/styles/AddMedia.css'
 
 
 const AddMedia = () => {
@@ -24,22 +24,20 @@ const AddMedia = () => {
     value3: '',
   });
 
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
 
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.id]: e.target.value, // Dynamically update the correct field
+      [e.target.id]: e.target.value,
     });
   };
-  
-
-
 
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     console.log('Submitted Data:', formData);
     const formattedData = {
@@ -57,14 +55,15 @@ const AddMedia = () => {
         value2: formData.value2,
         value3: formData.value3,
       },
-      tags: [formData.tag1, formData.tag2, formData.tag3].filter(Boolean), // Remove empty tags
+      tags: [formData.tag1, formData.tag2, formData.tag3].filter(Boolean),
       url: formData.url,
     };
+
     try {
       const response = await apiRequest('social/socialApp', 'POST', formattedData);
 
-
       alert('App details added successfully!');
+
       setFormData({
         mediaName: '',
         inMediaUsername: '',
@@ -81,8 +80,10 @@ const AddMedia = () => {
         stat3: '',
         value3: '',
       });
-      navigate('/userDashboard');
-    } catch (error) { 
+
+      navigate('/user-dashboard');
+
+    } catch (error) {
       console.error('Error:', error);
       alert('Failed to add app details. Please try again.');
     }
@@ -92,7 +93,10 @@ const AddMedia = () => {
     <main className="main-content hide-scrollbar">
       <div>
         <h2 className="text-center">Add App Details</h2>
+
+
         <form style={{ marginTop: '50px' }} onSubmit={handleSubmit}>
+
 
           <div className="mb-3">
             <label htmlFor="mediaName" className="form-label">
@@ -114,6 +118,7 @@ const AddMedia = () => {
             </select>
           </div>
 
+
           <div className="mb-3">
             <label htmlFor="inMediaUsername" className="form-label">
               In-App Username
@@ -125,19 +130,18 @@ const AddMedia = () => {
               placeholder="Enter in-app username"
               required
               onChange={handleChange}
-              value={formData.inMediaUsername} // Bind value to state
+              value={formData.inMediaUsername}
             />
           </div>
-
 
 
           <div className="mb-3">
             <label htmlFor="inMediaProfileImg" className="form-label">
               In-App Profile Image
             </label>
-            <input type="text" className="form-control" id="inMediaProfileImg" placeholder="Enter profile image URL" 
-            value={formData.inMediaProfileImg} // Bind value from state
-            onChange={handleChange} />
+            <input type="text" className="form-control" id="inMediaProfileImg" placeholder="Enter profile image URL"
+              value={formData.inMediaProfileImg}
+              onChange={handleChange} />
           </div>
 
 
@@ -152,7 +156,7 @@ const AddMedia = () => {
                   type="text"
                   className="form-control"
                   id={`stat${num}`}
-                  value={formData[`stat${num}`]} // Bind value from state
+                  value={formData[`stat${num}`]}
                   placeholder="Enter stat name"
                   onChange={handleChange}
                 />
@@ -165,14 +169,13 @@ const AddMedia = () => {
                   type="text"
                   className="form-control"
                   id={`value${num}`}
-                  value={formData[`value${num}`]} // Bind value from state
+                  value={formData[`value${num}`]}
                   placeholder="Enter value"
                   onChange={handleChange}
                 />
               </div>
             ))}
           </div>
-
 
 
           <div className="mb-3">
@@ -211,9 +214,9 @@ const AddMedia = () => {
                   type="text"
                   className="form-control"
                   id={`tag${num}`}
-                  value={formData[`tag${num}`]} // Bind state to value
+                  value={formData[`tag${num}`]}
                   placeholder={`Enter tag ${num}`}
-                  onChange={handleChange} // Update state on change
+                  onChange={handleChange}
                 />
               </div>
             ))}

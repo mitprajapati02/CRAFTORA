@@ -23,8 +23,8 @@ const Sidebar = () => {
     const fetchUsertasks = async () => {
       try {
         const response = await apiRequest('social/tasks', 'GET');
-        // setTasks(response);
-        setData(response || []); // Ensure data is always an array
+
+        setData(response || []);
       } catch (error) {
         console.error('Error fetching social media apps:', error);
       }
@@ -38,7 +38,7 @@ const Sidebar = () => {
 
   const handleProfile = () => {
     if (user) {
-      navigate('/userProfile');
+      navigate('/user-profile');
     } else {
       navigate('/login');
     }
@@ -51,7 +51,7 @@ const Sidebar = () => {
 
   return (
     <aside className="sidebar d-none d-md-block">
-      {/* Top Section: Profile */}
+
       <div className="top-section">
         <button className="btn btn-primary w-100 mb-3 mt-3" onClick={handleProfile}>Profile
         </button>
@@ -64,19 +64,23 @@ const Sidebar = () => {
         <ul className="list-group mt-2">
           {data.length > 0 ? (
             data.slice(0, 3).map((app, appIndex) =>
-              (app.reminders || []).slice(0, 3).map((reminder, index) => (
-                <li key={`${appIndex}-${index}`} className="list-group-item">
-                  <span className="reminder-name">{reminder.reminder}</span>
-                  <br />
-                  <small className="reminder-date">
-                    {new Date(reminder.date).toLocaleDateString()}
-                  </small>
-                </li>
-              ))
+              (app.reminders || [])
+                .filter(reminder => new Date(reminder.date) >= new Date().setHours(0, 0, 0, 0))
+                .slice(0, 3)
+                .map((reminder, index) => (
+                  <li key={`${appIndex}-${index}`} className="list-group-item">
+                    <span className="reminder-name">{reminder.reminder}</span>
+                    <br />
+                    <small className="reminder-date">
+                      {new Date(reminder.date).toLocaleDateString()}
+                    </small>
+                  </li>
+                ))
             )
           ) : (
             <li className="list-group-item">No reminders available</li>
           )}
+
         </ul>
       </div>
 
