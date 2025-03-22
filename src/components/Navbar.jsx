@@ -1,5 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { apiRequest } from '../utils/apiService';
+import { useParams } from 'react-router-dom';
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -10,51 +15,84 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { appId } = useParams();
   const user = JSON.parse(localStorage.getItem('user'));
-  let userName;
-  if(user){
-    userName = user.username;
-  }
+
+  const [mediaList, setMediaList] = useState([]);
+  const [selectedMedia, setSelectedMedia] = useState(null);
+
+  let userName = user?.username || 'User';
+
+
+  useEffect(() => {
+    const fetchUserMedia = async () => {
+      try {
+        const response = await apiRequest('social/socialApps', 'GET');
+        setMediaList(response);
+        console.log(response);
+      } catch (error) {
+        console.error('Error fetching social media apps:', error);
+      }
+    };
+    if (user) fetchUserMedia();
+  }, []);
+
+
+
+  const handleMediaSelect = (media) => {
+    setSelectedMedia(media);
+    navigate(`/appDashboard/${media.id}`); // Navigate to media's dashboard
+  };
 
   const handleAddNewApp = () => {
-    if(user){
+    if (user) {
       navigate('/addMedia');
-    }else{
+    } else {
       navigate('/login');
     }
   };
 
   return (
     <nav className="navbar d-none d-md-flex">
-      {/* Top row with user profile */}
+      {/* User Profile Section */}
       <div className="user-profile">
-        <img src="user-profile-pic.jpg" alt="User Profile" className="profile-pic" />
-        <p className="user-name">{userName || 'User'}</p>
+        <img
+          src="user-profile-pic.jpg"
+          alt="User Profile"
+          className="profile-pic"
+        />
+        <p className="user-name">{userName}</p>
       </div>
 
-      {/* Social Apps List */}
+      {/* Dynamically Display User's Social Media Apps */}
       <div className="social-apps">
         <ul>
-          {/* Social media app list items */}
-          <li className="app-item active" id="app1">
-            <i className="bi bi-facebook app-icon"></i>
-              <Link to="/appDashboard"><span className="app-name">Facebook</span></Link>
-            
-          </li>
-          <li className="app-item" id="app2">
-            <i className="bi bi-twitter app-icon"></i>
-            <span className="app-name">Twitter</span>
-          </li>
-          <li className="app-item" id="app3">
-            <i className="bi bi-instagram app-icon"></i>
-            <span className="app-name">Instagram</span>
-          </li>
+          {mediaList.length > 0 ? (
+            mediaList.map((media) => (
+              <li
+                key={media.id}
+                className={`app-item ${media?.id === appId ? "active" : ""
+                  }`}
+                onClick={() => handleMediaSelect(media)}
+                style={{ cursor: "pointer" }}
+              >
+                <i className={`bi bi-${media.icon} app-icon`}></i>
+                <span className="app-name">{media.platform}</span>
+              </li>
+            ))
+          ) : (
+            <p>No media added yet.</p>
+          )}
         </ul>
       </div>
 
-      
+      {/* Add New Media Button */}
       <div className="add-new-app">
-        <button className="btn btn-primary" id="addAppBtn" onClick={handleAddNewApp}>
+        <button
+          className="btn btn-primary"
+          id="addAppBtn"
+          onClick={handleAddNewApp}
+        >
           <i className="bi bi-plus-circle"></i> Add New Social
         </button>
       </div>
