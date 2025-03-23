@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
 
 import '../assets/styles/userProfile.css'
 
 const UserProfile = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: 'Username',
     mobile: '+1234567890',
@@ -29,30 +31,41 @@ const UserProfile = () => {
 
   const getUserProfile = async () => {
     try {
-      const userData = JSON.parse(localStorage.getItem('user'));
-      if (!userData) return;
+      const userData = JSON.parse(localStorage.getItem("user"));
 
-      const token = userData?.token;
-      const response = await axios.get('http://localhost:5001/api/user/profile', {
+      // If user data or token is missing, redirect to login
+      if (!userData || !userData.token) {
+        navigate("/login");
+        return;
+      }
+
+      const token = userData.token;
+
+      const response = await axios.get("http://localhost:5001/api/user/profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
-      if (!response.data) {
-        return
+
+      // If user data is missing, remove from localStorage and redirect
+      if (!response.data.user) {
+        localStorage.removeItem("user");
+        navigate("/login");
+        return;
       }
 
-      ;
       setCurrentUser(response.data.user);
       setFormData(response.data.user);
-      setApps(response.data.apps); // Store apps in state
-
-      console.log(response);
+      setApps(response.data.apps);
     } catch (error) {
-      console.error('Error fetching user profile', error);
+      console.error("Error fetching user profile", error);
+
+      // Redirect to login on error
+      localStorage.removeItem("user");
+      navigate("/login");
     }
   };
+
 
   useEffect(() => {
     getUserProfile();
@@ -135,7 +148,7 @@ const UserProfile = () => {
                 <tr>
                   <td>Want to change password?</td>
                   <td>
-                    <Link to="/forgot-password" className="btn btn-primary">
+                    <Link to="/change-password" className="btn btn-primary">
                       Change Password
                     </Link>
                   </td>

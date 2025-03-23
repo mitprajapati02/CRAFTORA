@@ -16,6 +16,8 @@ import SignUp from './components/SignUp';
 import AddMedia from './components/AddMedia';
 import ContactUs from './components/ContactUs';
 import ForgotPass from './components/ForgotPass';
+import ChangePassword from './components/ChangePassword';
+import ResetPassword from './components/ResetPassword';
 
 import LoginPage from './components/LoginPage';
 import PrivacyPolicy from './components/PrivacyPolicy';
@@ -42,6 +44,9 @@ function App() {
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/forgot-password" element={<ForgotPass />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/change-password" element={< ChangePassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+
 
             {/* Full Layout Pages (Added missing routes) */}
             <Route path="/user-profile" element={<UserProfile />} />

@@ -41,7 +41,7 @@ const Layout = () => {
   }, [location.pathname]);
 
 
-  const miniLayoutPaths = ['/login', '/signup', '/terms&service', '/add-media', '/contact-us', '/forgot-password', '/privacy-policy'];
+  const miniLayoutPaths = ['/login', '/signup', '/terms&service', '/add-media', '/contact-us', '/forgot-password', '/privacy-policy', '/change-password', '/reset-password'];
   const fullLayoutPaths = {
     '/user-profile': <UserProfile />,
     '/app-dashboard': <AppDashboard />,

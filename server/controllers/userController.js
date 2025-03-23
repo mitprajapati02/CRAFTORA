@@ -1,5 +1,7 @@
 // eslint-disable-next-line no-undef
+const bcrypt = require("bcryptjs");
 const User = require("../models/User");
+const nodemailer = require("nodemailer");
 
 const getUserProfile = async (req, res) => {
   try {
@@ -106,17 +108,106 @@ const updateUserPassword = async (req, res) => {
 
 const changePassword = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email }).exec();
-    if (user) {
-      user.password = password;
-      await user.save();
-      res.json({ message: "Password updated successfully" });
-    } else {
-      res.status(404).json({ message: "User not found" });
+    const { currentPassword, newPassword, token } = req.body;
+
+    if (!token) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized. No token provided." });
     }
+
+    // Find user by token
+    const user = await User.findOne({ token });
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found or invalid token." });
+    }
+
+    // Verify if the current password is correct
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res
+        .status(400)
+        .json({ message: "Current password is incorrect." });
+    }
+
+    // Hash the new password before saving
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update password
+    user.password = hashedPassword;
+    await user.save();
+
+    res.json({ message: "Password changed successfully." });
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await user.save();
+
+    const resetLink = `http://localhost:5173/reset-password/${user.token}`;
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "craftora7@gmail.com",
+        pass: "tdtg gdwm ujbg uyuz", // Use App Password
+      },
+      tls: {
+        rejectUnauthorized: false, // Bypass SSL issue
+      },
+    });
+
+    const mailOptions = {
+      from: "craftora7@gmail.com",
+      to: user.email,
+      subject: "Reset Your Password",
+      html: `
+        <p>Hello,</p>
+        <p>You requested to reset your password. Click the link below to reset it:</p>
+        <p><a href="${resetLink}" style="color: blue;">Reset Password</a></p>
+        <p>If you didn't request this, ignore this email.</p>
+        <p>Thanks,<br/>Your App Team</p>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.json({ message: "Reset link sent to your email" });
+  } catch (error) {
+    console.error("Error in forgotPassword:", error);
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { token, newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({ token });
+    if (!user) return res.status(400).json({ message: "Invalid token" });
+
+    // Hash new password
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    res.json({ message: "Password reset successful" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -126,4 +217,6 @@ module.exports = {
   updateUserProfile,
   updateUserPassword,
   changePassword,
+  resetPassword,
+  forgotPassword,
 };
