@@ -69,6 +69,14 @@ th {
     width: 90%;
   }
 }
+@media (max-width: 768px) {
+  /* Mobile screens */
+  .profile-pic {
+    width: 100px !important;
+    height: 100px !important;
+    border-radius: 50% !important;
+  }
+}
 
 .row {
   justify-content: center;

@@ -13,6 +13,7 @@ const OffcanvasNavbar = () => {
   const user = JSON.parse(localStorage.getItem('user'));
   const [mediaList, setMediaList] = useState([]);
   const [selectedMedia, setSelectedMedia] = useState(null);
+  const [profilePic, setProfilePic] = useState(null);
 
   let userName = user?.username || 'User';
 
@@ -21,6 +22,7 @@ const OffcanvasNavbar = () => {
       try {
         const response = await apiRequest('social/socialApps', 'GET');
         setMediaList(response);
+        setProfilePic(response[0]?.profilePic);
       } catch (error) {
         console.error('Error fetching social media apps:', error);
       }
@@ -50,7 +52,11 @@ const OffcanvasNavbar = () => {
       <div className="offcanvas-body">
         {/* User Profile */}
         <div className="user-profile">
-          <img src="user-profile-pic.jpg" alt="User Profile" className="profile-pic" />
+          <img
+            src={profilePic ? `http://localhost:5001${profilePic}` : "/default-profile.png"}
+            alt="Profile"
+            className="profile-pic"
+          />
           <p className="user-name">{userName}</p>
         </div>
 

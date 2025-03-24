@@ -39,6 +39,8 @@ const ForgotPass = () => {
               placeholder="Email Address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              style={{ backgroundColor: 'white' , color: 'black'}}
+
               required
             />
           </div>

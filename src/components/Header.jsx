@@ -34,20 +34,25 @@ const Header = () => {
           data-bs-toggle="offcanvas"
           data-bs-target="#navbarOffcanvas"
         ></i>
-        <span className="logo d-md-none">
-          <img src={Logo} alt="Logo" width="150px" />
-        </span>
+        
         <i className="bi bi-star-fill icon-hover d-none d-md-inline"></i>
         <span className="d-none d-md-inline"><Link to="/user-dashboard" className="text-decoration-none " style={{ color: '#7f91f2' }}>Dashboard</Link> | {pageName || 'user-dashboard'}</span>
+
       </div>
+      <span className="logo">
+          <Link to="/user-dashboard" className="text-decoration-none ">
+            <img src={Logo} alt="Logo" width="150px" className="craftoraLogo" />
+          </Link>
+        </span>
       <div className="header-right d-flex align-items-center gap-3">
-        <div className="search-bar d-none d-sm-flex">
-          <i className="bi bi-search icon-hover"></i>
+        
+        <div className="search-bar d-none d-sm-flex" style={{ display: 'none' }}>
+          <i className="bi bi-search icon-hover d-none"></i>
           <input type="text" placeholder="Search" />
-          <i className="bi bi-command icon-hover"></i>
+          <i className="bi bi-command icon-hover d-none"></i>
         </div>
         <i
-          className="bi bi-search icon-hover d-block d-sm-none"
+          className="bi bi-search icon-hover d-none d-sm-none"
           data-bs-toggle="offcanvas"
           data-bs-target="#searchOffcanvas"
         ></i>

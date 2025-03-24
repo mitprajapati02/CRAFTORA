@@ -64,7 +64,7 @@ const AppDashboard = () => {
                 console.error('Error fetching app details:', error);
                 setError(error.message);
                 setLoading(false);
-                console.log(response.data.states);
+
             }
         };
         fetchAppData();
@@ -167,7 +167,6 @@ const AppDashboard = () => {
         const updatedFields = {
             mediaName: finalProfile.mediaName,
             inMediaUsername: finalProfile.inMediaUsername,
-            inMediaProfileImg: finalProfile.inMediaProfileImg,
             states: finalProfile.states,
             values: finalProfile.values,
             url: finalProfile.url
@@ -314,11 +313,6 @@ const AppDashboard = () => {
 
                     {/* Profile Section */}
                     <div className="text-center">
-                        <img
-                            src={appData.inMediaProfileImg || 'https://via.placeholder.com/100'}
-                            alt="Profile"
-                            className="profile-photo mb-3"
-                        />
                         <h4>{appData.inMediaUsername || 'Username'}</h4>
 
                         {/* Stats Section */}
@@ -358,17 +352,6 @@ const AppDashboard = () => {
                                 />
                             </div>
 
-                            {/* Profile Image */}
-                            <div className="mb-3">
-                                <label className="form-label">Profile Photo</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    name="inMediaProfileImg"
-                                    value={editProfile.inMediaProfileImg || ""}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
                             <div className="mb-3">
                                 <label className="form-label"> App URL</label>
                                 <input

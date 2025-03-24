@@ -20,6 +20,7 @@ const Navbar = () => {
   const user = JSON.parse(localStorage.getItem('user'));
 
   const [mediaList, setMediaList] = useState([]);
+  const [profilePic, setProfilePic] = useState(null);
   const [selectedMedia, setSelectedMedia] = useState(null);
 
   let userName = user?.username || 'User';
@@ -30,6 +31,7 @@ const Navbar = () => {
       try {
         const response = await apiRequest('social/socialApps', 'GET');
         setMediaList(response);
+        setProfilePic(response[0]?.profilePic);
       } catch (error) {
         console.error('Error fetching social media apps:', error);
       }
@@ -57,8 +59,8 @@ const Navbar = () => {
       {/* User Profile Section */}
       <div className="user-profile">
         <img
-          src="user-profile-pic.jpg"
-          alt="User Profile"
+          src={profilePic ? `http://localhost:5001${profilePic}` : "/default-profile.png"}
+          alt="Profile"
           className="profile-pic"
         />
         <p className="user-name">{userName}</p>

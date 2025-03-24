@@ -87,7 +87,7 @@ const ChangePassword = () => {
                             placeholder="Current Password"
                             value={formData.currentPassword}
                             onChange={handleChange}
-                            style={{ backgroundColor: 'black' }}
+                            style={{ backgroundColor: 'white' , color: 'black'}}
                             required
                         />
                     </div>
@@ -101,7 +101,7 @@ const ChangePassword = () => {
                             placeholder="New Password (min. 6 characters)"
                             value={formData.newPassword}
                             onChange={handleChange}
-                            style={{ backgroundColor: 'black' }}
+                            style={{ backgroundColor: 'white' , color: 'black'}}
                             required
                         />
                         {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}

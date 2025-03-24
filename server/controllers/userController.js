@@ -2,6 +2,7 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const nodemailer = require("nodemailer");
+const path = require("path");
 
 const getUserProfile = async (req, res) => {
   try {
@@ -16,7 +17,7 @@ const getUserProfile = async (req, res) => {
     // Step 2: Find the user and populate social media apps
     const user = await User.findOne({ token })
       .select("-password -token") // Exclude password & token
-      .populate("socialMediaApps", "mediaName _id inMediaProfileImg") // Populate apps
+      .populate("socialMediaApps", "mediaName _id ") // Populate apps
       .exec();
 
     if (!user) {
@@ -28,7 +29,6 @@ const getUserProfile = async (req, res) => {
       id: app._id,
       platform: app.mediaName,
       icon: getPlatformIcon(app.mediaName),
-      profileImg: app.inMediaProfileImg || "", // Get profile image if available
     }));
 
     // Step 4: Send user data along with their social media apps
@@ -59,25 +59,33 @@ const updateUserProfile = async (req, res) => {
     const user = await User.findOne({ token })
       .select("-password -token")
       .exec();
-    if (user) {
-      user.username = req.body.username || user.username;
-      user.email = req.body.email || user.email;
-      user.profession = req.body.profession || user.profession;
-      user.age = req.body.age || user.age;
-      if (req.body.password) {
-        user.password = req.body.password;
-      }
 
-      const updatedUser = await user.save();
-      res.json({
-        message: "User updated successfully",
-        user: {
-          username: updatedUser.username,
-          email: updatedUser.email,
-          profession: updatedUser.profession,
-        },
-      });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
+
+    // Update user fields
+    user.username = req.body.username || user.username;
+    user.email = req.body.email || user.email;
+    user.profession = req.body.profession || user.profession;
+    user.age = req.body.age || user.age;
+
+    // Update profile picture if a new file is uploaded
+    if (req.file) {
+      user.profilePic = `/uploads/${req.file.filename}`;
+    }
+
+    const updatedUser = await user.save();
+
+    res.json({
+      message: "User updated successfully",
+      user: {
+        username: updatedUser.username,
+        email: updatedUser.email,
+        profession: updatedUser.profession,
+        profilePic: updatedUser.profilePic, // Return updated profile picture
+      },
+    });
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });
   }

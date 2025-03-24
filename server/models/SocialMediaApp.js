@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const socialMediaAppSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 
     mediaName: { type: String, required: true },
     inMediaUsername: {
@@ -10,7 +10,6 @@ const socialMediaAppSchema = new mongoose.Schema(
       unique: true,
       required: true,
     },
-    inMediaProfileImg: { type: String, default: '' },
     bio: { type: String, maxlength: 500 },
 
     states: {
@@ -27,15 +26,14 @@ const socialMediaAppSchema = new mongoose.Schema(
 
     tags: [{ type: String, default: [] }],
 
-    url: { type: String, default: '' },
+    url: { type: String, default: "" },
 
-    reminders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reminder' }],
-    todoLists: [{ type: mongoose.Schema.Types.ObjectId, ref: 'TodoList' }],
-
+    reminders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Reminder" }],
+    todoLists: [{ type: mongoose.Schema.Types.ObjectId, ref: "TodoList" }],
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model('SocialMediaApp', socialMediaAppSchema);
+module.exports = mongoose.model("SocialMediaApp", socialMediaAppSchema);

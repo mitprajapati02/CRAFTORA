@@ -63,7 +63,7 @@ const Sidebar = () => {
         <h5>Reminders</h5>
         <ul className="list-group mt-2">
           {data.length > 0 ? (
-            data.slice(0, 3).map((app, appIndex) =>
+            data.slice(0, 5).map((app, appIndex) =>
               (app.reminders || [])
                 .filter(reminder => new Date(reminder.date) >= new Date().setHours(0, 0, 0, 0))
                 .slice(0, 3)
@@ -89,7 +89,7 @@ const Sidebar = () => {
         <h5>To-Do List</h5>
         <ul className="list-group mt-2">
           {data.length > 0 ? (
-            data.slice(0, 3).map((app, appIndex) =>
+            data.slice(0, 5).map((app, appIndex) =>
               (app.tasks || []).slice(0, 3).map((task, index) => (
                 <li key={`${appIndex}-${index}`} className="list-group-item">
                   <span className="todo-name">{task.task}</span>

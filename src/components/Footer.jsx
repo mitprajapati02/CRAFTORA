@@ -76,13 +76,13 @@ const Footer = () => {
               <strong>Email:</strong> <a href="mailto:mp7702524@gmail.com">mp7702524@gmail.com</a>
             </p>
             <div className="social-icons d-flex gap-3 mt-2">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.instagram.com/mit25779/" target="_blank" rel="noopener noreferrer">
                 <i className="bi bi-instagram"></i>
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.linkedin.com/in/mit07" target="_blank">
                 <i className="bi bi-linkedin"></i>
               </a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/mitprajapati02" target="_blank" rel="noopener noreferrer">
                 <i className="bi bi-github"></i>
               </a>
             </div>

@@ -18,7 +18,8 @@
 }
 
 .header .search-bar {
-  display: flex;
+  /* display: flex; */
+  display: none !important;
   align-items: center;
   gap: 10px;
   background-color: #272828;
@@ -29,6 +30,7 @@
 }
 
 .search-bar input {
+  display: none !important;
   border: none;
   background: none;
   outline: none;
@@ -41,10 +43,16 @@
     display: none;
   }
   .header .header-left .logo {
-    display: none;
+    display: block;
     font-size: 1.5rem;
     color: #94dc98;
   }
+}
+
+.header .header-left .logo {
+  display: block;
+  font-size: 1.5rem;
+  color: #94dc98;
 }
 
 @media (max-width: 576px) {
@@ -53,7 +61,7 @@
     justify-content: space-between;
   }
   .header .header-left .logo {
-    display: none;
+    display: block;
     font-size: 1.5rem;
     color: #94dc98;
   }

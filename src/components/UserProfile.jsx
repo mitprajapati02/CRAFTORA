@@ -7,33 +7,31 @@ import { Link } from 'react-router-dom';
 
 import '../assets/styles/userProfile.css'
 
+
 const UserProfile = () => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    username: 'Username',
-    mobile: '+1234567890',
-    email: 'user@example.com',
-    profession: 'Software Developer',
-    age: '',
-    profilePicture: '',
+    username: "Username",
+    mobile: "+1234567890",
+    email: "user@example.com",
+    profession: "Software Developer",
+    age: 25,
+    profilePicture: "",
   });
 
   const [apps, setApps] = useState([]); // Store social media apps
+  const [profilePic, setProfilePic] = useState(null); // State for file
+  const [currentUser, setCurrentUser] = useState(null); // Store current user data
 
-  const [currentUser, setCurrentUser] = useState({
-    username: 'Username',
-    mobile: '+1234567890',
-    email: 'user@example.com',
-    profession: 'Software Developer',
-    age: 25,
-    profilePicture: '',
-  });
+  useEffect(() => {
+    getUserProfile();
+  }, []);
 
   const getUserProfile = async () => {
     try {
       const userData = JSON.parse(localStorage.getItem("user"));
 
-      // If user data or token is missing, redirect to login
       if (!userData || !userData.token) {
         navigate("/login");
         return;
@@ -47,7 +45,6 @@ const UserProfile = () => {
         },
       });
 
-      // If user data is missing, remove from localStorage and redirect
       if (!response.data.user) {
         localStorage.removeItem("user");
         navigate("/login");
@@ -59,42 +56,57 @@ const UserProfile = () => {
       setApps(response.data.apps);
     } catch (error) {
       console.error("Error fetching user profile", error);
-
-      // Redirect to login on error
       localStorage.removeItem("user");
       navigate("/login");
     }
   };
 
-
-  useEffect(() => {
-    getUserProfile();
-  }, []);
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    setProfilePic(e.target.files[0]); // Store the selected file
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const userData = JSON.parse(localStorage.getItem('user'));
+      const userData = JSON.parse(localStorage.getItem("user"));
       if (!userData) return;
 
-      const token = userData?.token;
-      const response = await axios.put('http://localhost:5001/api/user/profile', formData, {
+      const token = userData.token;
+
+      // Create FormData for file upload
+      const updatedFormData = new FormData();
+      updatedFormData.append("username", formData.username);
+      updatedFormData.append("email", formData.email);
+      updatedFormData.append("profession", formData.profession);
+      updatedFormData.append("age", formData.age);
+
+      if (profilePic) {
+        updatedFormData.append("profilePic", profilePic);
+      }
+
+      const response = await axios.put("http://localhost:5001/api/user/profile", updatedFormData, {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data", // Required for file upload
         },
       });
-      console.log(response);
-      alert('Profile updated successfully');
-      getUserProfile();
-    } catch (error) {
-      console.error('Error updating user profile', error);
-    }
-  }
 
+
+      alert("Profile updated successfully");
+      getUserProfile(); // Refresh profile data
+    } catch (error) {
+      console.error("Error updating user profile", error);
+    }
+  };
+
+  if (!currentUser) {
+    return <p>Loading...</p>;
+  }
   return (
     <div className="container mt-4">
       <div className="row">
@@ -102,10 +114,12 @@ const UserProfile = () => {
         <div className="col-lg-4 col-12 mb-4">
           <div className="card p-3">
             <img
-              src={'https://via.placeholder.com/300x200'}
+              src={currentUser.profilePic ? `http://localhost:5001${currentUser.profilePic}` : "/default-profile.png"}
               alt="Profile"
-              className="profile-img img-fluid"
+              className="profile-pic profile-img"
             />
+
+
             <h4 className="text-center mt-3">{currentUser.username || 'User'}</h4>
             <table className="table profile-info-table">
               <tbody>
@@ -170,10 +184,15 @@ const UserProfile = () => {
                   <label className="form-label">Username</label>
                   <input type="text" className="form-control" name="username" value={formData.username} onChange={handleChange} />
                 </div>
-                {/* <div className="mb-3">
+                <div className="mb-3">
                   <label className="form-label">Profile Picture</label>
-                  <input type="file" className="form-control" />
-                </div> */}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="form-control"
+                    onChange={(e) => setProfilePic(e.target.files[0])} // Store file in state
+                  />
+                </div>
                 <div className="mb-3">
                   <label className="form-label">Mobile</label>
                   <input type="text" className="form-control" name="mobile" value={formData.mobile} onChange={handleChange} />

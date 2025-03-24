@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 
 
 import '../assets/styles/AddMedia.css'
+import { OptionIcon } from 'lucide-react';
 
 
 const AddMedia = () => {
   const [formData, setFormData] = useState({
     mediaName: '',
     inMediaUsername: '',
-    inMediaProfileImg: '',
     bio: '',
     url: '',
     tag1: '',
@@ -39,11 +39,10 @@ const AddMedia = () => {
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-    console.log('Submitted Data:', formData);
+
     const formattedData = {
       mediaName: formData.mediaName,
       inMediaUsername: formData.inMediaUsername,
-      inMediaProfileImg: formData.inMediaProfileImg || '',
       bio: formData.bio || '',
       states: {
         stat1: formData.stat1,
@@ -67,7 +66,6 @@ const AddMedia = () => {
       setFormData({
         mediaName: '',
         inMediaUsername: '',
-        inMediaProfileImg: '',
         bio: '',
         url: '',
         tag1: '',
@@ -115,6 +113,12 @@ const AddMedia = () => {
               <option value="Facebook">Facebook</option>
               <option value="Instagram">Instagram</option>
               <option value="Twitter">Twitter</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Snapchat">Snapchat</option>
+              <option value="YouTube">YouTube</option>
+              <option value="Pinterest">Pinterest</option>
+              <option value="LeetCode">LeetCode</option>
+              <option value="Codeforces">Codeforces</option>
             </select>
           </div>
 
@@ -133,17 +137,6 @@ const AddMedia = () => {
               value={formData.inMediaUsername}
             />
           </div>
-
-
-          <div className="mb-3">
-            <label htmlFor="inMediaProfileImg" className="form-label">
-              In-App Profile Image
-            </label>
-            <input type="text" className="form-control" id="inMediaProfileImg" placeholder="Enter profile image URL"
-              value={formData.inMediaProfileImg}
-              onChange={handleChange} />
-          </div>
-
 
           <div className="row">
             {[1, 2, 3].map((num) => (

@@ -25,7 +25,6 @@ async function createSocialMediaApp(req, res) {
     const {
       mediaName,
       inMediaUsername,
-      inMediaProfileImg = "",
       bio = "",
       states = {},
       values = {},
@@ -43,7 +42,6 @@ async function createSocialMediaApp(req, res) {
       user: userId,
       mediaName,
       inMediaUsername,
-      inMediaProfileImg,
       bio,
       states,
       values,
@@ -67,23 +65,26 @@ async function createSocialMediaApp(req, res) {
 
 async function getAppsByUser(req, res) {
   try {
-    // Step 1: Get token from the Authorization header
+
     const token = req.headers.authorization.split(" ")[1];
 
-    // Step 2: Extract userId from the token
+
     const userId = await getUserIdFromToken(token);
 
-    // Step 3: Fetch SocialMediaApp documents for the user
-    const apps = await SocialMediaApp.find({ user: userId })
-      .populate("reminders") // Populate reminders
-      .populate("todoLists"); // Populate todoLists
 
-    // Step 4: Format the response
+    const apps = await SocialMediaApp.find({ user: userId })
+      .populate("reminders") 
+      .populate("todoLists");
+    
+    const user = await User.findById(userId)
+
+
     const formattedResponse = apps.map((app) => ({
-      id: app._id, // Unique ID
-      platform: app.mediaName, // Social media platform name
-      icon: getPlatformIcon(app.mediaName), // Get icon based on platform name
-      tasks: app.todoLists.at(0)?.tasks || [], // Extract task names
+      id: app._id, 
+      platform: app.mediaName,
+      icon: getPlatformIcon(app.mediaName),
+      tasks: app.todoLists.at(0)?.tasks || [],
+      profilePic : user.profilePic,
     }));
 
     // Step 5: Send formatted response
@@ -169,7 +170,6 @@ async function getAppById(req, res) {
       id: app._id,
       mediaName: app.mediaName,
       inMediaUsername: app.inMediaUsername,
-      inMediaProfileImg: app.inMediaProfileImg || "",
       bio: app.bio || "",
       states: app.states || {},
       values: app.values || {},
@@ -244,7 +244,6 @@ async function updateProfile(req, res) {
     const {
       mediaName = "",
       inMediaUsername = "",
-      inMediaProfileImg = "",
       states = {},
       values = {},
       url = "",
@@ -252,7 +251,7 @@ async function updateProfile(req, res) {
 
     const updatedAppProfile = await SocialMediaApp.findByIdAndUpdate(
       appId,
-      { mediaName, inMediaUsername, inMediaProfileImg, states, values, url },
+      { mediaName, inMediaUsername, states, values, url },
       { new: true }
     );
     await updatedAppProfile.save();

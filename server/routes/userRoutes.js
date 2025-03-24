@@ -1,4 +1,17 @@
 const express = require("express");
+
+const multer = require("multer");
+const path = require("path");
+
+const storage = multer.diskStorage({
+  destination: "uploads/", // Save images in 'uploads' directory
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
+  },
+});
+
+const upload = multer({ storage });
+
 const {
   getUserProfile,
   updateUserProfile,
@@ -11,7 +24,7 @@ const router = express.Router();
 
 router.get("/profile", getUserProfile);
 
-router.put("/profile", updateUserProfile);
+router.put("/profile", upload.single("profilePic"), updateUserProfile);
 
 router.patch("/change-password", changePassword);
 
