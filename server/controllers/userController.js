@@ -1,27 +1,25 @@
-// eslint-disable-next-line no-undef
-const bcrypt = require("bcryptjs");
-const User = require("../models/User");
-const nodemailer = require("nodemailer");
-const path = require("path");
+import bcrypt from 'bcryptjs';
+import User from '../models/User.js';
+import nodemailer from 'nodemailer';
 
 const getUserProfile = async (req, res) => {
   try {
     // Step 1: Get token from request headers
-    const token = req.headers.authorization?.split(" ")[1];
+    const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
       return res
         .status(401)
-        .json({ message: "Unauthorized: No token provided" });
+        .json({ message: 'Unauthorized: No token provided' });
     }
 
     // Step 2: Find the user and populate social media apps
     const user = await User.findOne({ token })
-      .select("-password -token") // Exclude password & token
-      .populate("socialMediaApps", "mediaName _id ") // Populate apps
+      .select('-password -token') // Exclude password & token
+      .populate('socialMediaApps', 'mediaName _id ') // Populate apps
       .exec();
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
 
     // Step 3: Format social media apps with icons
@@ -37,31 +35,32 @@ const getUserProfile = async (req, res) => {
       apps: formattedApps,
     });
   } catch (error) {
-    console.error("Error in getUserProfile:", error);
-    res.status(500).json({ message: "Server Error", error: error.message });
+    // eslint-disable-next-line no-console
+    console.error('Error in getUserProfile:', error);
+    res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
 
 function getPlatformIcon(platform) {
   const icons = {
-    Facebook: "bi bi-facebook",
-    Instagram: "bi bi-instagram",
-    Twitter: "bi bi-twitter",
-    LinkedIn: "bi bi-linkedin",
-    YouTube: "bi bi-youtube",
+    Facebook: 'bi bi-facebook',
+    Instagram: 'bi bi-instagram',
+    Twitter: 'bi bi-twitter',
+    LinkedIn: 'bi bi-linkedin',
+    YouTube: 'bi bi-youtube',
   };
-  return icons[platform] || "bi bi-globe";
+  return icons[platform] || 'bi bi-globe';
 }
 
 const updateUserProfile = async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization.split(' ')[1];
     const user = await User.findOne({ token })
-      .select("-password -token")
+      .select('-password -token')
       .exec();
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
 
     // Update user fields
@@ -78,7 +77,7 @@ const updateUserProfile = async (req, res) => {
     const updatedUser = await user.save();
 
     res.json({
-      message: "User updated successfully",
+      message: 'User updated successfully',
       user: {
         username: updatedUser.username,
         email: updatedUser.email,
@@ -87,21 +86,21 @@ const updateUserProfile = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
+    res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
 
 const updateUserPassword = async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization.split(' ')[1];
     const user = await User.findOne({ token })
-      .select("-password -token")
+      .select('-password -token')
       .exec();
     if (user) {
       user.password = req.body.password;
       const updatedUser = await user.save();
       res.json({
-        message: "Password updated successfully",
+        message: 'Password updated successfully',
         user: {
           username: updatedUser.username,
           email: updatedUser.email,
@@ -110,7 +109,7 @@ const updateUserPassword = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
+    res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
 
@@ -121,7 +120,7 @@ const changePassword = async (req, res) => {
     if (!token) {
       return res
         .status(401)
-        .json({ message: "Unauthorized. No token provided." });
+        .json({ message: 'Unauthorized. No token provided.' });
     }
 
     // Find user by token
@@ -130,7 +129,7 @@ const changePassword = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({ message: "User not found or invalid token." });
+        .json({ message: 'User not found or invalid token.' });
     }
 
     // Verify if the current password is correct
@@ -138,7 +137,7 @@ const changePassword = async (req, res) => {
     if (!isMatch) {
       return res
         .status(400)
-        .json({ message: "Current password is incorrect." });
+        .json({ message: 'Current password is incorrect.' });
     }
 
     // Hash the new password before saving
@@ -148,9 +147,9 @@ const changePassword = async (req, res) => {
     user.password = hashedPassword;
     await user.save();
 
-    res.json({ message: "Password changed successfully." });
+    res.json({ message: 'Password changed successfully.' });
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
+    res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
 
@@ -158,12 +157,12 @@ const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
-      return res.status(400).json({ message: "Email is required" });
+      return res.status(400).json({ message: 'Email is required' });
     }
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
 
     await user.save();
@@ -171,10 +170,10 @@ const forgotPassword = async (req, res) => {
     const resetLink = `http://localhost:5173/reset-password/${user.token}`;
 
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: 'gmail',
       auth: {
-        user: "craftora7@gmail.com",
-        pass: "tdtg gdwm ujbg uyuz", // Use App Password
+        user: 'craftora7@gmail.com',
+        pass: 'tdtg gdwm ujbg uyuz', // Use App Password
       },
       tls: {
         rejectUnauthorized: false, // Bypass SSL issue
@@ -182,9 +181,9 @@ const forgotPassword = async (req, res) => {
     });
 
     const mailOptions = {
-      from: "craftora7@gmail.com",
+      from: 'craftora7@gmail.com',
       to: user.email,
-      subject: "Reset Your Password",
+      subject: 'Reset Your Password',
       html: `
         <p>Hello,</p>
         <p>You requested to reset your password. Click the link below to reset it:</p>
@@ -195,36 +194,50 @@ const forgotPassword = async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
-    res.json({ message: "Reset link sent to your email" });
+    res.json({ message: 'Reset link sent to your email' });
   } catch (error) {
-    console.error("Error in forgotPassword:", error);
-    res.status(500).json({ message: "Server Error", error: error.message });
+    // eslint-disable-next-line no-console
+    console.error('Error in forgotPassword:', error);
+    res.status(500).json({ message: 'Server Error', error: error.message });
   }
 };
+
+
 
 const resetPassword = async (req, res) => {
   const { token, newPassword } = req.body;
 
   try {
     const user = await User.findOne({ token });
-    if (!user) return res.status(400).json({ message: "Invalid token" });
+    if (!user) return res.status(400).json({ message: 'Invalid token' });
 
     // Hash new password
     user.password = await bcrypt.hash(newPassword, 10);
     await user.save();
 
-    res.json({ message: "Password reset successful" });
+    res.json({ message: 'Password reset successful' });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
-// eslint-disable-next-line no-undef
-module.exports = {
+const checkToken = async (req, res) => {
+  const { token } = req.params;
+  const user = await User.findOne({ token });
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  res.json({ message: 'Token is valid' });
+};
+
+
+export {
   getUserProfile,
   updateUserProfile,
   updateUserPassword,
   changePassword,
   resetPassword,
   forgotPassword,
+  checkToken,
 };

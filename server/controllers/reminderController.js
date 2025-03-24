@@ -1,5 +1,5 @@
-const Reminder = require('../models/Reminder');
-const SocialMediaApp = require('../models/SocialMediaApp');
+import Reminder from '../models/Reminder.js';
+import SocialMediaApp from '../models/SocialMediaApp.js';
 
 async function createReminder(req, res) {
   try {
@@ -44,6 +44,7 @@ async function createReminder(req, res) {
     });
 
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error adding reminder:', error);
     res.status(500).json({ error: error.message });
   }
@@ -64,8 +65,10 @@ async function getRemindersByApp(req, res) {
     // Respond with the list of reminders
     res.json(reminders);
   } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error fetching reminders:', error);
     res.status(500).json({ error: error.message });
   }
 }
 
-module.exports = { createReminder, getRemindersByApp };
+export { createReminder, getRemindersByApp };

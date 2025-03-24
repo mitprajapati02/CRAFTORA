@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const todoListSchema = new mongoose.Schema({
   app: { type: mongoose.Schema.Types.ObjectId, ref: 'SocialMediaApp' },
@@ -10,4 +10,4 @@ const todoListSchema = new mongoose.Schema({
   ],
 });
 
-module.exports = mongoose.model('TodoList', todoListSchema);
+export default mongoose.model('TodoList', todoListSchema);

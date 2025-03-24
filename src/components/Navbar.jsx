@@ -12,7 +12,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../assets/styles/navbar.css'
 import '../assets/styles/offcanvas.css'
 
-import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -21,6 +20,7 @@ const Navbar = () => {
 
   const [mediaList, setMediaList] = useState([]);
   const [profilePic, setProfilePic] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [selectedMedia, setSelectedMedia] = useState(null);
 
   let userName = user?.username || 'User';
@@ -33,6 +33,7 @@ const Navbar = () => {
         setMediaList(response);
         setProfilePic(response[0]?.profilePic);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Error fetching social media apps:', error);
       }
     };
@@ -59,7 +60,7 @@ const Navbar = () => {
       {/* User Profile Section */}
       <div className="user-profile">
         <img
-          src={profilePic ? `http://localhost:5001${profilePic}` : "/default-profile.png"}
+          src={profilePic ? `http://localhost:5001${profilePic}` : '/default-profile.png'}
           alt="Profile"
           className="profile-pic"
         />
@@ -73,10 +74,10 @@ const Navbar = () => {
             mediaList.map((media) => (
               <li
                 key={media.id}
-                className={`app-item ${media?.id === appId ? "active" : ""
+                className={`app-item ${media?.id === appId ? 'active' : ''
                   }`}
                 onClick={() => handleMediaSelect(media)}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
               >
                 <i className={`bi bi-${media.icon} app-icon`}></i>
                 <span className="app-name">{media.platform}</span>

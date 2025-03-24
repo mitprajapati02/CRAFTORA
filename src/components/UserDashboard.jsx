@@ -4,32 +4,26 @@ import '../assets/styles/UserDashboard.css'
 import { apiRequest } from '../utils/apiService';
 import { useEffect, useState } from 'react';
 
-
-
-
-
 const UserDashboard = () => {
   const user = JSON.parse(localStorage.getItem('user'));
   const [socialMediaData, setSocialMediaData] = useState([]);
+  const navigate = useNavigate();
 
-  if (user) {
-
-    useEffect(() => {
-      const fetchApps = async () => {
+  useEffect(() => {
+    const fetchApps = async () => {
+      if (user) {
         try {
           const response = await apiRequest('social/socialApps', 'GET');
           setSocialMediaData(response);
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error('Error fetching social media apps:', error);
         }
-      };
+      }
+    };
 
-      fetchApps();
-    }, []);
-  }
-
-  const navigate = useNavigate()
-
+    fetchApps();
+  }, [user]);
 
   return (
     <div className="main-container hide-scrollbar main-content">
@@ -59,9 +53,6 @@ const UserDashboard = () => {
         ))
       ) : null}
 
-
-
-
       <div className="add-card">
         <center>
           {user ? (<Link to="/add-media" className="text-decoration-none "> <i className="bi bi-plus"></i></Link>) : (
@@ -69,7 +60,6 @@ const UserDashboard = () => {
           )}
         </center>
       </div>
-
     </div>
   );
 };

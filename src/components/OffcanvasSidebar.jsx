@@ -17,6 +17,7 @@ const OffcanvasSidebar = () => {
                 const response = await apiRequest('social/tasks', 'GET');
                 setData(response || []); // Ensure data is always an array
             } catch (error) {
+                // eslint-disable-next-line no-console
                 console.error('Error fetching social media tasks:', error);
             }
         };

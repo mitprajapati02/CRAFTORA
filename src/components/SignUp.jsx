@@ -56,8 +56,9 @@ const SignUp = () => {
       localStorage.setItem('user', JSON.stringify({ username, email, token }));
       navigate('/user-dashboard');
 
-    } catch (err) {
-      console.error('Signup failed', err);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Signup failed', error);
     }
   };
 

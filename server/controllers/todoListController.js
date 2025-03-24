@@ -1,5 +1,5 @@
-const TodoList = require('../models/TodoList');
-const SocialMediaApp = require('../models/SocialMediaApp');
+import TodoList from '../models/TodoList.js';
+import SocialMediaApp from '../models/SocialMediaApp.js';
 
 async function createTodoList(req, res) {
   try {
@@ -48,6 +48,7 @@ async function createTodoList(req, res) {
     res.status(200).json({ message: 'Task added successfully', task: newTask });
 
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     res.status(500).json({ error: error.message });
   }
@@ -69,6 +70,7 @@ async function markTaskCompleted(req, res) {
 
     res.status(200).json({ message: 'Task updated successfully', task });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -89,6 +91,7 @@ async function deleteTask(req, res) {
 
     res.status(200).json({ message: 'Task deleted successfully' });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -109,7 +112,7 @@ async function getTodoListsByApp(req, res) {
   }
 }
 
-module.exports = {
+export {
   createTodoList,
   markTaskCompleted,
   deleteTask,

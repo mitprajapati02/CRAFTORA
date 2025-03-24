@@ -1,27 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { useState } from "react";
-import axios from "axios";
+import { useState } from 'react';
+import axios from 'axios';
 
 import '../assets/styles/ForgotPass.css'
 
 
 const ForgotPass = () => {
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
-    setError("");
+    setMessage('');
+    setError('');
 
     try {
-      const response = await axios.post("http://localhost:5001/api/user/forgot-password", { email });
+      const response = await axios.post('http://localhost:5001/api/user/forgot-password', { email });
       setMessage(response.data.message);
     } catch (error) {
-      setError(error.response?.data?.message || "Something went wrong.");
+      setError(error.response?.data?.message || 'Something went wrong.');
     }
   };
 

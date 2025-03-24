@@ -1,5 +1,5 @@
-const express = require("express");
-const {
+import express from 'express';
+import {
   createSocialMediaApp,
   getAppsByUser,
   removeApp,
@@ -7,16 +7,16 @@ const {
   getTasksByUser,
   updateBio,
   updateProfile,
-} = require("../controllers/socialMediaController");
+} from '../controllers/socialMediaController.js';
 
 const router = express.Router();
 
-router.post("/socialApp", createSocialMediaApp);
-router.get("/socialApps/", getAppsByUser);
-router.delete("/socialApp/:appId", removeApp);
-router.get("/socialApp/:appId", getAppById);
-router.get("/tasks", getTasksByUser);
-router.put("/socialApp/updateBio", updateBio);
-router.patch("/socialApp/updateProfile", updateProfile);
+router.post('/socialApp', createSocialMediaApp);
+router.get('/socialApps/', getAppsByUser);
+router.delete('/socialApp/:appId', removeApp);
+router.get('/socialApp/:appId', getAppById);
+router.get('/tasks', getTasksByUser);
+router.put('/socialApp/updateBio', updateBio);
+router.patch('/socialApp/updateProfile', updateProfile);
 
-module.exports = router;
+export default router;

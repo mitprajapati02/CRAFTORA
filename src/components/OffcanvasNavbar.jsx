@@ -12,6 +12,7 @@ const OffcanvasNavbar = () => {
   const { appId } = useParams();
   const user = JSON.parse(localStorage.getItem('user'));
   const [mediaList, setMediaList] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [selectedMedia, setSelectedMedia] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
 
@@ -24,6 +25,7 @@ const OffcanvasNavbar = () => {
         setMediaList(response);
         setProfilePic(response[0]?.profilePic);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Error fetching social media apps:', error);
       }
     };
@@ -53,7 +55,7 @@ const OffcanvasNavbar = () => {
         {/* User Profile */}
         <div className="user-profile">
           <img
-            src={profilePic ? `http://localhost:5001${profilePic}` : "/default-profile.png"}
+            src={profilePic ? `http://localhost:5001${profilePic}` : '/default-profile.png'}
             alt="Profile"
             className="profile-pic"
           />

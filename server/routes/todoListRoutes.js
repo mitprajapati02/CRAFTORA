@@ -1,10 +1,10 @@
-const express = require('express');
-const {
+import express from 'express';
+import {
   createTodoList,
   markTaskCompleted,
   deleteTask,
   getTodoListsByApp,
-} = require('../controllers/todoListController');
+} from '../controllers/todoListController.js';
 
 const router = express.Router();
 
@@ -17,4 +17,4 @@ router.put('/toggle/:taskId', markTaskCompleted);
 router.delete('/delete/:taskId', deleteTask);
 
 
-module.exports = router;
+export default router;

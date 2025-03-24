@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const reminderSchema = new mongoose.Schema({
   app: {
@@ -10,4 +10,4 @@ const reminderSchema = new mongoose.Schema({
   date: { type: Date, required: true },
 });
 
-module.exports = mongoose.model('Reminder', reminderSchema);
+export default mongoose.model('Reminder', reminderSchema);

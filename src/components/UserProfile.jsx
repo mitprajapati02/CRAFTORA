@@ -12,12 +12,12 @@ const UserProfile = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    username: "Username",
-    mobile: "+1234567890",
-    email: "user@example.com",
-    profession: "Software Developer",
+    username: 'Username',
+    mobile: '+1234567890',
+    email: 'user@example.com',
+    profession: 'Software Developer',
     age: 25,
-    profilePicture: "",
+    profilePicture: '',
   });
 
   const [apps, setApps] = useState([]); // Store social media apps
@@ -30,24 +30,24 @@ const UserProfile = () => {
 
   const getUserProfile = async () => {
     try {
-      const userData = JSON.parse(localStorage.getItem("user"));
+      const userData = JSON.parse(localStorage.getItem('user'));
 
       if (!userData || !userData.token) {
-        navigate("/login");
+        navigate('/login');
         return;
       }
 
       const token = userData.token;
 
-      const response = await axios.get("http://localhost:5001/api/user/profile", {
+      const response = await axios.get('http://localhost:5001/api/user/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
       if (!response.data.user) {
-        localStorage.removeItem("user");
-        navigate("/login");
+        localStorage.removeItem('user');
+        navigate('/login');
         return;
       }
 
@@ -55,9 +55,10 @@ const UserProfile = () => {
       setFormData(response.data.user);
       setApps(response.data.apps);
     } catch (error) {
-      console.error("Error fetching user profile", error);
-      localStorage.removeItem("user");
-      navigate("/login");
+      // eslint-disable-next-line no-console
+      console.error('Error fetching user profile', error);
+      localStorage.removeItem('user');
+      navigate('/login');
     }
   };
 
@@ -65,48 +66,47 @@ const UserProfile = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFileChange = (e) => {
-    setProfilePic(e.target.files[0]); // Store the selected file
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const userData = JSON.parse(localStorage.getItem("user"));
+      const userData = JSON.parse(localStorage.getItem('user'));
       if (!userData) return;
 
       const token = userData.token;
 
       // Create FormData for file upload
       const updatedFormData = new FormData();
-      updatedFormData.append("username", formData.username);
-      updatedFormData.append("email", formData.email);
-      updatedFormData.append("profession", formData.profession);
-      updatedFormData.append("age", formData.age);
+      updatedFormData.append('username', formData.username);
+      updatedFormData.append('email', formData.email);
+      updatedFormData.append('profession', formData.profession);
+      updatedFormData.append('age', formData.age);
 
       if (profilePic) {
-        updatedFormData.append("profilePic", profilePic);
+        updatedFormData.append('profilePic', profilePic);
       }
 
-      const response = await axios.put("http://localhost:5001/api/user/profile", updatedFormData, {
+      await axios.put('http://localhost:5001/api/user/profile', updatedFormData, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data", // Required for file upload
+          'Content-Type': 'multipart/form-data', // Required for file upload
         },
       });
 
 
-      alert("Profile updated successfully");
+      alert('Profile updated successfully');
       getUserProfile(); // Refresh profile data
     } catch (error) {
-      console.error("Error updating user profile", error);
+      // eslint-disable-next-line no-console
+      console.error('Error updating user profile', error);
     }
   };
 
   if (!currentUser) {
     return <p>Loading...</p>;
   }
+
   return (
     <div className="container mt-4">
       <div className="row">
@@ -114,7 +114,7 @@ const UserProfile = () => {
         <div className="col-lg-4 col-12 mb-4">
           <div className="card p-3">
             <img
-              src={currentUser.profilePic ? `http://localhost:5001${currentUser.profilePic}` : "/default-profile.png"}
+              src={currentUser.profilePic ? `http://localhost:5001${currentUser.profilePic}` : '/default-profile.png'}
               alt="Profile"
               className="profile-pic profile-img"
             />

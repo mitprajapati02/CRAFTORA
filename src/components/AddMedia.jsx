@@ -59,7 +59,7 @@ const AddMedia = () => {
     };
 
     try {
-      const response = await apiRequest('social/socialApp', 'POST', formattedData);
+      await apiRequest('social/socialApp', 'POST', formattedData);
 
       alert('App details added successfully!');
 
@@ -82,6 +82,7 @@ const AddMedia = () => {
       navigate('/user-dashboard');
 
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error:', error);
       alert('Failed to add app details. Please try again.');
     }

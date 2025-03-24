@@ -26,8 +26,6 @@ const AppDashboard = () => {
 
     const [todoLists, setTodoLists] = useState([]);
 
-    const [reminders, setReminders] = useState([]);
-
     const navigate = useNavigate();
 
 
@@ -47,27 +45,19 @@ const AppDashboard = () => {
                 });
 
                 setAppData(response.data);
-
                 setEditProfile({ ...response.data });
-
                 setBio(response.data.bio || '');
-
                 setTags(response.data.tags || []);
 
-
                 const firstTodoList = response.data.todoLists?.[0] || { tasks: [] };
-
                 setTodoLists(firstTodoList.tasks);
 
-                setReminders(response.data.reminders || []);
-
                 setLoading(false);
-
             } catch (error) {
+                // eslint-disable-next-line no-console
                 console.error('Error fetching app details:', error);
                 setError(error.message);
                 setLoading(false);
-
             }
         };
         fetchAppData();
@@ -114,6 +104,7 @@ const AppDashboard = () => {
                 e.target.reset();
             }
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.error('Error adding reminder:', error);
             alert('Failed to add reminder.');
         }
@@ -177,7 +168,7 @@ const AppDashboard = () => {
 
         try {
 
-            const response = await axios.patch("http://localhost:5001/api/social/socialApp/updateProfile", updatedFields,
+            const response = await axios.patch('http://localhost:5001/api/social/socialApp/updateProfile', updatedFields,
                 {
                     headers: {
                         Authorization: `Bearer ${appId}`,
@@ -193,7 +184,8 @@ const AppDashboard = () => {
                 document.getElementById('editProfileForm').classList.remove('show');
             }
         } catch (error) {
-            console.error("Error updating profile:", error);
+            // eslint-disable-next-line no-console
+            console.error('Error updating profile:', error);
         }
 
     };
@@ -223,6 +215,7 @@ const AppDashboard = () => {
                 e.target.reset();
             }
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.error('Error adding task:', error);
             alert('Failed to add task.');
         }
@@ -249,6 +242,7 @@ const AppDashboard = () => {
                 );
             }
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.error('Error toggling task:', error);
             alert('Failed to update task status.');
         }
@@ -270,6 +264,7 @@ const AppDashboard = () => {
                 setTodoLists((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
             }
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.error('Error deleting task:', error);
             alert('Failed to delete task.');
         }
@@ -291,6 +286,7 @@ const AppDashboard = () => {
                 document.getElementById('editBioForm').classList.remove('show');
             }
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.error('Error updating bio:', error);
             alert('Failed to update bio.');
         }
@@ -298,14 +294,16 @@ const AppDashboard = () => {
 
 
     const handleRemove = async () => {
-        if (!window.confirm("Are you sure you want to delete this app?")) return;
+        if (!window.confirm('Are you sure you want to delete this app?')) return;
 
         try {
             const response = await axios.delete(`http://localhost:5001/api/social/socialApp/${appId}`);
             alert(response.data.message);
             navigate('/user-dashboard');
         } catch (error) {
-            alert(error.response?.data?.error || "Failed to delete app");
+            // eslint-disable-next-line no-console
+            console.error('Error deleting app:', error);
+            alert(error.response?.data?.error || 'Failed to delete app');
         }
     };
 
@@ -363,7 +361,7 @@ const AppDashboard = () => {
                                     type="text"
                                     className="form-control"
                                     name="inMediaUsername"
-                                    value={editProfile.inMediaUsername || ""}
+                                    value={editProfile.inMediaUsername || ''}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -374,7 +372,7 @@ const AppDashboard = () => {
                                     type="url"
                                     className="form-control"
                                     name="url"
-                                    value={editProfile.url || ""}
+                                    value={editProfile.url || ''}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -389,7 +387,7 @@ const AppDashboard = () => {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                value={stateLabel || ""}
+                                                value={stateLabel || ''}
                                                 onChange={(e) => handleStateChange(key, e.target.value)}
                                             />
                                         </div>
@@ -398,7 +396,7 @@ const AppDashboard = () => {
                                             <input
                                                 type="number"
                                                 className="form-control"
-                                                value={editProfile.values?.[key] || ""}
+                                                value={editProfile.values?.[key] || ''}
                                                 onChange={(e) => handleValueChange(key, e.target.value)}
                                             />
                                         </div>

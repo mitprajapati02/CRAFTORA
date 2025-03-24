@@ -1,18 +1,12 @@
 import React from 'react';
 import '../assets/styles/miniFooter.css';
-import { createContext, useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const MiniFooter = () => {
 
   const storedTheme = localStorage.getItem('theme') || 'light';
-    const [darkMode, setDarkMode] = useState(storedTheme === 'dark');
-  
-    // Function to toggle theme
-    const toggleTheme = () => {
-      const newTheme = !darkMode;
-      setDarkMode(newTheme);
-      localStorage.setItem('theme', newTheme ? 'dark' : 'light');
-    };
+  // eslint-disable-next-line no-unused-vars
+  const [darkMode, setDarkMode] = useState(storedTheme === 'dark');
   
     // Apply theme styles when darkMode changes
     useEffect(() => {

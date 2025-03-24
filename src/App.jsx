@@ -2,7 +2,7 @@
 import Layout from './components/Layout';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -20,6 +20,7 @@ import ChangePassword from './components/ChangePassword';
 import ResetPassword from './components/ResetPassword';
 
 import LoginPage from './components/LoginPage';
+import PageNotFound from './components/PageNotFound';
 import PrivacyPolicy from './components/PrivacyPolicy';
 
 import UserDashboard from './components/UserDashboard';
@@ -37,6 +38,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             {/* Mini Layout Pages */}
+            <Route path="*" element={<PageNotFound />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/terms&service" element={<TermsOfService />} />

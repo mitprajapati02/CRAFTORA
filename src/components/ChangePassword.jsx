@@ -16,16 +16,16 @@ import { Link } from 'react-router-dom';
 
 const ChangePassword = () => {
     const [formData, setFormData] = useState({
-        currentPassword: "",
-        newPassword: ""
+        currentPassword: '',
+        newPassword: ''
     });
-    const [message, setMessage] = useState("");
-    const [error, setError] = useState("");
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
 
     // Handle input changes
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-        setError("");
+        setError('');
     };
 
     // Handle form submission
@@ -34,16 +34,16 @@ const ChangePassword = () => {
 
         // Validate new password length
         if (formData.newPassword.length < 6) {
-            setError("New password must be at least 6 characters long.");
+            setError('New password must be at least 6 characters long.');
             return;
         }
 
         // Retrieve token safely
-        const storedUser = localStorage.getItem("user");
+        const storedUser = localStorage.getItem('user');
         const token = storedUser ? JSON.parse(storedUser).token : null;
 
         if (!token) {
-            setError("User not authenticated. Please log in again.");
+            setError('User not authenticated. Please log in again.');
             return;
         }
 
@@ -51,19 +51,20 @@ const ChangePassword = () => {
 
         try {
             const response = await axios.patch(
-                "http://localhost:5001/api/user/change-password",
+                'http://localhost:5001/api/user/change-password',
                 dataWithToken,
                 {
-                    headers: { "Content-Type": "application/json" }, // Ensure JSON format
+                    headers: { 'Content-Type': 'application/json' }, // Ensure JSON format
                 }
             );
 
             setMessage(response.data.message);
-            setError("");
+            setError('');
             
         } catch (error) {
-            console.error("Error:", error.response || error.message); // Log for debugging
-            setError(error.response?.data?.message || "Something went wrong.");
+            // eslint-disable-next-line no-console
+            console.error('Error:', error.response || error.message); // Log for debugging
+            setError(error.response?.data?.message || 'Something went wrong.');
         }
     };
 
@@ -104,7 +105,7 @@ const ChangePassword = () => {
                             style={{ backgroundColor: 'white' , color: 'black'}}
                             required
                         />
-                        {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
+                        {error && <p style={{ color: 'red', fontSize: '14px' }}>{error}</p>}
                     </div>
 
                     <button type="submit" className="btn btn-primary">Change Password</button>

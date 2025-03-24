@@ -26,6 +26,7 @@ const Sidebar = () => {
 
         setData(response || []);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Error fetching social media apps:', error);
       }
     };

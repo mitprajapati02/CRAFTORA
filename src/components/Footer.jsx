@@ -1,5 +1,5 @@
 import React from 'react';
-import { createContext, useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 
@@ -14,11 +14,14 @@ const Footer = () => {
 
   const [darkMode, setDarkMode] = useState(storedTheme === 'dark');
 
+  // eslint-disable-next-line no-unused-vars
   const toggleTheme = () => {
     const newTheme = !darkMode;
     setDarkMode(newTheme);
     localStorage.setItem('theme', newTheme ? 'dark' : 'light');
   };
+
+
 
   useEffect(() => {
     document.body.style.backgroundColor = darkMode ? '#0f0f0f' : '#d5ebe1';

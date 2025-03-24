@@ -32,6 +32,7 @@ export const apiRequest = async (endpoint, method = 'GET', data = {}) => {
 
     return response.data; // Return response data
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(`API Request Error: ${error.response?.data?.error || error.message}`);
     throw error; // Throw error for handling in components
   }

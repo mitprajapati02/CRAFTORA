@@ -27,7 +27,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 
 import { useLocation, Outlet } from 'react-router-dom';
@@ -41,15 +41,15 @@ const Layout = () => {
   }, [location.pathname]);
 
 
-  const miniLayoutPaths = ['/login', '/signup', '/terms&service', '/add-media', '/contact-us', '/forgot-password', '/privacy-policy', '/change-password', '/reset-password'];
+  const miniLayoutPaths = ['login', 'signup', 'terms&service', 'add-media', 'contact-us', 'forgot-password', 'privacy-policy', 'change-password', 'reset-password'];
   const fullLayoutPaths = {
     '/user-profile': <UserProfile />,
     '/app-dashboard': <AppDashboard />,
     '/': <UserDashboard />
   };
 
+  const isMiniLayout = miniLayoutPaths.includes(location.pathname.split('/')[1]);
 
-  const isMiniLayout = miniLayoutPaths.includes(location.pathname);
   const mainContent = fullLayoutPaths[location.pathname] || <Outlet />;
 
   return (
