@@ -187,26 +187,25 @@ async function getAppById(req, res) {
 
 async function removeApp(req, res) {
   try {
-    // Step 1: Find and delete the SocialMediaApp
     const app = await SocialMediaApp.findById(req.params.appId);
 
     if (!app) {
       return res.status(404).json({ error: "SocialMediaApp not found" });
     }
 
-    // Step 2: Remove the app from the user's socialMediaApps array and delete the app
+    // Remove the app from the user's socialMediaApps array
     const userUpdate = User.findByIdAndUpdate(
       app.user,
       { $pull: { socialMediaApps: app._id } },
-      { new: true } // This ensures we get the updated user (not required here but can be helpful for tracking)
+      { new: true }
     );
 
-    const appDelete = app.delete(); // Delete the social media app
+    // Corrected: Use deleteOne() instead of delete()
+    const appDelete = SocialMediaApp.deleteOne({ _id: app._id });
 
-    // Step 3: Run both operations concurrently
+    // Run both operations concurrently
     await Promise.all([userUpdate, appDelete]);
 
-    // Step 4: Respond with a success message
     res.json({ message: "App deleted successfully" });
   } catch (error) {
     console.error(error);

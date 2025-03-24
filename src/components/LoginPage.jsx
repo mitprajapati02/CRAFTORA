@@ -76,7 +76,7 @@ const LoginPage = () => {
         </form>
         <div className="d-flex justify-content-between">
           <Link to="/signup">Sign Up</Link>
-          <Link to="/forgotPassword">Forgot Password?</Link>
+          <Link to="/forgot-password">Forgot Password?</Link>
         </div>
       </div>
     </main>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 import axios from 'axios';
@@ -26,6 +27,8 @@ const AppDashboard = () => {
     const [todoLists, setTodoLists] = useState([]);
 
     const [reminders, setReminders] = useState([]);
+
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -294,6 +297,19 @@ const AppDashboard = () => {
     };
 
 
+    const handleRemove = async () => {
+        if (!window.confirm("Are you sure you want to delete this app?")) return;
+
+        try {
+            const response = await axios.delete(`http://localhost:5001/api/social/socialApp/${appId}`);
+            alert(response.data.message);
+            navigate('/user-dashboard');
+        } catch (error) {
+            alert(error.response?.data?.error || "Failed to delete app");
+        }
+    };
+
+
 
 
 
@@ -530,6 +546,7 @@ const AppDashboard = () => {
                 <button className="btn btn-outline-secondary mt-2" data-bs-toggle="collapse" data-bs-target="#editBioForm">
                     <i className="bi bi-pencil"></i>
                 </button>
+                
 
                 {/* Edit Bio Form */}
                 <div className="collapse mt-3" id="editBioForm">
@@ -538,6 +555,9 @@ const AppDashboard = () => {
                         <button type="submit" className="btn btn-primary">Save</button>
                     </form>
                 </div>
+                <button className="btn btn-danger" onClick={handleRemove} style={{ marginTop: '1rem' }}>
+                    <i className="bi bi-trash"></i> Remove App
+                </button>
             </div>
         </div>
 
