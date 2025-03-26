@@ -6,10 +6,12 @@ import { useEffect, useState } from 'react';
 
 const UserDashboard = () => {
   const user = JSON.parse(localStorage.getItem('user'));
+  console.log('user',user)
   const [socialMediaData, setSocialMediaData] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log('user',user)
     const fetchApps = async () => {
       if (user) {
         try {
@@ -23,7 +25,7 @@ const UserDashboard = () => {
     };
 
     fetchApps();
-  }, [user]);
+  }, []);
 
   return (
     <div className="main-container hide-scrollbar main-content">

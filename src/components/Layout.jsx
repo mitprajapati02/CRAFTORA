@@ -30,13 +30,21 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { useEffect } from 'react';
 
 
-import { useLocation, Outlet } from 'react-router-dom';
+import { useLocation, Outlet, useNavigate } from 'react-router-dom';
 
-const Layout = () => {
+const Layout = ({ children }) => {
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (location.pathname === '/' && userData) {
+      navigate('/user-dashboard')
+    } else if (!userData) {
+      navigate('/login')
+    }
+
     document.title = location.pathname === '/' ? 'Home' : location.pathname.replace('/', ' ').toUpperCase();
   }, [location.pathname]);
 
@@ -50,7 +58,9 @@ const Layout = () => {
 
   const isMiniLayout = miniLayoutPaths.includes(location.pathname.split('/')[1]);
 
-  const mainContent = fullLayoutPaths[location.pathname] || <Outlet />;
+  // const mainContent = fullLayoutPaths[location.pathname] || <Outlet />;
+  // console.log('mainContent',mainContent)
+
 
   return (
     <>
@@ -59,7 +69,8 @@ const Layout = () => {
         <div className="flex-grow-1 d-flex flex-column">
           {isMiniLayout ? <MiniHeader /> : <Header />}
           <div className="main-container hide-scrollbar main-content">
-            {mainContent}
+            {children}
+            {/* {mainContent} */}
             {/* {message} */}
           </div>
         </div>

@@ -35,8 +35,8 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <Routes>
-          <Route path="/" element={<Layout />}>
+        <Layout >
+          <Routes>
             {/* Mini Layout Pages */}
             <Route path="*" element={<PageNotFound />} />
             <Route path="/login" element={<LoginPage />} />
@@ -54,8 +54,8 @@ function App() {
             <Route path="/user-profile" element={<UserProfile />} />
             <Route path="/app-dashboard/:appId" element={<AppDashboard />} />
             <Route path="/user-dashboard" element={<UserDashboard />} />
-          </Route>
-        </Routes>
+          </Routes>
+        </Layout>
       </Router>
     </ThemeProvider>
   );

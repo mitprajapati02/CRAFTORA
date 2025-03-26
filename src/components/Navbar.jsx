@@ -60,7 +60,7 @@ const Navbar = () => {
       {/* User Profile Section */}
       <div className="user-profile">
         <img
-          src={profilePic ? `http://localhost:5001${profilePic}` : '/default-profile.png'}
+          src={profilePic ? `http://localhost:5001${profilePic}` : '/images/user.webp'}
           alt="Profile"
           className="profile-pic"
         />
