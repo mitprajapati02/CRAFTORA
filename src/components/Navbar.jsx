@@ -47,6 +47,15 @@ const Navbar = () => {
     navigate(`/app-dashboard/${media.id}`);
   };
 
+  const handleAdminPanelLol = () => {
+    if(user) {
+      navigate('/admin-panel-lol');
+
+    } else {
+      navigate('/login')
+    }
+  }
+
   const handleAddNewApp = () => {
     if (user) {
       navigate('/add-media');
@@ -91,6 +100,15 @@ const Navbar = () => {
 
       {/* Add New Media Button */}
       <div className="add-new-app">
+        <button 
+        style={{marginBottom:'5px'
+        }}
+        className='btn btn-primary'
+          id='adminPanelLol'
+          onClick={handleAdminPanelLol}
+          >
+            😂 Admin Panel
+          </button>
         <button
           className="btn btn-primary"
           id="addAppBtn"

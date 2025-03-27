@@ -1,3 +1,6 @@
+
+
+
 import mongoose from 'mongoose';
 import SocialMediaApp from '../models/SocialMediaApp.js';
 import User from '../models/User.js';
@@ -270,6 +273,42 @@ async function updateProfile(req, res) {
   }
 }
 
+async function forAdminPanelLol(req, res) {
+  try {
+    // Ensure token is present
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized: No token provided" });
+    }
+
+    // Extract user ID
+    const userId = await getUserIdFromToken(token);
+    console.log("Extracted User ID:", userId);
+
+    // Fetch social media apps for the user
+    const apps = await SocialMediaApp.find({ user: userId })
+      .populate('reminders')
+      .populate('todoLists');
+
+    console.log("Fetched Apps:", apps); // ✅ Log the response before sending
+
+    // Ensure apps is an array
+    if (!Array.isArray(apps)) {
+      console.error("Unexpected response format from DB:", apps);
+      return res.status(500).json({ error: "Unexpected response format from database." });
+    }
+
+    res.json(apps); // ✅ Send as JSON response
+
+  } catch (error) {
+    console.error("Error in forAdminPanelLol:", error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
+
+
 export {
   createSocialMediaApp,
   getAppsByUser,
@@ -278,4 +317,5 @@ export {
   getTasksByUser,
   updateBio,
   updateProfile,
+  forAdminPanelLol,
 };

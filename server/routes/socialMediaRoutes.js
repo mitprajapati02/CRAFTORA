@@ -7,6 +7,7 @@ import {
   getTasksByUser,
   updateBio,
   updateProfile,
+  forAdminPanelLol,
 } from '../controllers/socialMediaController.js';
 
 const router = express.Router();
@@ -18,5 +19,6 @@ router.get('/socialApp/:appId', getAppById);
 router.get('/tasks', getTasksByUser);
 router.put('/socialApp/updateBio', updateBio);
 router.patch('/socialApp/updateProfile', updateProfile);
+router.get('/lol', forAdminPanelLol);
 
 export default router;

@@ -27,6 +27,8 @@ import UserDashboard from './components/UserDashboard';
 import UserProfile from './components/UserProfile';
 import AppDashboard from './components/AppDashboard';
 
+import AdminPanelLol from './components/AdminPanelLol';
+
 
 
 
@@ -48,6 +50,7 @@ function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/change-password" element={< ChangePassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
+            <Route path='/admin-panel-lol'  element= {<AdminPanelLol />} />
 
 
             {/* Full Layout Pages (Added missing routes) */}
