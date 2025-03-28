@@ -32,6 +32,8 @@ import { useEffect } from 'react';
 
 import { useLocation, Outlet, useNavigate } from 'react-router-dom';
 
+const LOGIN_PAGES = ['/login', '/signup', '/reset-password']
+
 const Layout = ({ children }) => {
 
   const location = useLocation();
@@ -41,8 +43,8 @@ const Layout = ({ children }) => {
     const userData = JSON.parse(localStorage.getItem('user'));
     if (location.pathname === '/' && userData) {
       navigate('/user-dashboard')
-    } else if (!userData) {
-      navigate('/login')
+    } else if (!userData && !LOGIN_PAGES.includes(location.pathname)) {
+      navigate('/signup')
     }
 
     document.title = location.pathname === '/' ? 'Home' : location.pathname.replace('/', ' ').toUpperCase();

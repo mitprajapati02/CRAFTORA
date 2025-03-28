@@ -290,11 +290,10 @@ async function forAdminPanelLol(req, res) {
       .populate('reminders')
       .populate('todoLists');
 
-    console.log("Fetched Apps:", apps); // ✅ Log the response before sending
 
     // Ensure apps is an array
     if (!Array.isArray(apps)) {
-      console.error("Unexpected response format from DB:", apps);
+
       return res.status(500).json({ error: "Unexpected response format from database." });
     }
 
@@ -305,8 +304,6 @@ async function forAdminPanelLol(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
-
-
 
 
 export {
