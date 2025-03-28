@@ -14,11 +14,6 @@ const Sidebar = () => {
   const user = JSON.parse(localStorage.getItem('user'));
   const [data, setData] = useState([]);
 
-
-
-
-
-
   useEffect(() => {
     const fetchUsertasks = async () => {
       try {
@@ -32,10 +27,6 @@ const Sidebar = () => {
     };
     if (user) fetchUsertasks();
   }, []);
-
-
-
-
 
   const handleProfile = () => {
     if (user) {
