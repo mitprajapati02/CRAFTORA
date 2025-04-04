@@ -59,15 +59,15 @@ function AdminPanelLol() {
                 <Table striped bordered hover responsive>
                     <thead className="table-dark">
                         <tr>
-                            <th>#</th>
-                            <th>Username</th>
-                            <th>Media Name</th>
-                            <th>Bio</th>
-                            <th>Reminders</th>
-                            <th>States</th>
-                            <th>Tags</th>
-                            <th>To-Do Lists</th>
-                            <th>Actions</th>
+                            <th style={{color: 'black'}}>#</th>
+                            <th style={{color: 'black'}}>Username</th>
+                            <th style={{color: 'black'}}>Media Name</th>
+                            <th style={{color: 'black'}}>Bio</th>
+                            <th style={{color: 'black'}}>Reminders</th>
+                            <th style={{color: 'black'}}>States</th>
+                            <th style={{color: 'black'}}>Tags</th>
+                            <th style={{color: 'black'}}>To-Do Lists</th>
+                            <th style={{color: 'black'}}>Actions</th>
                         </tr>
                     </thead>
                     <tbody style={{border: 'black 1px solid'}}>

@@ -107,7 +107,7 @@ const Navbar = () => {
           id='adminPanelLol'
           onClick={handleAdminPanelLol}
           >
-            😂 Admin Panel
+            Admin Panel
           </button>
         <button
           className="btn btn-primary"
