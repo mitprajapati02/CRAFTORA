@@ -11,7 +11,7 @@ const UserDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('user',user)
+    // console.log('user',user)
     const fetchApps = async () => {
       if (user) {
         try {
