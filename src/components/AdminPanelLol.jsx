@@ -16,7 +16,7 @@ function AdminPanelLol() {
         const fetchApps = async () => {
             if (user) {
                 try {
-                    const apps = await apiRequest('social/lol', 'GET'); 
+                    const apps = await apiRequest('social/lol', 'GET');
 
                     if (Array.isArray(apps)) {
                         setUserApps(apps); // ✅ Store directly in state
@@ -58,15 +58,15 @@ function AdminPanelLol() {
                 <Table striped bordered hover responsive>
                     <thead className="table-dark">
                         <tr>
-                            <th style={{ color: "black" }}>#</th>
-                            <th style={{ color: "black" }}>Username</th>
-                            <th style={{ color: "black" }}>Media Name</th>
-                            <th style={{ color: "black" }}>Bio</th>
-                            <th style={{ color: "black" }}>Reminders</th>
-                            <th style={{ color: "black" }}>States</th>
-                            <th style={{ color: "black" }}>Tags</th>
-                            <th style={{ color: "black" }}>To-Do Lists</th>
-                            <th style={{ color: "black" }}>Actions</th>
+                            <th style={{ color: 'black' }}>#</th>
+                            <th style={{ color: 'black' }}>Username</th>
+                            <th style={{ color: 'black' }}>Media Name</th>
+                            <th style={{ color: 'black' }}>Bio</th>
+                            <th style={{ color: 'black' }}>Reminders</th>
+                            <th style={{ color: 'black' }}>States</th>
+                            <th style={{ color: 'black' }}>Tags</th>
+                            <th style={{ color: 'black' }}>To-Do Lists</th>
+                            <th style={{ color: 'black' }}>Actions</th>
                         </tr>
                     </thead>
                     <tbody style={{ border: 'black 1px solid' }}>

@@ -8,10 +8,10 @@ const connectDB = async () => {
     // eslint-disable-next-line no-undef
     await mongoose.connect(process.env.MONGO_URI);
     // eslint-disable-next-line no-console
-    console.log('✅ MongoDB Connected Successfully');
+    console.log(' MongoDB Connected Successfully');
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.error('❌ Error connecting to MongoDB:', err.message);
+    console.error('Error connecting to MongoDB:', err.message);
     // eslint-disable-next-line no-undef
     process.exit(1);
   }

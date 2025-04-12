@@ -107,9 +107,9 @@ const Navbar = () => {
           className='btn btn-primary'
           id='adminPanelLol'
           onClick={handleAdminPanelLol}
-        >
-          Admin Panel
-        </button>
+          >
+            Admin Panel
+          </button>
         <button
           className="btn btn-primary"
           id="addAppBtn"
