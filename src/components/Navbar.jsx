@@ -48,7 +48,7 @@ const Navbar = () => {
   };
 
   const handleAdminPanelLol = () => {
-    if(user) {
+    if (user) {
       navigate('/admin-panel-lol');
 
     } else {
@@ -100,15 +100,16 @@ const Navbar = () => {
 
       {/* Add New Media Button */}
       <div className="add-new-app">
-        <button 
-        style={{marginBottom:'5px'
-        }}
-        className='btn btn-primary'
+        <button
+          style={{
+            marginBottom: '5px'
+          }}
+          className='btn btn-primary'
           id='adminPanelLol'
           onClick={handleAdminPanelLol}
-          >
-            😂 Admin Panel
-          </button>
+        >
+          Admin Panel
+        </button>
         <button
           className="btn btn-primary"
           id="addAppBtn"

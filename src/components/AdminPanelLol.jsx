@@ -16,9 +16,8 @@ function AdminPanelLol() {
         const fetchApps = async () => {
             if (user) {
                 try {
-                    const apps = await apiRequest('social/lol', 'GET'); // ✅ Expect array directly
-                    console.log("✅ Fetched Apps:", apps);
-    
+                    const apps = await apiRequest('social/lol', 'GET'); 
+
                     if (Array.isArray(apps)) {
                         setUserApps(apps); // ✅ Store directly in state
                     } else {
@@ -29,14 +28,14 @@ function AdminPanelLol() {
                 }
             }
         };
-    
+
         fetchApps();
     }, []);
-    
-    
-    
-    
-    
+
+
+
+
+
 
 
     const handleDelete = async (appId) => {
@@ -54,23 +53,23 @@ function AdminPanelLol() {
     };
 
     return (
-        <div className="container-5 " style={{width:'100%'}}>
+        <div className="container-5 " style={{ width: '100%' }}>
             {userApps?.length > 0 ? (
                 <Table striped bordered hover responsive>
                     <thead className="table-dark">
                         <tr>
-                            <th>#</th>
-                            <th>Username</th>
-                            <th>Media Name</th>
-                            <th>Bio</th>
-                            <th>Reminders</th>
-                            <th>States</th>
-                            <th>Tags</th>
-                            <th>To-Do Lists</th>
-                            <th>Actions</th>
+                            <th style={{ color: "black" }}>#</th>
+                            <th style={{ color: "black" }}>Username</th>
+                            <th style={{ color: "black" }}>Media Name</th>
+                            <th style={{ color: "black" }}>Bio</th>
+                            <th style={{ color: "black" }}>Reminders</th>
+                            <th style={{ color: "black" }}>States</th>
+                            <th style={{ color: "black" }}>Tags</th>
+                            <th style={{ color: "black" }}>To-Do Lists</th>
+                            <th style={{ color: "black" }}>Actions</th>
                         </tr>
                     </thead>
-                    <tbody style={{border: 'black 1px solid'}}>
+                    <tbody style={{ border: 'black 1px solid' }}>
                         {userApps.map((app, index) => (
                             <tr key={app._id} >
                                 <td>{index + 1}</td>
@@ -118,8 +117,8 @@ function AdminPanelLol() {
             )}
         </div>
     );
-    
-    
+
+
 }
 
 export default AdminPanelLol;
