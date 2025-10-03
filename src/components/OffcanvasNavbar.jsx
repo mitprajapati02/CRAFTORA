@@ -55,7 +55,7 @@ const OffcanvasNavbar = () => {
         {/* User Profile */}
         <div className="user-profile">
           <img
-            src={profilePic ? `http://localhost:5001${profilePic}` : '/default-profile.png'}
+            src={profilePic ? `${profilePic}` : '/default-profile.png'}
             alt="Profile"
             className="profile-pic"
           />

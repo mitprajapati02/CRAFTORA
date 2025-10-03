@@ -50,7 +50,7 @@ const SignUp = () => {
     const dataWithToken = { ...formData, token };
 
     try {
-      await axios.post('http://localhost:5001/api/auth/signup', dataWithToken);
+      await axios.post('/api/auth/signup', dataWithToken);
 
 
       localStorage.setItem('user', JSON.stringify({ username, email, token }));

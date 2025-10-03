@@ -69,7 +69,7 @@ const Navbar = () => {
       {/* User Profile Section */}
       <div className="user-profile">
         <img
-          src={profilePic ? `http://localhost:5001${profilePic}` : '/images/user.webp'}
+          src={profilePic ? `https://craftora-1o90.onrender.com${profilePic}` : '/images/user.webp'}
           alt="Profile"
           className="profile-pic"
         />
@@ -107,9 +107,9 @@ const Navbar = () => {
           className='btn btn-primary'
           id='adminPanelLol'
           onClick={handleAdminPanelLol}
-          >
-            Admin Panel
-          </button>
+        >
+          Admin Panel
+        </button>
         <button
           className="btn btn-primary"
           id="addAppBtn"

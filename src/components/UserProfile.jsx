@@ -39,7 +39,7 @@ const UserProfile = () => {
 
       const token = userData.token;
 
-      const response = await axios.get('http://localhost:5001/api/user/profile', {
+      const response = await axios.get('https://craftora-1o90.onrender.com/api/user/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -87,7 +87,7 @@ const UserProfile = () => {
         updatedFormData.append('profilePic', profilePic);
       }
 
-      await axios.put('http://localhost:5001/api/user/profile', updatedFormData, {
+      await axios.put('https://craftora-1o90.onrender.com/api/user/profile', updatedFormData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data', // Required for file upload
@@ -114,7 +114,7 @@ const UserProfile = () => {
         <div className="col-lg-4 col-12 mb-4">
           <div className="card p-3">
             <img
-              src={currentUser.profilePic ? `http://localhost:5001${currentUser.profilePic}` : '/default-profile.png'}
+              src={currentUser.profilePic ? `https://craftora-1o90.onrender.com${currentUser.profilePic}` : '/default-profile.png'}
               alt="Profile"
               className="profile-pic profile-img"
             />

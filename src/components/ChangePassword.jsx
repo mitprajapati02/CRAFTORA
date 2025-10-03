@@ -51,7 +51,7 @@ const ChangePassword = () => {
 
         try {
             const response = await axios.patch(
-                'http://localhost:5001/api/user/change-password',
+                'https://craftora-1o90.onrender.com/api/user/change-password',
                 dataWithToken,
                 {
                     headers: { 'Content-Type': 'application/json' }, // Ensure JSON format
@@ -60,7 +60,7 @@ const ChangePassword = () => {
 
             setMessage(response.data.message);
             setError('');
-            
+
         } catch (error) {
             // eslint-disable-next-line no-console
             console.error('Error:', error.response || error.message); // Log for debugging
@@ -88,7 +88,7 @@ const ChangePassword = () => {
                             placeholder="Current Password"
                             value={formData.currentPassword}
                             onChange={handleChange}
-                            style={{ backgroundColor: 'white' , color: 'black'}}
+                            style={{ backgroundColor: 'white', color: 'black' }}
                             required
                         />
                     </div>
@@ -102,7 +102,7 @@ const ChangePassword = () => {
                             placeholder="New Password (min. 6 characters)"
                             value={formData.newPassword}
                             onChange={handleChange}
-                            style={{ backgroundColor: 'white' , color: 'black'}}
+                            style={{ backgroundColor: 'white', color: 'black' }}
                             required
                         />
                         {error && <p style={{ color: 'red', fontSize: '14px' }}>{error}</p>}

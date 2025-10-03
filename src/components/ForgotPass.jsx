@@ -18,7 +18,7 @@ const ForgotPass = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:5001/api/user/forgot-password', { email });
+      const response = await axios.post('https://craftora-1o90.onrender.com/api/user/forgot-password', { email });
       setMessage(response.data.message);
     } catch (error) {
       setError(error.response?.data?.message || 'Something went wrong.');
@@ -39,7 +39,7 @@ const ForgotPass = () => {
               placeholder="Email Address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{ backgroundColor: 'white' , color: 'black'}}
+              style={{ backgroundColor: 'white', color: 'black' }}
 
               required
             />

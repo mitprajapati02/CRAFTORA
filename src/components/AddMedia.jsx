@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 import '../assets/styles/AddMedia.css'
-import { OptionIcon } from 'lucide-react';
+
 
 
 const AddMedia = () => {

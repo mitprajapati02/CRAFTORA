@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "proxy": "http://localhost:5001",
+  "proxy": "https://craftora-1o90.onrender.com",
   "description": "",
   "main": "server.js",
   "scripts": {

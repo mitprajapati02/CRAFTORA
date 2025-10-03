@@ -33,7 +33,7 @@ const LoginPage = () => {
     const dataWithToken = { ...formData, token };
 
     try {
-      const response = await axios.post('http://localhost:5001/api/auth/login', dataWithToken);
+      const response = await axios.post('https://craftora-1o90.onrender.com/api/auth/login', dataWithToken);
       localStorage.setItem('user', JSON.stringify(response.data.user));
       alert('Login successful!');
       navigation('/user-dashboard');

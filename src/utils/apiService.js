@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 // Base URL for your API
-const API_BASE_URL = 'http://localhost:5001/api';
+const API_BASE_URL = "https://craftora-1o90.onrender.com/api";
 
 /**
  * @function apiRequest
@@ -11,11 +11,11 @@ const API_BASE_URL = 'http://localhost:5001/api';
  * @param {object} [data={}] - Request body data (default empty object)
  * @returns {Promise} - Axios response
  */
-export const apiRequest = async (endpoint, method = 'GET', data = {}) => {
+export const apiRequest = async (endpoint, method = "GET", data = {}) => {
   try {
-    const userData = JSON.parse(localStorage.getItem('user'));
+    const userData = JSON.parse(localStorage.getItem("user"));
     if (!userData || !userData.token) {
-      throw new Error('User not authenticated');
+      throw new Error("User not authenticated");
     }
 
     const token = userData.token;
@@ -26,14 +26,16 @@ export const apiRequest = async (endpoint, method = 'GET', data = {}) => {
       data,
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
     return response.data; // Return response data
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error(`API Request Error: ${error.response?.data?.error || error.message}`);
+    console.error(
+      `API Request Error: ${error.response?.data?.error || error.message}`
+    );
     throw error; // Throw error for handling in components
   }
 };
