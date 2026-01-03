@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Base URL for your API
-const API_BASE_URL = "https://craftora-1o90.onrender.com/api";
+const API_BASE_URL = "http://localhost:5001/api";
 
 /**
  * @function apiRequest

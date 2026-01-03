@@ -38,7 +38,7 @@ const AppDashboard = () => {
                     throw new Error('User not authenticated');
                 }
 
-                const response = await axios.get(`https://craftora-1o90.onrender.com/api/social/socialApp/${appId}`, {
+                const response = await axios.get(`http://localhost:5001/api/social/socialApp/${appId}`, {
                     headers: {
                         Authorization: `Bearer ${userData.token}`,
                     },
@@ -87,7 +87,7 @@ const AppDashboard = () => {
         try {
 
             const response = await axios.post(
-                'https://craftora-1o90.onrender.com/api/reminder/add',
+                'http://localhost:5001/api/reminder/add',
                 { reminder: reminderText, date: reminderDate },
                 {
                     headers: {
@@ -168,7 +168,7 @@ const AppDashboard = () => {
 
         try {
 
-            const response = await axios.patch('https://craftora-1o90.onrender.com/api/social/socialApp/updateProfile', updatedFields,
+            const response = await axios.patch('http://localhost:5001/api/social/socialApp/updateProfile', updatedFields,
                 {
                     headers: {
                         Authorization: `Bearer ${appId}`,
@@ -200,7 +200,7 @@ const AppDashboard = () => {
 
         try {
             const response = await axios.put(
-                'https://craftora-1o90.onrender.com/api/todo/todoList',
+                'http://localhost:5001/api/todo/todoList',
                 { task: newTask },
                 {
                     headers: {
@@ -225,7 +225,7 @@ const AppDashboard = () => {
     const toggleTodo = async (taskId) => {
         try {
             const response = await axios.put(
-                `https://craftora-1o90.onrender.com/api/todo/toggle/${taskId}`,
+                `http://localhost:5001/api/todo/toggle/${taskId}`,
                 {},
                 {
                     headers: {
@@ -252,7 +252,7 @@ const AppDashboard = () => {
     const removeTodo = async (taskId) => {
         try {
             const response = await axios.delete(
-                `https://craftora-1o90.onrender.com/api/todo/delete/${taskId}`, // API to delete task
+                `http://localhost:5001/api/todo/delete/${taskId}`, // API to delete task
                 {
                     headers: {
                         Authorization: `Bearer ${appId}`,
@@ -275,7 +275,7 @@ const AppDashboard = () => {
         e.preventDefault();
         const updatedBio = e.target.bio.value;
         try {
-            const response = await axios.put('https://craftora-1o90.onrender.com/api/social/socialApp/updateBio', { bio: updatedBio }, {
+            const response = await axios.put('http://localhost:5001/api/social/socialApp/updateBio', { bio: updatedBio }, {
                 headers: {
                     Authorization: `Bearer ${appId}`,
                 },
@@ -297,7 +297,7 @@ const AppDashboard = () => {
         if (!window.confirm('Are you sure you want to delete this app?')) return;
 
         try {
-            const response = await axios.delete(`https://craftora-1o90.onrender.com/api/social/socialApp/${appId}`);
+            const response = await axios.delete(`http://localhost:5001/api/social/socialApp/${appId}`);
             alert(response.data.message);
             navigate('/user-dashboard');
         } catch (error) {

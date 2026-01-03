@@ -50,7 +50,7 @@ const SignUp = () => {
     const dataWithToken = { ...formData, token };
 
     try {
-      await axios.post('https://craftora-1o90.onrender.com/api/auth/signup', dataWithToken);
+      await axios.post('http://localhost:5001/api/auth/signup', dataWithToken);
 
 
       localStorage.setItem('user', JSON.stringify({ username, email, token }));

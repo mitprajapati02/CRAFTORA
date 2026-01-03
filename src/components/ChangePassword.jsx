@@ -51,7 +51,7 @@ const ChangePassword = () => {
 
         try {
             const response = await axios.patch(
-                'https://craftora-1o90.onrender.com/api/user/change-password',
+                'http://localhost:5001/api/user/change-password',
                 dataWithToken,
                 {
                     headers: { 'Content-Type': 'application/json' }, // Ensure JSON format

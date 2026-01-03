@@ -42,7 +42,7 @@ function AdminPanelLol() {
         if (!window.confirm('Are you sure you want to delete this app?')) return;
 
         try {
-            const response = await axios.delete(`https://craftora-1o90.onrender.com/api/social/socialApp/${appId}`);
+            const response = await axios.delete(`http://localhost:5001/api/social/socialApp/${appId}`);
             alert(response.data.message);
             navigate('/user-dashboard');
         } catch (error) {

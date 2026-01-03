@@ -17,7 +17,7 @@ const ResetPassword = () => {
 
         const checkToken = async () => {
             try {
-                const response = await axios.get(`https://craftora-1o90.onrender.com/api/user/check-token/${token}`);
+                const response = await axios.get(`http://localhost:5001/api/user/check-token/${token}`);
                 if (response.status === 200) {
                     setMessage('Token is valid.');
                 } else {
@@ -40,7 +40,7 @@ const ResetPassword = () => {
         }
 
         try {
-            const response = await axios.patch('https://craftora-1o90.onrender.com/api/user/reset-password', {
+            const response = await axios.patch('http://localhost:5001/api/user/reset-password', {
                 token,
                 newPassword
             });
