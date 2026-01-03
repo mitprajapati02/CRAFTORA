@@ -18,11 +18,19 @@ Future work includes advanced UI polish, analytics, and collaboration features.
 ## Project Screen Shot(s)
 <img width="1899" height="917" alt="brave_screenshot_localhost (6)" src="https://github.com/user-attachments/assets/07bc251a-018c-40e6-b9ac-62cca8baa800" />
 
+---
+
 <img width="1900" height="917" alt="brave_screenshot_localhost (5)" src="https://github.com/user-attachments/assets/8f972f6c-a2e2-4c0b-aa05-bcd1b092e100" />
+
+---
 
 <img width="1894" height="911" alt="brave_screenshot_localhost (3)" src="https://github.com/user-attachments/assets/e6bf564e-1e2e-4504-9e89-dc0a686d205f" />
 
+---
+
 <img width="1893" height="913" alt="brave_screenshot_localhost (7)" src="https://github.com/user-attachments/assets/649066c0-0c2e-4142-bc00-9962855384d1" />
+
+---
 
 <img width="1893" height="558" alt="brave_screenshot_localhost (4)" src="https://github.com/user-attachments/assets/9b8ce3b1-2f50-424f-8299-74c0308eee03" />
 
